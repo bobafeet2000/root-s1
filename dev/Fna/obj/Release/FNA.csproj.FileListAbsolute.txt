@@ -1,0 +1,8 @@
+E:\dev\FNA\bin\Release\FNA.dll.config
+E:\dev\FNA\bin\Release\FNA.dll
+E:\dev\FNA\obj\Release\FNA.csproj.CoreCompileInputs.cache
+E:\dev\FNA\obj\Release\FNA.dll
+D:\dev\Fna\bin\Release\FNA.dll.config
+D:\dev\Fna\bin\Release\FNA.dll
+D:\dev\Fna\obj\Release\FNA.csproj.CoreCompileInputs.cache
+D:\dev\Fna\obj\Release\FNA.dll
