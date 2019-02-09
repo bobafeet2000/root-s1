@@ -41,8 +41,10 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Content\Arial.xnb" />
-    <None Include="Content\debug_text.xnb" />
+    <None Include="Content\namco_18.xnb" />
+    <None Include="Content\namco_27.xnb" />
+    <None Include="Content\namco_36.xnb" />
+    <None Include="Content\namco_9.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FNA">
@@ -50,11 +52,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Background.cs" />
+    <Compile Include="Constant.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Art.cs" />
+    <Compile Include="Input.cs" />
+    <Compile Include="Object.cs" />
+    <Compile Include="Screen.cs" />
+    <Compile Include="Session.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\player.png" />
     <Content Include="Engine.ico" />
   </ItemGroup>
   <ItemGroup />

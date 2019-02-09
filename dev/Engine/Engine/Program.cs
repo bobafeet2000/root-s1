@@ -7,15 +7,11 @@ namespace Engine
 {
     static class Program
     {
-        /// Constantes 
-        public const int MAIN_WINDOW_WIDTH = 448;
-        public const int MAIN_WINDOW_HEIGHT = 576;
-        public const bool MAIN_WINDOW_FULLSCREEN = false;
 
-        /// The main entry point for the application.
+        /// Point d'entrée du programme
         static void Main(string[] args)
         {
-            using (Game game = new Game(MAIN_WINDOW_WIDTH,MAIN_WINDOW_HEIGHT,MAIN_WINDOW_FULLSCREEN))
+            using (Game game = new Game())
             {
                 game.Run();
             }

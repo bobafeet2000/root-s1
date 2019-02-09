@@ -12,15 +12,28 @@ namespace Engine
 {
     public class Game : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        SpriteFont spritefont;
-        Color backcolor;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private float elapsetime;
 
-        // a enlever
-        Texture2D player;
-        int posx,posy;
-        int largeur;
+        private ScreenBoot screenboot; // Ecran de boot
+        private ScreenHome screenhome; // Ecran d'accueil
+        private Session session; // Partie mono joueur
+
+        private int timer; // timer à usage multiple
+
+        // Récupération des constantes générales 
+        Color backcolor = new Color(Constant.BKCOLOR_R, Constant.BKCOLOR_G, Constant.BKCOLOR_B);  // couleur du fond
+        Color debug_font_color = new Color(Constant.FONT_DEBUG_COLOR_R, Constant.FONT_DEBUG_COLOR_G, Constant.FONT_DEBUG_COLOR_B); // couleur de la font DEBUG
+       
+
+        public enum GameState
+        {
+            //Tous les états possibles du jeu
+            Boot, MainMenu, Instructions, PlayGame, 
+        }
+        GameState CurrentGameState = GameState.Boot;
+
 
         /// <summary>
         ///  Variables nécessaires au calcul du framerate 
@@ -29,28 +42,34 @@ namespace Engine
         float _elapsed_time = 0.0f;
         int _fps = 0;
 
-        public Game(int width, int height, bool isfullscreen) // Constructeur avec la taille de la fenetre en parametre
+        public Game() // Constructeur 
         {
             graphics = new GraphicsDeviceManager(this);
 
             /// <summary>
             /// suppression frame rate, sinon 60 FPS par défaut
+            ///this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f); // fixe le FPS 
             ///graphics.SynchronizeWithVerticalRetrace = false;
-            ///IsFixedTimeStep = false;
+            ///this.IsFixedTimeStep = true;
             /// <summary>
 
 
-            graphics.PreferredBackBufferHeight = height;
-            graphics.PreferredBackBufferWidth = width;
-            graphics.IsFullScreen = isfullscreen;
+            /// <summary>
+            /// Chargement et application des paramètres d'affichage 
+            /// <summary>
+            graphics.PreferredBackBufferHeight = Constant.MAIN_WINDOW_HEIGHT;
+            graphics.PreferredBackBufferWidth = Constant.MAIN_WINDOW_WIDTH;
+            graphics.IsFullScreen = Constant.MAIN_WINDOW_FULLSCREEN;
+            Window.Title = Constant.GAME_NAME;
             graphics.ApplyChanges();
+            if (Constant.MAIN_WINDOWS_BORDERLESS) { this.Window.IsBorderlessEXT = Constant.MAIN_WINDOWS_BORDERLESS; } // A faire après le Applychanges !
 
-            Content.RootDirectory = "Content";
 
-            // a enlever
-            largeur = width;
-            posx = width / 2;
-            posy = height - 50;
+            /// <summary>
+            /// Désignation du répertoire de ressources
+            /// <summary>
+            Content.RootDirectory = Constant.CONTENT_DIR;
+
         }
 
         /// <summary>
@@ -58,6 +77,7 @@ namespace Engine
         /// </summary>
         protected override void Initialize()
         {
+            timer = 0;
             base.Initialize();
         }
 
@@ -66,18 +86,15 @@ namespace Engine
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
+            // SpriteBatch, objet de gestion de l'affichage des sprites
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // a enlever
-            player = this.Content.Load<Texture2D>("player");
+            //Chargement du contenu
+            Art.Load(Content);
 
-            // Création d'un new SpriteFont
-            //spritefont = Content.Load<SpriteFont>("arial");
-#if DEBUG
-            spritefont = Content.Load<SpriteFont>("debug_text");
-#endif
-
+            screenboot = new ScreenBoot(Constant.GAME_BOOT);
+            screenhome = new ScreenHome(Constant.GAME_NAME);
+        
         }
 
         /// <summary>
@@ -87,6 +104,9 @@ namespace Engine
         /// </summary>
         protected override void Update(GameTime gameTime)
         {
+            /// DEBUG: baisse du FPS : 
+            ///System.Threading.Thread.Sleep(14);
+           
             /// <summary>
             /// Calcul du framerate
             /// <summary> 
@@ -98,26 +118,46 @@ namespace Engine
                 _elapsed_time = 0;
             }
 
-            // ESC = Sortie du programme
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                this.Exit();
+            elapsetime = (float)gameTime.ElapsedGameTime.TotalMilliseconds; // calcul du temps passé depuis le dernier update
 
-            // a enlever
-            if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                if (posx >= largeur - player.Width)
-                    posx = largeur - player.Width;
-                    else posx += 2;
-                
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                if (posx <= 0) posx = 0;
-                else posx -= 2;
-            }
-               
+            Input.Update();  // Update entrée clavier du joueur
 
-            //Update the things FNA handles for us underneath the hood:
+            switch (CurrentGameState)
+            {
+                case GameState.Boot:
+                    timer += (int)elapsetime;
+                    if (timer > 1000) CurrentGameState = GameState.MainMenu;
+                    else screenboot.Update(elapsetime); 
+                    break;
+
+                case GameState.MainMenu:
+                    if (Input.KeyPressed(Keys.Enter))
+                    {
+                        session = new Session();
+                        CurrentGameState = GameState.PlayGame;
+                        break;
+                    }
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        this.Exit();
+                    }
+                    screenhome.Update(elapsetime);
+                    break;
+
+                case GameState.PlayGame:
+
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        session.End();
+                        session = null;                       
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    session.Update(elapsetime);
+                    break;
+            }
+
+            //Update base
             base.Update(gameTime);
         }
 
@@ -126,8 +166,8 @@ namespace Engine
         /// </summary>
         protected override void Draw(GameTime gameTime)
         {
-            //This will clear what's on the screen each frame, if we don't clear the screen will look like a mess:
-            GraphicsDevice.Clear(Color.Black);
+            //Effacement du device
+            GraphicsDevice.Clear(backcolor);
 
             // Incrément du compteur de frame quand entre dans la méthode Draw
             _total_frames++;
@@ -135,18 +175,27 @@ namespace Engine
             // SpriteBatch START
             spriteBatch.Begin();
 
-            // a enlaver
-            spriteBatch.Draw(player, new Vector2(posx, posy), null, Color.White);
 
-#if DEBUG
-            // Affichage du compteur de frame
-            spriteBatch.DrawString(spritefont, string.Format("FPS={0}", _fps), new Vector2(10.0f, 10.0f), Color.White);
-#endif
+            switch (CurrentGameState)
+            {
+                case GameState.Boot:
+                    screenboot.Draw(spriteBatch);
+                    break;
+                case GameState.MainMenu:
+                   screenhome.Draw(spriteBatch);
+                    break;
+                case GameState.PlayGame:
+                   session.Draw(spriteBatch);
+                    break;
+            }
+
+            // Affichage du compteur de frame si DEBUG
+            if (Constant.ISDEBUG) { spriteBatch.DrawString(Art.Font_Debug, string.Format("FPS = {0}", _fps), new Vector2(10.0f, 10.0f), debug_font_color * Constant.FONT_DEBUG_COLOR_A); }
 
             // SpriteBatch END 
             spriteBatch.End();
 
-            //Draw the things FNA handles for us underneath the hood:
+            //Draw base
             base.Draw(gameTime);
 
         }
