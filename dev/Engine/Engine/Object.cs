@@ -56,12 +56,12 @@ namespace Engine
             if (Input.IsKeyDown(Keys.Right))
             {
                 //  Implemtanter la vitesse de déplacement avec elpsetime, par exemple :  pos_X = pos_X + (int)(elapsetime/5);     
-                if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2) pos_X += 1;
+                if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2) pos_X += 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                if (pos_X > sprite.Rect.Width / 2) pos_X -= 1;
+                if (pos_X > sprite.Rect.Width / 2) pos_X -= 2   ;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)

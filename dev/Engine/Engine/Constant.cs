@@ -13,11 +13,12 @@ namespace Engine
         public const bool ISDEBUG = true;
         public const string GAME_NAME = "Galaga 2019";
         public const string GAME_BOOT = "Boot";
+        public const string GAME_INSTRUCTION = "Instruction";
         public const string CONTENT_DIR = "Content";
         public const int MAIN_WINDOW_WIDTH = 448;               // Résolution borne Galaga * 2
         public const int MAIN_WINDOW_HEIGHT = 576;              // Résolution borne Galaga * 2
         public const bool MAIN_WINDOWS_BORDERLESS = false;
-        public const bool MAIN_WINDOW_FULLSCREEN = true; //false;
+        public const bool MAIN_WINDOW_FULLSCREEN = false;
 
         public const int BACKGROUND_RANDOM_STAR = 5;         // Random max (une chance sur BACKGROUND_RANDOM_STAR de faire apparaitre une étoile)
         public const int BACKGROUND_BLINK_STAR = 600;         // Cycle de clignotement des étoiles en ms

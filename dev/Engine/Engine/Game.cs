@@ -18,6 +18,7 @@ namespace Engine
 
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
+        private ScreenInstruction screeninstruction;
         private Session session; // Partie mono joueur
 
         private int timer; // timer à usage multiple
@@ -30,7 +31,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instructions, PlayGame, 
+            Boot, MainMenu, Instruction, PlayGame, 
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -137,12 +138,31 @@ namespace Engine
                         CurrentGameState = GameState.PlayGame;
                         break;
                     }
+                    if (Input.KeyPressed(Keys.H))
+                    {
+                        screeninstruction = new ScreenInstruction(Constant.GAME_INSTRUCTION);
+                        CurrentGameState = GameState.Instruction;
+                        break;
+
+                    }
                     if (Input.KeyPressed(Keys.Escape))
                     {
                         this.Exit();
                     }
                     screenhome.Update(elapsetime);
                     break;
+
+                case GameState.Instruction:
+                { 
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        screeninstruction = null;
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    screeninstruction.Update(elapsetime);
+                    break;
+                }
 
                 case GameState.PlayGame:
 
@@ -183,6 +203,9 @@ namespace Engine
                     break;
                 case GameState.MainMenu:
                    screenhome.Draw(spriteBatch);
+                    break;
+                case GameState.Instruction:
+                    screeninstruction.Draw(spriteBatch);
                     break;
                 case GameState.PlayGame:
                    session.Draw(spriteBatch);
