@@ -15,6 +15,7 @@ namespace Engine
     {
         public Player player { get; protected set; }
         public Background background { get; protected set; }
+        public Background2 back { get; protected set; }
         public SoundEffectInstance sound_start { get; protected set; }
         public SoundEffectInstance sound_explosion { get; protected set; }
 
@@ -23,6 +24,7 @@ namespace Engine
         {
             player = new Player();
             background = new Background();
+            back = new Background2();
 
             sound_start = Art.Song_start.CreateInstance(); // on charge le son d'intro
             sound_start.Play();                            // on joue le son d'intro
