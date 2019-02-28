@@ -18,7 +18,6 @@ namespace Engine
         public int pos_X { get; protected set; }
         public int pos_Y { get; protected set; }
         public Background background { get; protected set; }
-        public Background2 back { get; protected set; }
 
         public Screen()
         {
@@ -66,9 +65,7 @@ namespace Engine
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             font_color_name = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
-            background = new Background();
-            back = new Background2();
-           
+            background = new Background(2,2);
 
         }
 
@@ -94,7 +91,7 @@ namespace Engine
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             font_color_name = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
-            background = new Background();
+            background = new Background(2,2);
 
         }
 
@@ -110,4 +107,5 @@ namespace Engine
 
         }
     }
+
 }

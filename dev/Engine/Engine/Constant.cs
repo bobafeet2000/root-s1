@@ -20,33 +20,33 @@ namespace Engine
         public const bool MAIN_WINDOWS_BORDERLESS = false;
         public const bool MAIN_WINDOW_FULLSCREEN = false;
 
-        public const int BACKGROUND_RANDOM_STAR = 5;         // Random max (une chance sur BACKGROUND_RANDOM_STAR de faire apparaitre une étoile)
+        public const int BACKGROUND_RANDOM_STAR = 8;         // Random max (une chance sur BACKGROUND_RANDOM_STAR de faire apparaitre une étoile)
         public const int BACKGROUND_BLINK_STAR = 600;         // Cycle de clignotement des étoiles en ms
 
         public const int STAR_1_COLOR_R = 255;
         public const int STAR_1_COLOR_G = 255;
         public const int STAR_1_COLOR_B = 255;
-        public const float STAR_1_COLOR_A = 0.6f;
+        public const float STAR_1_COLOR_A = 0.9f;
 
         public const int STAR_2_COLOR_R = 0;
         public const int STAR_2_COLOR_G = 0;
         public const int STAR_2_COLOR_B = 255;
-        public const float STAR_2_COLOR_A = 0.6f;
+        public const float STAR_2_COLOR_A = 0.9f;
 
         public const int STAR_3_COLOR_R = 0;
         public const int STAR_3_COLOR_G = 255;
         public const int STAR_3_COLOR_B = 0;
-        public const float STAR_3_COLOR_A = 0.6f;
+        public const float STAR_3_COLOR_A = 0.9f;
 
         public const int STAR_4_COLOR_R = 255;
         public const int STAR_4_COLOR_G = 255;
         public const int STAR_4_COLOR_B = 0;
-        public const float STAR_4_COLOR_A = 0.6f;
+        public const float STAR_4_COLOR_A = 0.9f;
 
         public const int STAR_5_COLOR_R = 255;
         public const int STAR_5_COLOR_G = 0;
         public const int STAR_5_COLOR_B = 0;
-        public const float STAR_5_COLOR_A = 0.6f;
+        public const float STAR_5_COLOR_A = 0.9f;
 
         public const int BKCOLOR_R = 0;
         public const int BKCOLOR_G = 0;
@@ -66,10 +66,15 @@ namespace Engine
         public const float FONT_GAME_COLOR_A = 1f;
 
         public const string TEXTURE_PLAYER = "player";
-        public const string TEXTURE_STAR = "star";
+        public const int PLAYER_NBTIR = 5;
+        public const string TEXTURE_ENEMY1 = "enemy1";
+        public const string TEXTURE_STAR1 = "star1";
+        public const string TEXTURE_STAR2 = "star2";
+        public const string TEXTURE_TIR = "tir";
 
         public const string SOUND_START = "song_start";
         public const string SOUND_EXPLOSION = "song_explosion";
+        public const string SOUND_TIR = "song_tir";
 
 
     }

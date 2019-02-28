@@ -15,17 +15,22 @@ namespace Engine
     public class Background
     {
         public List<Star> listestar { get; protected set; }
-        private Random rnd;
+        private int speed;
+        //private Random rnd;
+        private static readonly Random rnd = new Random();  // Permet de réinitialiser le random a chaque new background
         private int pos_X;
         private int blink;
         private int state;
+        private int size;
         private int col;
         private Color color = Color.White;
 
-        public Background()
+        public Background(int size, int speed)
         {
             listestar = new List<Star>();
-            rnd = new Random();
+            this.size = size;
+            this.speed = speed;
+            //rnd = new Random();
             int pos_Y = 0;
 
             for (int i= 0;i<=(Constant.MAIN_WINDOW_HEIGHT);i++)
@@ -42,7 +47,7 @@ namespace Engine
                     if (col == 3) color = new Color(Constant.STAR_4_COLOR_R, Constant.STAR_4_COLOR_G, Constant.STAR_4_COLOR_B) * Constant.STAR_4_COLOR_A;
                     if (col == 4) color = new Color(Constant.STAR_5_COLOR_R, Constant.STAR_5_COLOR_G, Constant.STAR_5_COLOR_B) * Constant.STAR_5_COLOR_A;
 
-                    listestar.Add(new Star(color, pos_X, pos_Y, state, blink));
+                    listestar.Add(new Star(color, pos_X, pos_Y, state, blink, this.size, this.speed));
                 }
                 pos_Y++;
             }
@@ -72,7 +77,7 @@ namespace Engine
                 if (col == 3) color = new Color(Constant.STAR_4_COLOR_R, Constant.STAR_4_COLOR_G, Constant.STAR_4_COLOR_B) * Constant.STAR_4_COLOR_A;
                 if (col == 4) color = new Color(Constant.STAR_5_COLOR_R, Constant.STAR_5_COLOR_G, Constant.STAR_5_COLOR_B) * Constant.STAR_5_COLOR_A;
 
-                listestar.Add(new Star(color, pos_X, 0, state, blink));
+                listestar.Add(new Star(color, pos_X, 0, state, blink, this.size, this.speed));
             }
         }
 
