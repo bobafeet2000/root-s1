@@ -20,6 +20,8 @@ namespace Engine
         public SoundEffectInstance sound_explosion { get; protected set; }
         public SoundEffectInstance sound_tir1 { get; protected set; }
         public SoundEffectInstance sound_tir2 { get; protected set; }
+        public int level_num;
+        
 
 
 
@@ -30,8 +32,9 @@ namespace Engine
         }
         LevelState CurrentLevelState = LevelState.Game;
 
-        public Level()
+        public Level(int x)
         {
+            level_num = x;
             player = new Player();
             enemy = new Enemy();
             tirs = new List<Tir>();
