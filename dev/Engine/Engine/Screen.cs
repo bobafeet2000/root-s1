@@ -65,7 +65,7 @@ namespace Engine
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             font_color_name = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
-            background = new Background(2,2);
+            background = new Background(2,4);
 
         }
 
@@ -91,7 +91,7 @@ namespace Engine
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             font_color_name = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
-            background = new Background(2,2);
+            background = new Background(2,4);
 
         }
 

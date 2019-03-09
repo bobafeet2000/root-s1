@@ -20,8 +20,8 @@ namespace Engine
         public const bool MAIN_WINDOWS_BORDERLESS = false;
         public const bool MAIN_WINDOW_FULLSCREEN = false;
 
-        public const int BACKGROUND_RANDOM_STAR = 8;         // Random max (une chance sur BACKGROUND_RANDOM_STAR de faire apparaitre une étoile)
-        public const int BACKGROUND_BLINK_STAR = 600;         // Cycle de clignotement des étoiles en ms
+        public const int BACKGROUND_RANDOM_STAR = 4;         // Random max (une chance sur BACKGROUND_RANDOM_STAR de faire apparaitre une étoile)
+        public const int BACKGROUND_BLINK_STAR = 300;         // Cycle de clignotement des étoiles en ms
 
         public const int STAR_1_COLOR_R = 255;
         public const int STAR_1_COLOR_G = 255;
@@ -66,7 +66,9 @@ namespace Engine
         public const float FONT_GAME_COLOR_A = 1f;
 
         public const string TEXTURE_PLAYER = "player";
-        public const int PLAYER_NBTIR = 5;
+        public const int PLAYER_SPEED = 5;                                                      // plus indice eleve moins ca va vite
+        public const int PLAYER_NBTIR = 2;
+        public const int PLAYER_SPEEDTIR = 1;
         public const string TEXTURE_ENEMY1 = "enemy1";
         public const string TEXTURE_STAR1 = "star1";
         public const string TEXTURE_STAR2 = "star2";

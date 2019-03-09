@@ -53,11 +53,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
-    <Compile Include="Level.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Art.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="Session.cs" />

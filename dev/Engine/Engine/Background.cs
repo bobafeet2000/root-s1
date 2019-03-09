@@ -16,7 +16,6 @@ namespace Engine
     {
         public List<Star> listestar { get; protected set; }
         private int speed;
-        //private Random rnd;
         private static readonly Random rnd = new Random();  // Permet de réinitialiser le random a chaque new background
         private int pos_X;
         private int blink;
@@ -30,7 +29,6 @@ namespace Engine
             listestar = new List<Star>();
             this.size = size;
             this.speed = speed;
-            //rnd = new Random();
             int pos_Y = 0;
 
             for (int i= 0;i<=(Constant.MAIN_WINDOW_HEIGHT);i++)
@@ -49,7 +47,7 @@ namespace Engine
 
                     listestar.Add(new Star(color, pos_X, pos_Y, state, blink, this.size, this.speed));
                 }
-                pos_Y++;
+                pos_Y= pos_Y+this.speed;
             }
         }
 
@@ -65,7 +63,7 @@ namespace Engine
                 } 
             }
 
-            if (rnd.Next(0, Constant.BACKGROUND_RANDOM_STAR) == 0) // une chance sur 10 de mettre une étoile 
+            if (rnd.Next(0, Constant.BACKGROUND_RANDOM_STAR) == 0) // une chance sur BACKGROUND_RANDOM_STAR de mettre une étoile 
             {
                 int pos_X = rnd.Next(0, Constant.MAIN_WINDOW_WIDTH - 1);
                 int blink = rnd.Next(1, 9);

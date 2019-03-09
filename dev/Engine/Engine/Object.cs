@@ -52,16 +52,19 @@ namespace Engine
 
         public override void Update(float elapsetime)
         {
-             
+
+            int move = (int)(elapsetime / Constant.PLAYER_SPEED);
+
             if (Input.IsKeyDown(Keys.Right))
             {
-                //  Implemtanter la vitesse de déplacement avec elpsetime, par exemple :  pos_X = pos_X + (int)(elapsetime/5);     
-                if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2) pos_X = pos_X + (int)(elapsetime / 8);
+                if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2 - move) pos_X = pos_X + move;
+                else pos_X = Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                if (pos_X > sprite.Rect.Width / 2) pos_X = pos_X - (int)(elapsetime / 8);
+                if (pos_X > sprite.Rect.Width / 2 + move) pos_X = pos_X - move;
+                else pos_X = sprite.Rect.Width / 2;
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
@@ -115,7 +118,6 @@ namespace Engine
         public int blink { get; protected set; }
         public bool visible { get; protected set; }
         public int state { get; protected set; }
-        //public int speed { get; protected set; }    // vitesse de défilement
         public int laps { get; protected set; }
 
         public Star(Color color, int x, int y, int state, int blink, int size, int speed)
@@ -134,8 +136,7 @@ namespace Engine
 
         public override void Update(float elapsetime)
         {
-            // pos_Y += 1; // implementer la vitesse
-            pos_Y += speed;
+            pos_Y += (int)(elapsetime/speed);
             visible = (state % blink != 0);
 
             laps += (int)elapsetime;
@@ -170,7 +171,7 @@ namespace Engine
 
         public override void Update(float elapsetime)
         {
-            pos_Y -= (int)(elapsetime / 4); // implementer la vitesse     
+            pos_Y -= (int)(elapsetime / Constant.PLAYER_SPEEDTIR);   
 
         }
         public override void Draw(SpriteBatch spriteBatch)
