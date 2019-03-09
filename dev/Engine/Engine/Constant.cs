@@ -11,7 +11,8 @@ namespace Engine
     {
        
         public const bool ISDEBUG = true;
-        public const string GAME_NAME = "Galaga 2019";
+        public const string GAME_NAME = "Back to the roots";
+        public const string GAME_INTRO = "Get ready";
         public const string GAME_BOOT = "Boot";
         public const string GAME_INSTRUCTION = "Instruction";
         public const string CONTENT_DIR = "Content";

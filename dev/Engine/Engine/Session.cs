@@ -16,10 +16,12 @@ namespace Engine
         public Background background1 { get; protected set; }
         public Background background2 { get; protected set; }
         public SoundEffectInstance sound_start { get; protected set; }
+        public ScreenText screen_intro { get; protected set; }
         public Level mylevel { get; protected set; }
         public int num_level = 1;
         private int intro = 0;
         private bool intro_sound = false;
+        public int blink_text = 0;
 
         public enum SessionState
         {
@@ -34,6 +36,7 @@ namespace Engine
         {
             background1 = new Background(1,8);
             background2 = new Background(2,4);
+            screen_intro = new ScreenText(Constant.GAME_INTRO);
            
             sound_start = Art.Song_start.CreateInstance(); // on charge le son d'intro
            //sound_start.Play();                            // on joue le son d'intro
@@ -51,6 +54,7 @@ namespace Engine
              background1.Update(elapsetime);
              background2.Update(elapsetime);
              
+             
              switch (CurrentSessionState)
              {
                 case SessionState.Intro:
@@ -60,14 +64,17 @@ namespace Engine
                         sound_start.Play();
                         intro_sound = true;
                     }
-                       
-                    
+
+                    screen_intro.Update(elapsetime);
+                    blink_text += (int)elapsetime;
                     intro += (int)elapsetime;
 
                     if (intro > 10000)
                     {
                         CurrentSessionState = SessionState.Game;
+                        screen_intro = null;
                         mylevel = new Level(num_level);
+
                     } 
                     break;
 
@@ -85,9 +92,14 @@ namespace Engine
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
 
+            
+
             switch (CurrentSessionState)
             {
                 case SessionState.Intro:
+                    if (((blink_text % 1000) % 2) == 0 )     // a tester 
+                    { screen_intro.Draw(spriteBatch); }
+                    
                     break;
                 case SessionState.Game:
                     mylevel.Draw(spriteBatch);

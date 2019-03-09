@@ -65,7 +65,7 @@ namespace Engine
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             font_color_name = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
-            background = new Background(2,4);
+            background = new Background(2, 4);
 
         }
 
@@ -91,7 +91,7 @@ namespace Engine
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             font_color_name = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
-            background = new Background(2,4);
+            background = new Background(2, 4);
 
         }
 
@@ -108,4 +108,28 @@ namespace Engine
         }
     }
 
-}
+        public class ScreenText : Screen
+        {
+            public ScreenText(String name)
+            {
+                this.name = name;
+                pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
+                pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
+                font_color_name = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+            }
+
+            public override void Update(float elapsetime)
+            {
+               
+
+            }
+            public override void Draw(SpriteBatch spriteBatch)
+            {
+                
+                spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_name * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
+
+            }
+        }
+
+    }
+
