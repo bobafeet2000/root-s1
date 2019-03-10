@@ -30,16 +30,13 @@ namespace Engine
         }
         SessionState CurrentSessionState = SessionState.Intro;
 
-
-
         public Session()
         {
             background1 = new Background(1,8);
             background2 = new Background(2,4);
             screen_intro = new ScreenText(Constant.GAME_INTRO);
            
-            sound_start = Art.Song_start.CreateInstance(); // on charge le son d'intro
-           //sound_start.Play();                            // on joue le son d'intro
+            sound_start = Art.Song_start.CreateInstance(); // on charge le son d'intro         
         }
 
         public void End()
@@ -47,13 +44,10 @@ namespace Engine
             sound_start.Stop();
         }
 
-
-
         public void Update(float elapsetime)
         {
              background1.Update(elapsetime);
-             background2.Update(elapsetime);
-             
+             background2.Update(elapsetime);  
              
              switch (CurrentSessionState)
              {
@@ -69,7 +63,7 @@ namespace Engine
                     blink_text += (int)elapsetime;
                     intro += (int)elapsetime;
 
-                    if (intro > 10000)
+                    if (intro > Constant.GAME_INTRO_LAPS)
                     {
                         CurrentSessionState = SessionState.Game;
                         screen_intro = null;
@@ -92,14 +86,13 @@ namespace Engine
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
 
-            
-
             switch (CurrentSessionState)
             {
                 case SessionState.Intro:
-                    if (((blink_text % 1000) % 2) == 0 )     // a tester 
-                    { screen_intro.Draw(spriteBatch); }
-                    
+                    if ((blink_text < 600)) screen_intro.Draw(spriteBatch);
+                    else if (blink_text > 1200) blink_text = 0;
+
+
                     break;
                 case SessionState.Game:
                     mylevel.Draw(spriteBatch);

@@ -127,7 +127,7 @@ namespace Engine
             {
                 case GameState.Boot:
                     timer += (int)elapsetime;
-                    if (timer > 1000) CurrentGameState = GameState.MainMenu;
+                    if (timer > Constant.GAME_BOOT_LAPS) CurrentGameState = GameState.MainMenu;
                     else screenboot.Update(elapsetime); 
                     break;
 

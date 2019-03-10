@@ -18,11 +18,8 @@ namespace Engine
         public Enemy enemy { get; protected set; }
         public List<Tir> tirs { get; protected set; }
         public SoundEffectInstance sound_explosion { get; protected set; }
-        public SoundEffectInstance sound_tir1 { get; protected set; }
-        public SoundEffectInstance sound_tir2 { get; protected set; }
+        public SoundEffectInstance sound_tir { get; protected set; }    
         public int level_num;
-        
-
 
 
         public enum LevelState
@@ -36,20 +33,18 @@ namespace Engine
         {
             level_num = x;
             player = new Player();
-            enemy = new Enemy();
+            enemy = new Enemy(Art.Texture_Enemy1,1);
             tirs = new List<Tir>();
             nbtir = Constant.PLAYER_NBTIR;
 
-            sound_explosion = Art.Song_explosion.CreateInstance(); // on charge le son sans le jouer
-            sound_tir1 = Art.Song_tir.CreateInstance(); // on charge le son sans le jouer
-            sound_tir2 = Art.Song_tir.CreateInstance();
+            sound_explosion = Art.Song_explosion.CreateInstance(); // on charge le son sans le jouer         
+           
         }
 
-        public void End()
+        public void End() 
         {
             sound_explosion.Stop();
-            sound_tir1.Stop();
-            sound_tir2.Stop();
+            sound_tir.Stop();
         }
 
         public void Update(float elapsetime)
@@ -63,17 +58,8 @@ namespace Engine
                         if (tirs.Count() < nbtir)
                         {
                             tirs.Add(new Tir(player.pos_X, player.pos_Y));
-                            if (tirs.Count() == 1)
-                            {
-                                sound_tir1.Stop();
-                                sound_tir1.Play();
-                            }
-                            if (tirs.Count() == 2)
-                            {
-                                sound_tir2.Stop();
-                                sound_tir2.Play();
-                            }
-
+                            sound_tir = Art.Song_tir.CreateInstance(); // nouvelle instance sound_effect qui sera joué par dessus les précédentes
+                            sound_tir.Play();
                         }
                     }
 

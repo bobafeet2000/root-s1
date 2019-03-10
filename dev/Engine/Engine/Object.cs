@@ -20,6 +20,7 @@ namespace Engine
         public int pos_Y { get; protected set; }
         public float rotation { get; protected set; }
         public float scale { get; protected set; }
+        
 
         public Object()
         {
@@ -78,20 +79,30 @@ namespace Engine
     public class Enemy : Object
     {
         public int direction { get; private set; }
-        public Enemy()
+        public int cycle { get; protected set; }
+        public int frame { get; protected set; }
+        public Rectangle rect { get; private set; }
+
+
+        public Enemy(Texture2D texture , int frame)
         {
-
+            this.cycle = 0;
+            this.frame = frame;
             this.color = Color.White;
-            this.sprite = new Sprite(Art.Texture_Enemy1, this.color);
-
+            this.sprite = new Sprite(texture, this.color);
+            
+           
             // A ENLEVER
             pos_Y = 150;
             pos_X = 250;
             direction = 1;
         }
 
+
+
         public override void Update(float elapsetime)
         {
+
             if (direction==1)
             {
                 if (pos_X >= Constant.MAIN_WINDOW_WIDTH / 8) pos_X = pos_X - (int)(elapsetime / 5);

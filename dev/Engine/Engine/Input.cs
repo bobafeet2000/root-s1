@@ -20,26 +20,17 @@ namespace Engine
             keyboardState = Keyboard.GetState();
         }
 
-        /// <summary>
-        /// Checks if key is currently pressed.
-        /// </summary>
-        public static bool IsKeyDown(Keys input)
+        public static bool IsKeyDown(Keys input) // test de touche enfoncée
         {
             return keyboardState.IsKeyDown(input);
         }
 
-        /// <summary>
-        /// Checks if key is currently up.
-        /// </summary>
-        public static bool IsKeyUp(Keys input)
+        public static bool IsKeyUp(Keys input) // test de touche relaché
         {
             return keyboardState.IsKeyUp(input);
         }
 
-        /// <summary>
-        /// Checks if key was just pressed.
-        /// </summary>
-        public static bool KeyPressed(Keys input)
+        public static bool KeyPressed(Keys input) // test de touche pressée
         {
             if (keyboardState.IsKeyDown(input) == true && lastKeyboardState.IsKeyDown(input) == false)
                 return true;

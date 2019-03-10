@@ -13,7 +13,13 @@ namespace Engine
         public const bool ISDEBUG = true;
         public const string GAME_NAME = "Back to the roots";
         public const string GAME_INTRO = "Get ready";
+        public const int GAME_INTRO_LAPS = 7000;
+
         public const string GAME_BOOT = "Boot";
+        public const int GAME_BOOT_LAPS = 3200;
+
+        public static readonly string[] GAME_BOOT_MSG = { "mov bh , 32", "mov bl , 40", "mov si , WORD Descriptor", "mov ah , 0x89", "cli", "int 15h", "jmp backtotheroots" };
+
         public const string GAME_INSTRUCTION = "Instruction";
         public const string CONTENT_DIR = "Content";
         public const int MAIN_WINDOW_WIDTH = 448;               // Résolution borne Galaga * 2
@@ -53,6 +59,11 @@ namespace Engine
         public const int BKCOLOR_G = 0;
         public const int BKCOLOR_B = 0;
 
+        public const string FONT_BOOT = "namco_18";
+        public const int FONT_BOOT_COLOR_R = 20;
+        public const int FONT_BOOT_COLOR_G = 148;
+        public const int FONT_BOOT_COLOR_B = 20;
+        public const float FONT_BOOT_COLOR_A = 0.5f;
 
         public const string FONT_DEBUG = "namco_18";
         public const int FONT_DEBUG_COLOR_R = 255;
@@ -71,6 +82,7 @@ namespace Engine
         public const int PLAYER_NBTIR = 2;
         public const int PLAYER_SPEEDTIR = 1;
         public const string TEXTURE_ENEMY1 = "enemy1";
+        public const string TEXTURE_ENEMY3 = "enemy3";
         public const string TEXTURE_STAR1 = "star1";
         public const string TEXTURE_STAR2 = "star2";
         public const string TEXTURE_TIR = "tir";
@@ -78,6 +90,7 @@ namespace Engine
         public const string SOUND_START = "song_start";
         public const string SOUND_EXPLOSION = "song_explosion";
         public const string SOUND_TIR = "song_tir";
+        public const string SOUND_BOOT_MSG = "beep";
 
 
     }

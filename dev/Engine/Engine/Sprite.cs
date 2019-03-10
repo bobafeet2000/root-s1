@@ -12,18 +12,17 @@ namespace Engine
 {
     public class Sprite
     {
-        public Texture2D Texture { get; private set; } // Texture sprite, lecture seule   
-        public Color Color { get; private set; } // Texture sprite, lecture seule   
-        public Vector2 Position { get; private set; } // Position sprite, lecture seule
-        public float Rotation { get; private set; } // Rotation sprite, lecture seule;
-        public Vector2 Origin { get; private set; } // Origine sprite, lecture seule;
-        public Rectangle Rect { get; private set; } // Rectangle sprite, lecture seule;
-        public Vector2 ScaleFactor { get; private set; } // Scale sprite, lecture seule;
+        public Texture2D Texture { get; private set; }    
+        public Color Color { get; private set; }   
+        public Vector2 Position { get; private set; } 
+        public float Rotation { get; private set; }
+        public Vector2 Origin { get; private set; } 
+        public Rectangle Rect { get; private set; } 
+        public Vector2 ScaleFactor { get; private set; }
+        
 
-        // ========================================================================
-        // Creates a new sprite using the given texture
-        // ========================================================================
-        public Sprite(Texture2D texture, Color color)
+
+        public Sprite(Texture2D texture, Color color) // constructeur
         {
             this.Texture = texture;
             this.Color = color;
@@ -35,52 +34,27 @@ namespace Engine
             ScaleFactor = Vector2.One;
         }
 
-        // ========================================================================
-        // Draws the sprite onto a spritebatch using its settings
-        // ========================================================================
-        public void Draw(SpriteBatch spriteBatch)
+
+        public void Draw(SpriteBatch spriteBatch) // draw du sprite
         {
             spriteBatch.Draw(Texture, Position, Rect, this.Color, Rotation,
                               Origin, ScaleFactor, SpriteEffects.None, 0.0f);
         }
 
-        // ========================================================================
-        // Position modifiers
-        // ========================================================================
-        /// Sets the sprite's position given a Vector2
-        public void SetPosition(Vector2 pos) { Position = pos; }
+        public void SetPosition(Vector2 pos) { Position = pos; } // définit la posistion en absolu
 
-        /// Adds to the sprite's position given a Vector2 delta
-        public void Move(Vector2 deltaPos) { Position += deltaPos; }
+        public void Move(Vector2 deltaPos) { Position += deltaPos; } // définit la posistion en delta
 
-        // ========================================================================
-        // Rotation modifiers
-        // ========================================================================
-        /// Sets the sprite's rotation given a float
-        public void SetRotation(float rotation) { Rotation = rotation; }
+        public void SetRotation(float rotation) { Rotation = rotation; } // définit la rotation en absolu
 
-        /// Adds to the sprite's rotation given a float delta
-        public void Turn(float deltarotation) { Rotation += deltarotation; }
+        public void Turn(float deltarotation) { Rotation += deltarotation; } // définit la rotation en delta
 
-        // ========================================================================
-        // Origin modifiers
-        // ========================================================================
-        /// Sets the sprite's origin given a Vector2
-        public void SetOrigin(Vector2 origin) { this.Origin = origin; }
+        public void SetOrigin(Vector2 origin) { this.Origin = origin; } // fixe le centre de la sprite (pour rotation)
 
-        // ========================================================================
-        // Rect modifiers
-        // ========================================================================
-        /// Sets the sprite's source rectangle given a new Rectangle
-        public void SetRect(Rectangle newRect) { Rect = newRect; }
+        public void SetRect(Rectangle newRect) { Rect = newRect; } // définit la zone du fichier ressource (si plusieurs sprite dans le fichier)
 
-        // ========================================================================
-        // Scale modifiers
-        // ========================================================================
-        /// Sets the sprite's scale given a new Vector2 factor
-        public void SetScale(Vector2 scale) { this.ScaleFactor = scale; }
+        public void SetScale(Vector2 scale) { this.ScaleFactor = scale; } // définit l'échelle en absolu
 
-        /// Scales the sprite's current scale by the given Vector2 factor
-        public void Scale(Vector2 scale) { ScaleFactor *= scale; }
+        public void Scale(Vector2 scale) { ScaleFactor *= scale; } // définit l'échelle via un vector2
     }
 }
