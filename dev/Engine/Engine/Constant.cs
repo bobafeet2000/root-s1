@@ -11,7 +11,7 @@ namespace Engine
     {
        
         public const bool ISDEBUG = true;
-        public const string GAME_NAME = "Back to the roots";
+        public const string GAME_NAME = "Back to the Roots";
         public const string GAME_INTRO = "Get ready";
         public const int GAME_INTRO_LAPS = 7000;
 

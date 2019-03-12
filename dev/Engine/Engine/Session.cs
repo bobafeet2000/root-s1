@@ -74,8 +74,7 @@ namespace Engine
 
                 case SessionState.Game:
                     {
-                        mylevel.Update(elapsetime);
-                        
+                        mylevel.Update(elapsetime); 
                         break;
                     }
              }
