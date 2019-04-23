@@ -79,6 +79,7 @@ namespace Engine
                     if (tirs[i].rectangle.Intersects(enemies[j].rectangle))
                     {
                         enemies.Remove(enemies[j]);
+                        sound_explosion.Play();
                     }
                 }
             }
