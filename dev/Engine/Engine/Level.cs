@@ -20,6 +20,7 @@ namespace Engine
         public Enemy enemy3 { get; protected set; }
         public Enemy enemy4 { get; protected set; }
         public Enemy enemy1_1 { get; protected set; }
+        public List<Enemy> enemies { get; protected set; }
         public List<Tir> tirs { get; protected set; }
         public SoundEffectInstance sound_explosion { get; protected set; }
         public SoundEffectInstance sound_tir { get; protected set; }    
@@ -37,6 +38,7 @@ namespace Engine
         {
             level_num = x;
             player = new Player();
+            enemies = new List<Enemy>();
 
             // level de test
             enemy1_1 = new Enemy(Art.Texture_Enemy1_1, Constant.FRAME_ENEMY1_1, Constant.CYCLE_ENEMY1_1);
@@ -47,8 +49,13 @@ namespace Engine
             enemy2.Setpos(50, 150);
             enemy3 = new Enemy(Art.Texture_Enemy3, Constant.FRAME_ENEMY3, Constant.CYCLE_ENEMY3);
             enemy3.Setpos(150, 200);
-            enemy4 = new Enemy(Art.Texture_Enemy4, Constant.FRAME_ENEMY4, Constant.CYCLE_ENEMY4);
-            enemy4.Setpos(200, 250);
+            //enemy4 = new Enemy(Art.Texture_Enemy4, Constant.FRAME_ENEMY4, Constant.CYCLE_ENEMY4);
+            //enemy4.Setpos(200, 250);
+            enemies.Add(enemy1_1);
+            enemies.Add(enemy1);
+            enemies.Add(enemy2);
+            enemies.Add(enemy3);
+            //enemies.Add(enemy4);
             // fin test
 
             tirs = new List<Tir>();
@@ -56,13 +63,25 @@ namespace Engine
 
             // A AJOUTER :
             // lecture du pattern level
-            // liste des enemy
-            // liste des tirs enemy
+            // liste des tirs enemy 
 
-            // méthode détection collision
 
             sound_explosion = Art.Song_explosion.CreateInstance(); // on charge le son sans le jouer         
            
+        }
+
+        public void collision_detection()
+        {
+            for (int i = tirs.Count-1; i>=0 ; i--)
+            {
+                for (int j = enemies.Count-1; j>=0 ; j--)
+                {
+                    if (tirs[i].rectangle.Intersects(enemies[j].rectangle))
+                    {
+                        enemies.Remove(enemies[j]);
+                    }
+                }
+            }
         }
 
         public void End() 
@@ -77,15 +96,24 @@ namespace Engine
             {
                 case LevelState.Game:
 
-
+                    collision_detection();
                     // level de test
-                    enemy1.Update(elapsetime);      
-                    enemy2.Update(elapsetime);
-                    enemy3.Setrotation(enemy3.rotation + 0.1f);
-                    enemy3.Update(elapsetime);
+                    //enemy1.Update(elapsetime);      
+                    //enemy2.Update(elapsetime);
+                    //enemy3.Setrotation(enemy3.rotation + 0.1f);
+                    //enemy3.Update(elapsetime);
                     //enemy4.Update(elapsetime);
-                    enemy1_1.Update(elapsetime);
+                    //enemy1_1.Update(elapsetime);
                     // fin test
+
+                    foreach (var e in enemies)
+                    {
+                        if (e == enemy3)
+                        {
+                            e.Setrotation(enemy3.rotation + 0.1f);
+                        }
+                        e.Update(elapsetime);
+                    }
 
                     if (Input.KeyPressed(Keys.LeftControl))
                     {
@@ -108,7 +136,6 @@ namespace Engine
 
                     // update de la liste des tirs enemy
 
-                    // update de la liste d'enemy (positions, nouveaux tirs...)
 
                     // update des detections collision enemy (parcours des listes tir enemy par rapport à la position player)
 
@@ -127,18 +154,23 @@ namespace Engine
                 case LevelState.Game:
 
                     // level de test 
-                    enemy1.Draw(spriteBatch);
-                    enemy2.Draw(spriteBatch);
-                    enemy3.Draw(spriteBatch);
+                    //enemy1.Draw(spriteBatch);
+                    //enemy2.Draw(spriteBatch);
+                    //enemy3.Draw(spriteBatch);
                     //enemy4.Draw(spriteBatch);
-                    enemy1_1.Draw(spriteBatch);
+                    //enemy1_1.Draw(spriteBatch);
                     // fin test
+
+                    foreach (var e in enemies)
+                    {
+                        e.Draw(spriteBatch);
+                    }
 
                     if (tirs.Count() > 0) for (int i = 0; i < tirs.Count(); i++) tirs[i].Draw(spriteBatch); // draw de la liste des tirs player
 
                     // draw de la liste des tirs enemy
 
-                    // draw de la liste enemy
+
 
                     player.Draw(spriteBatch); // draw du player
 

@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -61,6 +61,11 @@ namespace Engine
             pos_X = Constant.MAIN_WINDOW_WIDTH / 2 - (this.sprite.Rect.Width / 2);
         }
 
+        public Rectangle rectangle
+        {
+            get { return new Rectangle(pos_X, pos_Y, sprite.Texture.Width, sprite.Texture.Height); }
+        }
+
         public override void Update(float elapsetime)
         {
 
@@ -106,6 +111,11 @@ namespace Engine
             this.sprite.SetOrigin(new Vector2((sprite.Texture.Width / frame) / 2, (sprite.Texture.Height / 2))); // on fixe le centre pour la rotation
 
             this.direction = 1; // à enlever à terme
+        }
+
+        public Rectangle rectangle
+        {
+            get { return new Rectangle(pos_X, pos_Y, (sprite.Texture.Width / this.frame), sprite.Texture.Height); }
         }
 
         public override void Update(float elapsetime)
@@ -194,14 +204,18 @@ namespace Engine
     }
 
     public class Tir : Object
-    {
-
+    {  
         public Tir(int x, int y)
         {
             this.color = Color.White;
             this.sprite = new Sprite(Art.Texture_Tir, this.color);
             this.pos_Y = y;
             this.pos_X = x;          
+        }
+
+        public Rectangle rectangle
+        {
+            get { return new Rectangle(pos_X, pos_Y, 6, 16); }
         }
 
         public override void Update(float elapsetime)
