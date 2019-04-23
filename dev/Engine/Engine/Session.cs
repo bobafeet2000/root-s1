@@ -13,6 +13,7 @@ namespace Engine
 {
     public class Session 
     {
+        public Background background0 { get; protected set; }
         public Background background1 { get; protected set; }
         public Background background2 { get; protected set; }
         public SoundEffectInstance sound_start { get; protected set; }
@@ -32,6 +33,7 @@ namespace Engine
 
         public Session()
         {
+            background0 = new Background(0,16);
             background1 = new Background(1,8);
             background2 = new Background(2,4);
             screen_intro = new ScreenText(Constant.GAME_INTRO);
@@ -46,6 +48,7 @@ namespace Engine
 
         public void Update(float elapsetime)
         {
+             background0.Update(elapsetime);
              background1.Update(elapsetime);
              background2.Update(elapsetime);  
              
@@ -83,6 +86,7 @@ namespace Engine
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            background0.Draw(spriteBatch);
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
 

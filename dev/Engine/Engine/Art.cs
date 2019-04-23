@@ -16,8 +16,15 @@ namespace Engine
         // Textures
         public static Texture2D Texture_Player { get; private set; }
         public static Texture2D Texture_Enemy1 { get; private set; }
+        public static Texture2D Texture_Enemy2 { get; private set; }
         public static Texture2D Texture_Enemy3 { get; private set; }
+        public static Texture2D Texture_Enemy4 { get; private set; }
+
+        // Textures nouveau skin
+        public static Texture2D Texture_Enemy1_1 { get; private set; }
+
         public static Texture2D Texture_Star1 { get; private set; }
+        public static Texture2D Texture_Star0 { get; private set; }
         public static Texture2D Texture_Star2 { get; private set; }
         public static Texture2D Texture_Tir { get; private set; }
         // Font
@@ -35,14 +42,26 @@ namespace Engine
         {
             if (Constant.ISDEBUG) { Font_Debug = content.Load<SpriteFont>(Constant.FONT_DEBUG); }
 
+            // Sprite player
             Texture_Player = content.Load<Texture2D>(Constant.TEXTURE_PLAYER);
+            // Sprite enemy
             Texture_Enemy1 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY1);
+            Texture_Enemy2 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY2);
             Texture_Enemy3 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY3);
+            Texture_Enemy4 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY4);
+            Texture_Enemy1_1 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY1_1); 
+            // Sprite star
+            Texture_Star0 = content.Load<Texture2D>(Constant.TEXTURE_STAR0);
             Texture_Star1 = content.Load<Texture2D>(Constant.TEXTURE_STAR1);
             Texture_Star2 = content.Load<Texture2D>(Constant.TEXTURE_STAR2);
+            // Sprite tir player
             Texture_Tir = content.Load<Texture2D>(Constant.TEXTURE_TIR);
+
+            // Font
             Font_Game = content.Load<SpriteFont>(Constant.FONT_GAME);
             Font_Boot = content.Load<SpriteFont>(Constant.FONT_BOOT);
+
+            // Song effect
             Song_start = content.Load<SoundEffect>(Constant.SOUND_START);
             Song_explosion = content.Load<SoundEffect>(Constant.SOUND_EXPLOSION);
             Song_tir = content.Load<SoundEffect>(Constant.SOUND_TIR);

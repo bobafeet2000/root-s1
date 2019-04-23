@@ -20,7 +20,6 @@ namespace Engine
         public int pos_Y { get; protected set; }
         public float rotation { get; protected set; }
         public float scale { get; protected set; }
-        
 
         public Object()
         {
@@ -36,6 +35,17 @@ namespace Engine
         {
             // draw
         }
+
+        public virtual void Setpos(int x,int y)
+        {
+            this.pos_X = x;
+            this.pos_Y = y;
+        }
+
+        public virtual void Setrotation(float r)
+        {
+            this.rotation = r;
+        }
     }
 
     public class Player : Object
@@ -46,7 +56,7 @@ namespace Engine
             this.color = Color.White;
             this.sprite = new Sprite(Art.Texture_Player, this.color);
 
-            // Position de départ, à enlever d'ici à terme ?
+            // Position de départ
             pos_Y = Constant.MAIN_WINDOW_HEIGHT - this.sprite.Rect.Height * 2 + this.sprite.Rect.Height / 2;
             pos_X = Constant.MAIN_WINDOW_WIDTH / 2 - (this.sprite.Rect.Width / 2);
         }
@@ -67,42 +77,51 @@ namespace Engine
                 if (pos_X > sprite.Rect.Width / 2 + move) pos_X = pos_X - move;
                 else pos_X = sprite.Rect.Width / 2;
             }
+
+            this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-           // this.sprite.SetRotation(this.rotation);  // par exmeple rotation += 0.5f;
-            this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
             this.sprite.Draw(spriteBatch);
         }
     }
 
     public class Enemy : Object
     {
-        public int direction { get; private set; }
-        public int cycle { get; protected set; }
-        public int frame { get; protected set; }
-        public Rectangle rect { get; private set; }
+        public int direction { get; private set; } // a faire évoluer en Vector2
+        public int cmp { get; private set; }
+        public int cycle { get; private set; }
+        public int frame { get; private set; }
+        public int frame_courante { get; private set; }
 
-
-        public Enemy(Texture2D texture , int frame)
+        public Enemy(Texture2D texture, int frame, int cycle)
         {
-            this.cycle = 0;
-            this.frame = frame;
+            this.cmp = 0;
             this.color = Color.White;
+            this.frame = frame;      
+            this.frame_courante = 1;
+            this.cycle = cycle;
             this.sprite = new Sprite(texture, this.color);
-            
-           
-            // A ENLEVER
-            pos_Y = 150;
-            pos_X = 250;
-            direction = 1;
+            this.sprite.SetRect(new Rectangle(0, 0, (sprite.Texture.Width / this.frame), sprite.Texture.Height)); // on fixe le premier rectangle à afficher par la sprite
+            this.sprite.SetOrigin(new Vector2((sprite.Texture.Width / frame) / 2, (sprite.Texture.Height / 2))); // on fixe le centre pour la rotation
+
+            this.direction = 1; // à enlever à terme
         }
-
-
 
         public override void Update(float elapsetime)
         {
+            cmp += (int)elapsetime;
+            if (cmp > (this.cycle))
+            {
+                cmp = 0;
+                frame_courante++;
+                if (frame_courante > frame) frame_courante = 1;
+            }
 
+            this.sprite.SetRect(new Rectangle((frame_courante - 1) * (sprite.Texture.Width / frame), 0, (sprite.Texture.Width / frame) , sprite.Texture.Height));  
+
+
+            // mouvement de test, à enlever à terme (les évolutions de positions sont à implémenter au niveau level
             if (direction==1)
             {
                 if (pos_X >= Constant.MAIN_WINDOW_WIDTH / 8) pos_X = pos_X - (int)(elapsetime / 5);
@@ -113,12 +132,16 @@ namespace Engine
                 if (pos_X < (Constant.MAIN_WINDOW_WIDTH / 10) * 8) pos_X = pos_X + (int)(elapsetime / 5);
                 else direction = 1;
             }
-            //
+            // fin test
+
+            this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
+
+            this.sprite.SetRotation(this.rotation);
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            // this.sprite.SetRotation(this.rotation);  // par exmeple rotation += 0.5f;
-            this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
+
             this.sprite.Draw(spriteBatch);
         }
     }
@@ -134,6 +157,7 @@ namespace Engine
         public Star(Color color, int x, int y, int state, int blink, int size, int speed)
         {
             this.color = color;
+            if (size == 0) this.sprite = new Sprite(Art.Texture_Star0, this.color);
             if (size ==1) this.sprite = new Sprite(Art.Texture_Star1,this.color);
             if (size == 2) this.sprite = new Sprite(Art.Texture_Star2, this.color);
             this.pos_Y = y;
