@@ -19,6 +19,7 @@ namespace Engine
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
         private ScreenInstruction screeninstruction; // Ecran d'accueil
+        private ScreenCredit screencredit; // Ecran de crédit
         private Session session; // Partie mono joueur
 
         private int timer; // timer à usage multiple
@@ -31,7 +32,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instruction, PlayGame, 
+            Boot, MainMenu, Instruction, Credit, PlayGame, 
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -148,6 +149,12 @@ namespace Engine
                         CurrentGameState = GameState.Instruction;
                         break;
                     }
+                    if (Input.KeyPressed(Keys.C))
+                    {
+                        screencredit = new ScreenCredit(Constant.GAME_CREDIT);
+                        CurrentGameState = GameState.Credit;
+                        break;
+                    }
                     screenhome.Update(elapsetime);
                     break;
 
@@ -172,6 +179,17 @@ namespace Engine
                         break;
                     }
                     screeninstruction.Update(elapsetime);
+                    break;
+
+                case GameState.Credit:
+
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        screencredit = null;
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    screencredit.Update(elapsetime);
                     break;
             }
 
@@ -207,6 +225,9 @@ namespace Engine
                     break;
                 case GameState.Instruction:
                     screeninstruction.Draw(spriteBatch);
+                    break;
+                case GameState.Credit:
+                    screencredit.Draw(spriteBatch);
                     break;
 
             }

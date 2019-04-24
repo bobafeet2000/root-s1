@@ -21,6 +21,7 @@ namespace Engine
         public static readonly string[] GAME_BOOT_MSG = { "mov bh , 32", "mov bl , 40", "mov si , WORD Descriptor", "mov ah , 0x89", "cli", "int 15h", "jmp backtotheroots" };
 
         public const string GAME_INSTRUCTION = "Instruction";
+        public const string GAME_CREDIT = "CREDIT";
         public const string CONTENT_DIR = "Content";
         public const int MAIN_WINDOW_WIDTH = 448;               // 448 Résolution borne Galaga * 2
         public const int MAIN_WINDOW_HEIGHT = 576;              // 576 Résolution borne Galaga * 2
