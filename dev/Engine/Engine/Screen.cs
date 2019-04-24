@@ -102,7 +102,8 @@ namespace Engine
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
             spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
-
+            spriteBatch.DrawString(Art.Font_Boot, "Press ENTER to start the game", new Vector2(this.pos_X, this.pos_Y+30), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, "Press H key to display instructions", new Vector2(13, Constant.MAIN_WINDOW_HEIGHT-30), font_color_game * Constant.FONT_GAME_COLOR_A);
         }
     }
 
