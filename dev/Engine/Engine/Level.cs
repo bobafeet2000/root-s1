@@ -34,12 +34,21 @@ namespace Engine
         }
         LevelState CurrentLevelState = LevelState.Game;
 
+        public enum EnemyType
+        {
+            enemy1,
+            enemy2,
+            enemy3,
+            enemy4,
+            enemy1_1,
+        }
         public Level(int x)
         {
             level_num = x;
             player = new Player();
             enemies = new List<Enemy>();
-
+            NewWave();
+            /*
             // level de test
             enemy1_1 = new Enemy(Art.Texture_Enemy1_1, Constant.FRAME_ENEMY1_1, Constant.CYCLE_ENEMY1_1);
             enemy1_1.Setpos(200, 50);
@@ -57,7 +66,7 @@ namespace Engine
             enemies.Add(enemy3);
             //enemies.Add(enemy4);
             // fin test
-
+            */
             tirs = new List<Tir>();
             nbtir = Constant.PLAYER_NBTIR;
 
@@ -85,6 +94,70 @@ namespace Engine
             }
         }
 
+        static T RandomEnumValue<T>()
+        {
+            var v = Enum.GetValues(typeof(T));
+            return (T)v.GetValue(new Random().Next(v.Length));
+        }
+
+        public void NewWave()
+        {
+            int NumberEnemy = new Random().Next(4, 4);
+
+            int PosX = 200;
+            int PosY = 50;
+            for (int j = 0; j < NumberEnemy; j++)
+            {
+
+                for (int i = 0; i < NumberEnemy; i++)
+                {
+                    var EnemyToAdd = RandomEnumValue<EnemyType>();
+
+                    bool test1 = EnemyToAdd == EnemyType.enemy1_1;
+                    if (EnemyToAdd == EnemyType.enemy1_1)
+                    {
+                        enemy1_1 = new Enemy(Art.Texture_Enemy1_1, Constant.FRAME_ENEMY1_1, Constant.CYCLE_ENEMY1_1);
+                        enemy1_1.Setpos(PosX, PosY);
+                        enemies.Add(enemy1_1);
+                    }
+
+                    bool test2 = EnemyToAdd == EnemyType.enemy2;
+                    if (EnemyToAdd == EnemyType.enemy2)
+                    {
+                        enemy2 = new Enemy(Art.Texture_Enemy2, Constant.FRAME_ENEMY2, Constant.CYCLE_ENEMY2);
+                        enemy2.Setpos(PosX, PosY);
+                        enemies.Add(enemy2);
+                    }
+                    bool test3 = EnemyToAdd == EnemyType.enemy3;
+                    if (EnemyToAdd == EnemyType.enemy3)
+                    {
+                        enemy3 = new Enemy(Art.Texture_Enemy3, Constant.FRAME_ENEMY3, Constant.CYCLE_ENEMY3);
+                        enemy3.Setpos(PosX, PosY);
+                        enemies.Add(enemy3);
+                    }
+                    bool test4 = EnemyToAdd == EnemyType.enemy4;
+                    if (EnemyToAdd == EnemyType.enemy4)
+                    {
+                        enemy4 = new Enemy(Art.Texture_Enemy4, Constant.FRAME_ENEMY4, Constant.CYCLE_ENEMY4);
+                        enemy4.Setpos(PosX, PosY);
+                        enemies.Add(enemy4);
+                    }
+                    bool test0 = EnemyToAdd == EnemyType.enemy1;
+                    if (EnemyToAdd == EnemyType.enemy1)
+                    {
+
+                        enemy1 = new Enemy(Art.Texture_Enemy1, Constant.FRAME_ENEMY1, Constant.CYCLE_ENEMY1);
+                        enemy1.Setpos(PosX, PosY);
+                        enemies.Add(enemy1);
+
+                    }
+
+                    PosX += 50;
+                }
+                PosY += 50;
+            }
+
+        }
         public void End() 
         {
             sound_explosion.Stop();
