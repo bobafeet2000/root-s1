@@ -108,11 +108,31 @@ namespace Engine
 
     public class ScreenInstruction : Screen
     {
+        public String name_2 { get; protected set; }
+        public String name_3 { get; protected set; }
+        public String name_4 { get; protected set; }
+
+        public int pos_X_2 { get; protected set; }
+        public int pos_X_3 { get; protected set; }
+        public int pos_X_4 { get; protected set; }
+        public int pos_Y_2 { get; protected set; }
+        public int pos_Y_3 { get; protected set; }
+        public int pos_Y_4 { get; protected set; }
+
         public ScreenInstruction(String name)
         {
             this.name = name;
+            name_2 = "Press arrow keys to move your vessel";
+            name_3 = "Press CTRL key to shoot the enemies";
+            name_4 = "Press ECHAP key to quit the game";
             pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
-            pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
+            pos_X_2 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_2).Length() / 2);
+            pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
+            pos_X_4 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_4).Length() / 2);
+            pos_Y = Constant.MAIN_WINDOW_HEIGHT / 4;
+            pos_Y_2 = Constant.MAIN_WINDOW_HEIGHT / 3;
+            pos_Y_3 = Constant.MAIN_WINDOW_HEIGHT / 2;
+            pos_Y_4 = pos_Y_2 * 2;
             font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
             background0 = new Background(0, 16);
@@ -134,7 +154,9 @@ namespace Engine
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
             spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
-
+            spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_4, new Vector2(this.pos_X_4, this.pos_Y_4), font_color_game * Constant.FONT_GAME_COLOR_A);
         }
     }
 
