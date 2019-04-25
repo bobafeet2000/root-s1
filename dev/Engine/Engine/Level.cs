@@ -75,7 +75,7 @@ namespace Engine
             // liste des tirs enemy 
 
 
-            sound_explosion = Art.Song_explosion.CreateInstance(); // on charge le son sans le jouer         
+            //sound_explosion = Art.Song_explosion.CreateInstance(); // on charge le son sans le jouer         
            
         }
 
@@ -88,6 +88,8 @@ namespace Engine
                     if (tirs[i].rectangle.Intersects(enemies[j].rectangle))
                     {
                         enemies.Remove(enemies[j]);
+                        tirs[i].Isdead();       // le tir est marqué comme dead pour être supprimé lors de l'update des tirs                  
+                        sound_explosion = Art.Song_explosion.CreateInstance();// nouvelle instance sound_effect qui sera joué par dessus les précédentes
                         sound_explosion.Play();
                     }
                 }
@@ -103,17 +105,21 @@ namespace Engine
         public void NewWave()
         {
             int NumberEnemy = new Random().Next(4, 4);
-
+            EnemyType? PreviousEnemy = null;
+            
             int PosX = 200;
             int PosY = 50;
             for (int j = 0; j < NumberEnemy; j++)
             {
+                
 
                 for (int i = 0; i < NumberEnemy; i++)
                 {
-                    var EnemyToAdd = RandomEnumValue<EnemyType>();
+                    EnemyType EnemyToAdd = RandomEnumValue<EnemyType>();
+                    while (EnemyToAdd == PreviousEnemy)
+                        EnemyToAdd = RandomEnumValue<EnemyType>();
 
-                    bool test1 = EnemyToAdd == EnemyType.enemy1_1;
+                    //bool test1 = EnemyToAdd == EnemyType.enemy1_1;
                     if (EnemyToAdd == EnemyType.enemy1_1)
                     {
                         enemy1_1 = new Enemy(Art.Texture_Enemy1_1, Constant.FRAME_ENEMY1_1, Constant.CYCLE_ENEMY1_1);
@@ -121,28 +127,28 @@ namespace Engine
                         enemies.Add(enemy1_1);
                     }
 
-                    bool test2 = EnemyToAdd == EnemyType.enemy2;
+                    //bool test2 = EnemyToAdd == EnemyType.enemy2;
                     if (EnemyToAdd == EnemyType.enemy2)
                     {
                         enemy2 = new Enemy(Art.Texture_Enemy2, Constant.FRAME_ENEMY2, Constant.CYCLE_ENEMY2);
                         enemy2.Setpos(PosX, PosY);
                         enemies.Add(enemy2);
                     }
-                    bool test3 = EnemyToAdd == EnemyType.enemy3;
+                    //bool test3 = EnemyToAdd == EnemyType.enemy3;
                     if (EnemyToAdd == EnemyType.enemy3)
                     {
                         enemy3 = new Enemy(Art.Texture_Enemy3, Constant.FRAME_ENEMY3, Constant.CYCLE_ENEMY3);
                         enemy3.Setpos(PosX, PosY);
                         enemies.Add(enemy3);
                     }
-                    bool test4 = EnemyToAdd == EnemyType.enemy4;
+                   // bool test4 = EnemyToAdd == EnemyType.enemy4;
                     if (EnemyToAdd == EnemyType.enemy4)
                     {
                         enemy4 = new Enemy(Art.Texture_Enemy4, Constant.FRAME_ENEMY4, Constant.CYCLE_ENEMY4);
                         enemy4.Setpos(PosX, PosY);
                         enemies.Add(enemy4);
                     }
-                    bool test0 = EnemyToAdd == EnemyType.enemy1;
+                    //bool test0 = EnemyToAdd == EnemyType.enemy1;
                     if (EnemyToAdd == EnemyType.enemy1)
                     {
 
@@ -152,7 +158,8 @@ namespace Engine
 
                     }
 
-                    PosX += 50;
+                    PosX += 50;  // à normaliser
+                    PreviousEnemy = EnemyToAdd;
                 }
                 PosY += 50;
             }
@@ -193,7 +200,7 @@ namespace Engine
                     {
                         if (tirs.Count() < nbtir)
                         {
-                            tirs.Add(new Tir(player.pos_X, player.pos_Y));
+                            tirs.Add(new Tir(player.pos_X + player.sprite.Texture.Width / 2 - 1, player.pos_Y));
                             sound_tir = Art.Song_tir.CreateInstance(); // nouvelle instance sound_effect qui sera joué par dessus les précédentes
                             sound_tir.Play();
                         }
@@ -202,7 +209,7 @@ namespace Engine
                     if (tirs.Count() > 0) for (int i = 0; i < tirs.Count(); i++)
                         {
                             tirs[i].Update(elapsetime);
-                            if (tirs[i].pos_Y < 0)
+                            if ((tirs[i].pos_Y < 0) || (tirs[i].dead))
                             {
                                 tirs.Remove(tirs[i]);
                             }

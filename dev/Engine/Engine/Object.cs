@@ -20,6 +20,7 @@ namespace Engine
         public int pos_Y { get; protected set; }
         public float rotation { get; protected set; }
         public float scale { get; protected set; }
+        public bool dead { get; protected set; }
 
         public Object()
         {
@@ -46,6 +47,11 @@ namespace Engine
         {
             this.rotation = r;
         }
+
+        public virtual void Isdead()
+        {
+            this.dead = true;
+        }
     }
 
     public class Player : Object
@@ -57,8 +63,9 @@ namespace Engine
             this.sprite = new Sprite(Art.Texture_Player, this.color);
 
             // Position de départ
-            pos_Y = Constant.MAIN_WINDOW_HEIGHT - this.sprite.Rect.Height * 2 + this.sprite.Rect.Height / 2;
-            pos_X = Constant.MAIN_WINDOW_WIDTH / 2 - (this.sprite.Rect.Width / 2);
+            //pos_Y = Constant.MAIN_WINDOW_HEIGHT - this.sprite.Rect.Height * 2 + this.sprite.Rect.Height / 2;
+            pos_Y = Constant.MAIN_WINDOW_HEIGHT - this.sprite.Rect.Height * 2;
+            pos_X = Constant.MAIN_WINDOW_WIDTH / 2 - (this.sprite.Rect.Width / 2) ;
         }
 
         public Rectangle rectangle
@@ -73,14 +80,18 @@ namespace Engine
 
             if (Input.IsKeyDown(Keys.Right))
             {
-                if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2 - move) pos_X = pos_X + move;
-                else pos_X = Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2;
+                //if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2 - move) pos_X = pos_X + move;
+                //else pos_X = Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width;
+                if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width - move) pos_X = pos_X + move;
+                else pos_X = Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                if (pos_X > sprite.Rect.Width / 2 + move) pos_X = pos_X - move;
-                else pos_X = sprite.Rect.Width / 2;
+                //if (pos_X > sprite.Rect.Width / 2 + move) pos_X = pos_X - move;
+                //else pos_X = sprite.Rect.Width/2;
+                if (pos_X > move) pos_X = pos_X - move;
+                else pos_X = 0;
             }
 
             this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
@@ -210,7 +221,8 @@ namespace Engine
             this.color = Color.White;
             this.sprite = new Sprite(Art.Texture_Tir, this.color);
             this.pos_Y = y;
-            this.pos_X = x;          
+            this.pos_X = x;
+            this.dead = false;
         }
 
         public Rectangle rectangle

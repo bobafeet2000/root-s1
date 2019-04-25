@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -100,7 +100,7 @@ namespace Engine
         public const int FRAME_ENEMY4 = 2;
 
         public const string TEXTURE_ENEMY1_1 = "enemy1_1";  // enemy nouveau skin 
-        public const int CYCLE_ENEMY1_1 = 200;                                                      // Cycle en ms
+        public const int CYCLE_ENEMY1_1 = 50;                                                      // Cycle en ms
         public const int FRAME_ENEMY1_1 = 4;
 
         public const string TEXTURE_STAR0 = "star0";
