@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -21,9 +21,10 @@ namespace Engine
         public static readonly string[] GAME_BOOT_MSG = { "mov bh , 32", "mov bl , 40", "mov si , WORD Descriptor", "mov ah , 0x89", "cli", "int 15h", "jmp backtotheroots" };
 
         public const string GAME_INSTRUCTION = "Instruction";
+        public const string GAME_CREDIT = "CREDIT";
         public const string CONTENT_DIR = "Content";
-        public const int MAIN_WINDOW_WIDTH = 448;               // Résolution borne Galaga * 2
-        public const int MAIN_WINDOW_HEIGHT = 576;              // Résolution borne Galaga * 2
+        public const int MAIN_WINDOW_WIDTH = 448;               // 448 Résolution borne Galaga * 2
+        public const int MAIN_WINDOW_HEIGHT = 576;              // 576 Résolution borne Galaga * 2
         public const bool MAIN_WINDOWS_BORDERLESS = false;
         public const bool MAIN_WINDOW_FULLSCREEN = false;
 
@@ -81,8 +82,29 @@ namespace Engine
         public const int PLAYER_SPEED = 5;                                                      // plus indice eleve moins ca va vite
         public const int PLAYER_NBTIR = 2;
         public const int PLAYER_SPEEDTIR = 1;
+
+        public const int SPEEDTIR_ENEMY = 5;
         public const string TEXTURE_ENEMY1 = "enemy1";
+        public const int CYCLE_ENEMY1 = 400;                                                      // Cycle en ms
+        public const int FRAME_ENEMY1 = 2;
+
+        public const string TEXTURE_ENEMY2 = "enemy2";
+        public const int CYCLE_ENEMY2 = 400;                                                      // Cycle en ms
+        public const int FRAME_ENEMY2 = 2;
+
         public const string TEXTURE_ENEMY3 = "enemy3";
+        public const int CYCLE_ENEMY3 = 400;                                                      // Cycle en ms
+        public const int FRAME_ENEMY3 = 2;
+
+        public const string TEXTURE_ENEMY4 = "enemy4";
+        public const int CYCLE_ENEMY4 = 100;                                                      // Cycle en ms
+        public const int FRAME_ENEMY4 = 2;
+
+        public const string TEXTURE_ENEMY1_1 = "enemy1_1";  // enemy nouveau skin 
+        public const int CYCLE_ENEMY1_1 = 50;                                                      // Cycle en ms
+        public const int FRAME_ENEMY1_1 = 4;
+
+        public const string TEXTURE_STAR0 = "star0";
         public const string TEXTURE_STAR1 = "star1";
         public const string TEXTURE_STAR2 = "star2";
         public const string TEXTURE_TIR = "tir";

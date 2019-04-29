@@ -18,9 +18,7 @@ namespace Engine
         public float Rotation { get; private set; }
         public Vector2 Origin { get; private set; } 
         public Rectangle Rect { get; private set; } 
-        public Vector2 ScaleFactor { get; private set; }
-        
-
+        public Vector2 ScaleFactor { get; private set; } 
 
         public Sprite(Texture2D texture, Color color) // constructeur
         {
@@ -28,10 +26,9 @@ namespace Engine
             this.Color = color;
             Position = Vector2.Zero;        
             Rotation = 0.0f;
-            // origin = Vector2.Zero;
-            Origin = new Vector2(texture.Width / 2, texture.Height / 2); // Coordonnées sprite positionnées au centre
-            Rect = new Rectangle(0, 0, texture.Width, texture.Height);
-            ScaleFactor = Vector2.One;
+            Origin = Vector2.Zero;
+            Rect = new Rectangle(0, 0, texture.Width, texture.Height); 
+            ScaleFactor = Vector2.One;         
         }
 
 

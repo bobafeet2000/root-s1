@@ -19,6 +19,7 @@ namespace Engine
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
         private ScreenInstruction screeninstruction; // Ecran d'accueil
+        private ScreenCredit screencredit; // Ecran de crédit
         private Session session; // Partie mono joueur
 
         private int timer; // timer à usage multiple
@@ -31,7 +32,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instruction, PlayGame, 
+            Boot, MainMenu, Instruction, Credit, PlayGame,Break 
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -148,17 +149,34 @@ namespace Engine
                         CurrentGameState = GameState.Instruction;
                         break;
                     }
+                    if (Input.KeyPressed(Keys.C))
+                    {
+                        screencredit = new ScreenCredit(Constant.GAME_CREDIT);
+                        CurrentGameState = GameState.Credit;
+                        break;
+                    }
                     screenhome.Update(elapsetime);
                     break;
 
+                case GameState.Break:
+                    if (Input.KeyPressed(Keys.P))
+                    {
+                        CurrentGameState = GameState.PlayGame;
+                    }
+
+                    break;
                 case GameState.PlayGame:
 
                     if (Input.KeyPressed(Keys.Escape))
                     {
                         session.End();
-                        session = null;                       
+                        session = null;
                         CurrentGameState = GameState.MainMenu;
                         break;
+                    }
+                    if (Input.KeyPressed(Keys.P))
+                    {
+                        CurrentGameState = GameState.Break;
                     }
                     session.Update(elapsetime);
                     break;
@@ -172,6 +190,17 @@ namespace Engine
                         break;
                     }
                     screeninstruction.Update(elapsetime);
+                    break;
+
+                case GameState.Credit:
+
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        screencredit = null;
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    screencredit.Update(elapsetime);
                     break;
             }
 
@@ -205,8 +234,19 @@ namespace Engine
                 case GameState.PlayGame:
                    session.Draw(spriteBatch);
                     break;
+                case GameState.Break:
+                    session.Draw(spriteBatch);
+                    string name = "PAUSE";
+                    int pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
+                    int pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
+                    Color font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B);
+                    spriteBatch.DrawString(Art.Font_Game, name, new Vector2(pos_X, pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    break;
                 case GameState.Instruction:
                     screeninstruction.Draw(spriteBatch);
+                    break;
+                case GameState.Credit:
+                    screencredit.Draw(spriteBatch);
                     break;
 
             }

@@ -25,7 +25,7 @@ namespace Engine
             return keyboardState.IsKeyDown(input);
         }
 
-        public static bool IsKeyUp(Keys input) // test de touche relaché
+        public static bool IsKeyUp(Keys input) // test de touche relachée
         {
             return keyboardState.IsKeyUp(input);
         }
