@@ -27,7 +27,7 @@ namespace Engine
         public enum SessionState
         {
             //Tous les états possibles de la partie
-            Intro, Game,
+            Intro, Game, Break
         }
         SessionState CurrentSessionState = SessionState.Intro;
 
@@ -77,11 +77,25 @@ namespace Engine
 
                 case SessionState.Game:
                     {
+                        if (Input.KeyPressed(Keys.P))
+                        {
+                            CurrentSessionState = SessionState.Break;
+                        }
                         mylevel.Update(elapsetime);
                         
                         break;
                     }
-             }
+
+                case SessionState.Break:
+                    {
+                        if (Input.KeyPressed(Keys.P))
+                        {
+                            CurrentSessionState = SessionState.Game;
+                        }
+                        break;
+                    }
+
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -96,11 +110,20 @@ namespace Engine
                     if ((blink_text < 600)) screen_intro.Draw(spriteBatch);
                     else if (blink_text > 1200) blink_text = 0;
 
-
                     break;
+
                 case SessionState.Game:
                     mylevel.Draw(spriteBatch);
-                    break;  
+                    break;
+
+                case SessionState.Break:
+                    mylevel.Draw(spriteBatch);
+                    string name = "PAUSE";
+                    int pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
+                    int pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2 - 100;
+                    Color font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B);
+                    spriteBatch.DrawString(Art.Font_Game, name, new Vector2(pos_X, pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    break;
             }
         }
     }

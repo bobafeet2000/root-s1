@@ -22,9 +22,11 @@ namespace Engine
         public Enemy enemy1_1 { get; protected set; }
         public List<Enemy> enemies { get; protected set; }
         public List<Tir> tirs { get; protected set; }
-        public List<Tir> tirsenemy { get; protected set; }
+        public List<Tirenemy> tirsenemy { get; protected set; }
         public SoundEffectInstance sound_explosion { get; protected set; }
-        public SoundEffectInstance sound_tir { get; protected set; }    
+        public SoundEffectInstance sound_death { get; protected set; }
+        public SoundEffectInstance sound_tir { get; protected set; }
+        public SoundEffectInstance sound_tir_enemy { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
         public int PLAYER_LIVES = 3; //TODO: INTEGRER LE SYSTEME DE VIE
@@ -50,36 +52,12 @@ namespace Engine
             level_num = x;
             player = new Player();
             enemies = new List<Enemy>();
-            tirsenemy = new List<Tir>();
-            /*
-            // level de test
-            enemy1_1 = new Enemy(Art.Texture_Enemy1_1, Constant.FRAME_ENEMY1_1, Constant.CYCLE_ENEMY1_1);
-            enemy1_1.Setpos(200, 50);
-            enemy1 = new Enemy(Art.Texture_Enemy1,Constant.FRAME_ENEMY1,Constant.CYCLE_ENEMY1);
-            enemy1.Setpos(100,100);
-            enemy2 = new Enemy(Art.Texture_Enemy2, Constant.FRAME_ENEMY2, Constant.CYCLE_ENEMY2);
-            enemy2.Setpos(50, 150);
-            enemy3 = new Enemy(Art.Texture_Enemy3, Constant.FRAME_ENEMY3, Constant.CYCLE_ENEMY3);
-            enemy3.Setpos(150, 200);
-            //enemy4 = new Enemy(Art.Texture_Enemy4, Constant.FRAME_ENEMY4, Constant.CYCLE_ENEMY4);
-            //enemy4.Setpos(200, 250);
-            enemies.Add(enemy1_1);
-            enemies.Add(enemy1);
-            enemies.Add(enemy2);
-            enemies.Add(enemy3);
-            //enemies.Add(enemy4);
-            // fin test
-            */
+            tirsenemy = new List<Tirenemy>();
+
             tirs = new List<Tir>();
             nbtir = Constant.PLAYER_NBTIR;
 
-            // A AJOUTER :
-            // lecture du pattern level
-            // liste des tirs enemy 
-
-
-            sound_explosion = Art.Song_explosion.CreateInstance(); // on charge le son sans le jouer         
-           
+            // A AJOUTER : lecture du pattern level          
         }
 
         public void collision_detection()
@@ -93,7 +71,9 @@ namespace Engine
                         if (tirs[i].rectangle.Intersects(enemies[j].rectangle))
                         {
                             enemies.Remove(enemies[j]);
-                            sound_explosion.Play();
+                            tirs[i].Isdead();       // le tir est marqué comme dead pour être supprimé lors de l'update des tirs                  
+                            sound_death = Art.Song_death.CreateInstance();// nouvelle instance sound_effect qui sera joué par dessus les précédentes
+                            sound_death.Play();
                         }
                     }
                 }
@@ -102,16 +82,17 @@ namespace Engine
             {
                 for (int i = tirsenemy.Count() - 1; i >= 0; i--)
                 {
-
                     if (tirsenemy[i].rectangle.Intersects(player.rectangle))
                     {
                         tirsenemy.Remove(tirsenemy[i]);
                         PLAYER_LIVES -= 1;
+                        sound_explosion = Art.Song_explosion.CreateInstance();
                         sound_explosion.Play();
                     }
-
                 }
             }
+
+        // TODO : Détection colision entre un enemy et le player (colision vaisseau)
             
         }
 
@@ -130,8 +111,10 @@ namespace Engine
             }
             if (random.Next(0, PERCENTAGE_SHOT) == 0 && enemies.Count() > 0)
             {
-                Tir tirenemy = new Tir(EnemyClosestToPlayer.pos_X, EnemyClosestToPlayer.pos_Y, "down");
+                Tirenemy tirenemy = new Tirenemy(EnemyClosestToPlayer.pos_X, EnemyClosestToPlayer.pos_Y, "down");
                 tirsenemy.Add(tirenemy);
+                sound_tir_enemy = Art.Song_tir_enemy.CreateInstance();
+                sound_tir_enemy.Play();
             }
         }
         static T RandomEnumValue<T>()
@@ -214,21 +197,14 @@ namespace Engine
                 case LevelState.Game:
 
                     collision_detection();
+
                     if (!enemies.Any())
                     {
                         level_num += 1;
                         NewWave();
                         PERCENTAGE_SHOT /= 2; ;
-
                     }
-                    // level de test
-                    //enemy1.Update(elapsetime);      
-                    //enemy2.Update(elapsetime);
-                    //enemy3.Setrotation(enemy3.rotation + 0.1f);
-                    //enemy3.Update(elapsetime);
-                    //enemy4.Update(elapsetime);
-                    //enemy1_1.Update(elapsetime);
-                    // fin test
+
 
                     foreach (var e in enemies)
                     {
@@ -243,7 +219,7 @@ namespace Engine
                     {
                         if (tirs.Count() < nbtir)
                         {
-                            tirs.Add(new Tir(player.pos_X + player.sprite.Texture.Width / 2 - 1, player.pos_Y,"up"));
+                            tirs.Add(new Tir(player.pos_X + player.sprite.Texture.Width / 2 - 1, player.pos_Y));
                             sound_tir = Art.Song_tir.CreateInstance(); // nouvelle instance sound_effect qui sera joué par dessus les précédentes
                             sound_tir.Play();
                         }
@@ -270,10 +246,6 @@ namespace Engine
                             }
                         }
 
-                    // update des detections collision enemy (parcours des listes tir enemy par rapport à la position player)
-
-                    // update des detections collision player (parcours des listes tir et de la liste des enemy)
-
                     player.Update(elapsetime); // update du player 
 
                     break;
@@ -286,28 +258,20 @@ namespace Engine
             {
                 case LevelState.Game:
 
-                    // level de test 
-                    //enemy1.Draw(spriteBatch);
-                    //enemy2.Draw(spriteBatch);
-                    //enemy3.Draw(spriteBatch);
-                    //enemy4.Draw(spriteBatch);
-                    //enemy1_1.Draw(spriteBatch);
-                    // fin test
-
                     foreach (var e in enemies)
                     {
                         e.Draw(spriteBatch);
                     }
 
                     if (tirs.Count() > 0) for (int i = 0; i < tirs.Count(); i++) tirs[i].Draw(spriteBatch); // draw de la liste des tirs player
-                    if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++) tirsenemy[i].Draw(spriteBatch); // draw de la liste des tirs ennemis
-                                                                                                                     // draw de la liste des tirs enemy
+                    if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++) tirsenemy[i].Draw(spriteBatch); // draw de la liste des tirs ennemy                                                                                                        
 
+                    // Affichage nombre de vie
                     string name = $"Lives : {PLAYER_LIVES}";
-                    int pos_X = (280);
-                    int pos_Y = Constant.MAIN_WINDOW_HEIGHT - 50;
-                    Color font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B);
-                    spriteBatch.DrawString(Art.Font_Game, name, new Vector2(pos_X, pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    int pos_X = (10);
+                    int pos_Y = Constant.MAIN_WINDOW_HEIGHT - 20;
+                    Color font_color_game_small = new Color(Constant.FONT_GAME_SMALL_COLOR_R, Constant.FONT_GAME_SMALL_COLOR_G, Constant.FONT_GAME_SMALL_COLOR_B);
+                    spriteBatch.DrawString(Art.Font_Game_small, name, new Vector2(pos_X, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     player.Draw(spriteBatch); // draw du player
 
                     break;

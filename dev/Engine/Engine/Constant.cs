@@ -72,6 +72,12 @@ namespace Engine
         public const int FONT_DEBUG_COLOR_B = 255;
         public const float FONT_DEBUG_COLOR_A = 0.5f;
 
+        public const string FONT_GAME_SMALL = "namco_12";
+        public const int FONT_GAME_SMALL_COLOR_R = 255;
+        public const int FONT_GAME_SMALL_COLOR_G = 0;
+        public const int FONT_GAME_SMALL_COLOR_B = 0;
+        public const float FONT_GAME_SMALL_COLOR_A = 0.8f;
+
         public const string FONT_GAME = "namco_27";
         public const int FONT_GAME_COLOR_R = 200;
         public const int FONT_GAME_COLOR_G = 200;
@@ -108,11 +114,14 @@ namespace Engine
         public const string TEXTURE_STAR1 = "star1";
         public const string TEXTURE_STAR2 = "star2";
         public const string TEXTURE_TIR = "tir";
+        public const string TEXTURE_TIR_ENEMY = "tirenemy";
 
         public const string SOUND_START = "song_start";
         public const string SOUND_EXPLOSION = "song_explosion";
+        public const string SOUND_DEATH = "song_death";
         public const string SOUND_TIR = "song_tir";
-        public const string SOUND_BOOT_MSG = "beep";
+        public const string SOUND_TIR_ENEMY = "song_tirenemy";
+        public const string SOUND_BOOT_MSG = "song_beep";
 
 
     }

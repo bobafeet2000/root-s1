@@ -27,14 +27,18 @@ namespace Engine
         public static Texture2D Texture_Star0 { get; private set; }
         public static Texture2D Texture_Star2 { get; private set; }
         public static Texture2D Texture_Tir { get; private set; }
+        public static Texture2D Texture_Tir_Enemy { get; private set; }
         // Font
         public static SpriteFont Font_Debug { get; private set; }
         public static SpriteFont Font_Boot { get; private set; }
         public static SpriteFont Font_Game { get; private set; }
+        public static SpriteFont Font_Game_small { get; private set; }
         // Sound
         public static SoundEffect Song_start { get; private set; }
         public static SoundEffect Song_tir { get; private set; }
+        public static SoundEffect Song_tir_enemy { get; private set; }
         public static SoundEffect Song_explosion { get; private set; }
+        public static SoundEffect Song_death { get; private set; }
         public static SoundEffect Song_boot_msg { get; private set; }
 
 
@@ -54,17 +58,21 @@ namespace Engine
             Texture_Star0 = content.Load<Texture2D>(Constant.TEXTURE_STAR0);
             Texture_Star1 = content.Load<Texture2D>(Constant.TEXTURE_STAR1);
             Texture_Star2 = content.Load<Texture2D>(Constant.TEXTURE_STAR2);
-            // Sprite tir player
+            // Sprite tir player et enemy
             Texture_Tir = content.Load<Texture2D>(Constant.TEXTURE_TIR);
+            Texture_Tir_Enemy = content.Load<Texture2D>(Constant.TEXTURE_TIR_ENEMY);
 
             // Font
             Font_Game = content.Load<SpriteFont>(Constant.FONT_GAME);
+            Font_Game_small = content.Load<SpriteFont>(Constant.FONT_GAME_SMALL);
             Font_Boot = content.Load<SpriteFont>(Constant.FONT_BOOT);
 
             // Song effect
             Song_start = content.Load<SoundEffect>(Constant.SOUND_START);
             Song_explosion = content.Load<SoundEffect>(Constant.SOUND_EXPLOSION);
+            Song_death = content.Load<SoundEffect>(Constant.SOUND_DEATH);
             Song_tir = content.Load<SoundEffect>(Constant.SOUND_TIR);
+            Song_tir_enemy = content.Load<SoundEffect>(Constant.SOUND_TIR_ENEMY);
             Song_boot_msg = content.Load<SoundEffect>(Constant.SOUND_BOOT_MSG);
 
         }

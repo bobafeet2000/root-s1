@@ -63,14 +63,13 @@ namespace Engine
             this.sprite = new Sprite(Art.Texture_Player, this.color);
 
             // Position de départ
-            //pos_Y = Constant.MAIN_WINDOW_HEIGHT - this.sprite.Rect.Height * 2 + this.sprite.Rect.Height / 2;
             pos_Y = Constant.MAIN_WINDOW_HEIGHT - this.sprite.Rect.Height * 2;
             pos_X = Constant.MAIN_WINDOW_WIDTH / 2 - (this.sprite.Rect.Width / 2) ;
         }
 
         public Rectangle rectangle
         {
-            get { return new Rectangle(pos_X, pos_Y, sprite.Texture.Width, sprite.Texture.Height); }
+            get { return new Rectangle(pos_X+4, pos_Y+4, sprite.Texture.Width-8, sprite.Texture.Height-8); }
         }
 
         public override void Update(float elapsetime)
@@ -80,16 +79,14 @@ namespace Engine
 
             if (Input.IsKeyDown(Keys.Right))
             {
-                //if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width / 2 - move) pos_X = pos_X + move;
-                //else pos_X = Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width;
+
                 if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width - move) pos_X = pos_X + move;
                 else pos_X = Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                //if (pos_X > sprite.Rect.Width / 2 + move) pos_X = pos_X - move;
-                //else pos_X = sprite.Rect.Width/2;
+
                 if (pos_X > move) pos_X = pos_X - move;
                 else pos_X = 0;
             }
@@ -126,7 +123,11 @@ namespace Engine
 
         public Rectangle rectangle
         {
-            get { return new Rectangle(pos_X, pos_Y, (sprite.Texture.Width / this.frame), sprite.Texture.Height); }
+            // Version en prenant tout le rectangle sprite (même si l'énemie ne rempli pas tout la surface
+            //get { return new Rectangle(pos_X - (sprite.Texture.Width / this.frame) / 2, pos_Y - (sprite.Texture.Height) / 2, (sprite.Texture.Width / this.frame), sprite.Texture.Height); }
+
+            // Version en réduisant le rectangle de colision de 6 de tous les cotés (au lieu de faire 30 sur 30 il fait 18 sur 18)
+            get { return new Rectangle((pos_X - (sprite.Texture.Width / this.frame) / 2) + 6, pos_Y - (sprite.Texture.Height) / 2, (sprite.Texture.Width / this.frame) - 12, sprite.Texture.Height - 6); }
         }
 
         public override void Update(float elapsetime)
@@ -216,12 +217,41 @@ namespace Engine
 
     public class Tir : Object
     {
-        private string direction_tir;
+        //private string direction_tir;
 
-        public Tir(int x, int y, string direction)
+        public Tir(int x, int y)
         {
             this.color = Color.White;
             this.sprite = new Sprite(Art.Texture_Tir, this.color);
+            this.pos_Y = y;
+            this.pos_X = x;
+        }
+
+        public Rectangle rectangle
+        {
+            get { return new Rectangle(pos_X, pos_Y, 6, 16); }
+        }
+
+        public override void Update(float elapsetime)
+        {
+                pos_Y -= (int)(elapsetime / Constant.PLAYER_SPEEDTIR);
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
+            this.sprite.Draw(spriteBatch);
+
+        }
+    }
+
+    public class Tirenemy : Object
+    {
+        private string direction_tir;
+
+        public Tirenemy(int x, int y, string direction)
+        {
+            this.color = Color.White;
+            this.sprite = new Sprite(Art.Texture_Tir_Enemy, this.color);
             this.pos_Y = y;
             this.pos_X = x;
             this.direction_tir = direction;
@@ -234,12 +264,8 @@ namespace Engine
 
         public override void Update(float elapsetime)
         {
-            if (this.direction_tir == "down")
-            {
-                pos_Y += (int)(elapsetime / Constant.SPEEDTIR_ENEMY);
-            }
-            else
-                pos_Y -= (int)(elapsetime / Constant.PLAYER_SPEEDTIR);
+
+            pos_Y += (int)(elapsetime / Constant.SPEEDTIR_ENEMY);
 
         }
         public override void Draw(SpriteBatch spriteBatch)
