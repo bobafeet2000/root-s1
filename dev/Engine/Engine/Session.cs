@@ -81,6 +81,10 @@ namespace Engine
                         {
                             CurrentSessionState = SessionState.Break;
                         }
+                        if (Input.KeyPressed(Keys.R))
+                        {
+                            //TODO: Quand on appuie sur la touche R, lancer une nouvelle partie
+                        }
                         mylevel.Update(elapsetime);
                         
                         break;

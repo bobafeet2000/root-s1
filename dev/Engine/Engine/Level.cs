@@ -27,15 +27,17 @@ namespace Engine
         public SoundEffectInstance sound_death { get; protected set; }
         public SoundEffectInstance sound_tir { get; protected set; }
         public SoundEffectInstance sound_tir_enemy { get; protected set; }
+        public ScreenOver screen_over { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
         public int PLAYER_LIVES = 3; //TODO: INTEGRER LE SYSTEME DE VIE
+        public int blink_text = 0;
 
 
         public enum LevelState
         {
             //Tous les états possibles de la partie
-            Game,
+            Game, Over,
         }
         LevelState CurrentLevelState = LevelState.Game;
 
@@ -248,6 +250,16 @@ namespace Engine
 
                     player.Update(elapsetime); // update du player 
 
+                    if (PLAYER_LIVES == 0)
+                    {
+                        CurrentLevelState = LevelState.Over;
+                        screen_over = new ScreenOver(Constant.GAME_OVER);
+                    }
+
+                    break;
+
+                case LevelState.Over :
+                    blink_text += (int)elapsetime;
                     break;
             }
         }
@@ -273,6 +285,12 @@ namespace Engine
                     Color font_color_game_small = new Color(Constant.FONT_GAME_SMALL_COLOR_R, Constant.FONT_GAME_SMALL_COLOR_G, Constant.FONT_GAME_SMALL_COLOR_B);
                     spriteBatch.DrawString(Art.Font_Game_small, name, new Vector2(pos_X, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     player.Draw(spriteBatch); // draw du player
+
+                    break;
+
+                case LevelState.Over:
+                    if ((blink_text < 600)) screen_over.Draw(spriteBatch);
+                    else if (blink_text > 1200) blink_text = 0;
 
                     break;
             }

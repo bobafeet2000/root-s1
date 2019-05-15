@@ -193,6 +193,49 @@ namespace Engine
         }
     }
 
+    public class ScreenOver : Screen
+    {
+        public String name_2 { get; protected set; }
+        public String name_3 { get; protected set; }
+
+        public int pos_X_2 { get; protected set; }
+        public int pos_X_3 { get; protected set; }
+
+        public ScreenOver(String name)
+        {
+            this.name = name;
+            name_2 = "Press the ESC to return to the menu";
+            name_3 = "Press the R to try again";
+            pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
+            pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
+            pos_X_2 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_2).Length() / 2);
+            pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
+
+            font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+
+            background0 = new Background(0, 16);
+            background1 = new Background(1, 8);
+            background2 = new Background(2, 4);
+        }
+
+        public override void Update(float elapsetime)
+        {
+            background0.Update(elapsetime);
+            background1.Update(elapsetime);
+            background2.Update(elapsetime);
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            background0.Draw(spriteBatch);
+            background1.Draw(spriteBatch);
+            background2.Draw(spriteBatch);
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A);// Affichage du titre de l'écran
+            spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, Constant.MAIN_WINDOW_HEIGHT - 50), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, Constant.MAIN_WINDOW_HEIGHT - 30), font_color_game * Constant.FONT_GAME_COLOR_A);
+
+        }
+    }
+
     public class ScreenCredit : Screen
     {
         public String name_2 { get; protected set; }
