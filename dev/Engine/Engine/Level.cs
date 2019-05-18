@@ -30,7 +30,7 @@ namespace Engine
         public ScreenOver screen_over { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
-        public int PLAYER_LIVES = 3; //TODO: INTEGRER LE SYSTEME DE VIE
+        public int PLAYER_LIVES = 30000000;
         public int blink_text = 0;
 
 
@@ -127,7 +127,15 @@ namespace Engine
 
         public void NewWave()
         {
-            int NumberEnemy = new Random().Next(2) + level_num;
+            int NumberEnemy = 2;
+            if(NumberEnemy+level_num <= 8)
+            {
+                NumberEnemy += level_num;
+            }
+            else
+            {
+                NumberEnemy = 8;
+            }
             EnemyType? PreviousEnemy = null;
             int PosX = 50;
             int PosY = 50;
@@ -204,7 +212,11 @@ namespace Engine
                     {
                         level_num += 1;
                         NewWave();
-                        PERCENTAGE_SHOT /= 2; ;
+                        if ((PERCENTAGE_SHOT /3) *2 >= 15)
+                        {
+                            PERCENTAGE_SHOT = (PERCENTAGE_SHOT / 3) * 2;
+                        }
+                        
                     }
 
 

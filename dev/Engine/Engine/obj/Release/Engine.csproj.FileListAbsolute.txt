@@ -16,3 +16,12 @@ C:\Users\mariu\Desktop\Epita\Info\root-s2\dev\Engine\Engine\obj\Release\Engine.c
 C:\Users\mariu\Desktop\Epita\Info\root-s2\dev\Engine\Engine\obj\Release\Engine.csproj.CopyComplete
 C:\Users\mariu\Desktop\Epita\Info\root-s2\dev\Engine\Engine\obj\Release\Engine.exe
 C:\Users\mariu\Desktop\Epita\Info\root-s2\dev\Engine\Engine\obj\Release\Engine.pdb
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\bin\Release\Engine.exe.config
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\bin\Release\Engine.exe
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\bin\Release\Engine.pdb
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\bin\Release\FNA.dll
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.csprojAssemblyReference.cache
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.csproj.CoreCompileInputs.cache
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.csproj.CopyComplete
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.exe
+C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.pdb

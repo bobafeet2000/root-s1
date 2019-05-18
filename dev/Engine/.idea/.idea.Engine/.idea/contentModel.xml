@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Théo\.Rider2019.1\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Théo\.Rider2019.1\system\resharper-host\local\Transient\ReSharperHost\v191\SolutionCaches\_Engine.-150136477.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine" t="IncludeFlat">
+      <e p="Engine" t="IncludeRecursive">
+        <e p="App.config" t="Include" />
+        <e p="Art.cs" t="Include" />
+        <e p="Background.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Constant.cs" t="Include" />
+        <e p="Content" t="Include">
+          <e p="namco_18.xnb" t="Include" />
+          <e p="namco_27.xnb" t="Include" />
+          <e p="namco_36.xnb" t="Include" />
+          <e p="namco_9.xnb" t="Include" />
+          <e p="player.png" t="Include" />
+        </e>
+        <e p="Engine.csproj" t="IncludeRecursive" />
+        <e p="Engine.ico" t="Include" />
+        <e p="Game.cs" t="Include" />
+        <e p="Input.cs" t="Include" />
+        <e p="Level.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive" />
+        <e p="Object.cs" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Screen.cs" t="Include" />
+        <e p="Session.cs" t="Include" />
+        <e p="Sprite.cs" t="Include" />
+      </e>
+      <e p="Engine.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
