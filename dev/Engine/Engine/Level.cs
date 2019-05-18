@@ -30,7 +30,7 @@ namespace Engine
         public ScreenOver screen_over { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
-        public int PLAYER_LIVES = 30000000;
+        public int PLAYER_LIVES = 5;
         public int blink_text = 0;
 
 
