@@ -296,5 +296,83 @@ namespace Engine
             spriteBatch.DrawString(Art.Font_Boot, name_5, new Vector2(this.pos_X_5, this.pos_Y_5), font_color_game * Constant.FONT_GAME_COLOR_A);
         }
     }
+
+    public class ScreenMenuMulti : Screen
+    {
+        public String name_2 { get; protected set; }
+        public String name_3 { get; protected set; }
+        public String name_4 { get; protected set; }
+
+        public int pos_X_2 { get; protected set; }
+        public int pos_X_4 { get; protected set; }
+        public int pos_Y_2 { get; protected set; }
+        public int pos_Y_3 { get; protected set; }
+        public int pos_Y_4 { get; protected set; }
+
+        public int choice;
+
+        public ScreenMenuMulti(String name)
+        {
+            this.name = name;
+            name_2 = "Player 1 (HOST)";
+            name_3 = "Player 2";
+            name_4 = "Press 1 or 2 to select your player";
+
+            pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
+            pos_X_2 = 10;
+            pos_X_4 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_4).Length() / 2);
+            pos_Y = 50;
+            pos_Y_2 = Constant.MAIN_WINDOW_HEIGHT / 3;
+            pos_Y_3 = Constant.MAIN_WINDOW_HEIGHT / 2;
+            pos_Y_4 = Constant.MAIN_WINDOW_HEIGHT - 50;
+            font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font
+            font_color_boot = new Color(Constant.FONT_BOOT_COLOR_R, Constant.FONT_BOOT_COLOR_G, Constant.FONT_BOOT_COLOR_B);
+
+            background0 = new Background(0, 16);
+            background1 = new Background(1, 8);
+            background2 = new Background(2, 4);
+        }
+
+        public override void Update(float elapsetime)
+        {
+            background0.Update(elapsetime);
+            background1.Update(elapsetime);
+            background2.Update(elapsetime);
+        }
+
+        public void SetChoice(int choice)
+        {
+            this.choice = choice;
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            background0.Draw(spriteBatch);
+            background1.Draw(spriteBatch);
+            background2.Draw(spriteBatch);
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
+            switch (choice)
+            {
+                case 0:
+                    spriteBatch.DrawString(Art.Font_Game, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    spriteBatch.DrawString(Art.Font_Game, name_3, new Vector2(this.pos_X_2, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    break;
+                case 1:
+                    spriteBatch.DrawString(Art.Font_Game, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_boot * Constant.FONT_GAME_COLOR_A);
+                    spriteBatch.DrawString(Art.Font_Game, name_3, new Vector2(this.pos_X_2, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    break;
+                case 2:
+                    spriteBatch.DrawString(Art.Font_Game, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    spriteBatch.DrawString(Art.Font_Game, name_3, new Vector2(this.pos_X_2, this.pos_Y_3), font_color_boot * Constant.FONT_GAME_COLOR_A);
+                    break;
+                default:
+                    spriteBatch.DrawString(Art.Font_Game, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    spriteBatch.DrawString(Art.Font_Game, name_3, new Vector2(this.pos_X_2, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
+                    break;
+            }
+            
+            spriteBatch.DrawString(Art.Font_Boot, name_4, new Vector2(this.pos_X_4, this.pos_Y_4), font_color_game * Constant.FONT_GAME_COLOR_A);
+        }
+    }
 }
 

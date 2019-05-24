@@ -20,9 +20,12 @@ namespace Engine
         private ScreenHome screenhome; // Ecran d'accueil
         private ScreenInstruction screeninstruction; // Ecran d'accueil
         private ScreenCredit screencredit; // Ecran de crédit
+        private ScreenMenuMulti screenmenumulti; // Ecran du menu du multi
         private Session session; // Partie mono joueur
 
         private int timer; // timer à usage multiple
+
+        private int choice;
 
         // Récupération des constantes générales 
         Color backcolor = new Color(Constant.BKCOLOR_R, Constant.BKCOLOR_G, Constant.BKCOLOR_B);  // couleur du fond
@@ -32,7 +35,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instruction, Credit, PlayGame, Break 
+            Boot, MainMenu, Instruction, Credit, PlayGame, Break, MultiMenu
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -155,6 +158,12 @@ namespace Engine
                         CurrentGameState = GameState.Credit;
                         break;
                     }
+                    if (Input.KeyPressed(Keys.M))
+                    {
+                        screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
+                        CurrentGameState = GameState.MultiMenu ;
+                        break;
+                    }
                     screenhome.Update(elapsetime);
                     break;
 
@@ -191,6 +200,27 @@ namespace Engine
                     }
                     screencredit.Update(elapsetime);
                     break;
+
+                case GameState.MultiMenu:
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        screenmenumulti = null;
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    if (Input.KeyPressed(Keys.D1))
+                    {
+                        screenmenumulti.SetChoice(1);
+                        break;
+                    }
+                    if (Input.KeyPressed(Keys.D2))
+                    {
+                        screenmenumulti.SetChoice(2);
+                        break;
+                    }
+                    screenmenumulti.Update(elapsetime);
+                    break;
+
             }
 
             //Update base
@@ -229,7 +259,9 @@ namespace Engine
                 case GameState.Credit:
                     screencredit.Draw(spriteBatch);
                     break;
-
+                case GameState.MultiMenu:
+                    screenmenumulti.Draw(spriteBatch);
+                    break;
             }
 
             // Affichage du compteur de frame si DEBUG
