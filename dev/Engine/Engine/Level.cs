@@ -93,9 +93,20 @@ namespace Engine
                     }
                 }
             }
+            if (enemies.Count > 0)
+            {
+                for (int i = enemies.Count()-1; i >= 0; i--)
+                {
+                    if (enemies[i].rectangle.Intersects(player.rectangle))
+                    {
+                        PLAYER_LIVES -= 1;
+                        enemies.Remove(enemies[i]);
+                        sound_explosion = Art.Song_explosion.CreateInstance();
+                        sound_explosion.Play();
+                    }
+                }
+            }
 
-        // TODO : Détection colision entre un enemy et le player (colision vaisseau)
-            
         }
 
         public void ReturnFire()
