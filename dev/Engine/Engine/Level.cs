@@ -33,6 +33,7 @@ namespace Engine
         public ScreenNext screen_next { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
+        public int score = 0;
         public int PLAYER_LIVES = 5;
         public int blink_text = 0;
 
@@ -80,7 +81,8 @@ namespace Engine
                         if (tirs[i].rectangle.Intersects(enemies[j].rectangle))
                         {
                             enemies.Remove(enemies[j]);
-                            tirs[i].Isdead();       // le tir est marqué comme dead pour être supprimé lors de l'update des tirs                  
+                            tirs[i].Isdead();// le tir est marqué comme dead pour être supprimé lors de l'update des tirs 
+                            score += 100;
                             sound_death = Art.Song_death.CreateInstance();// nouvelle instance sound_effect qui sera joué par dessus les précédentes
                             sound_death.Play();
                         }
@@ -243,6 +245,8 @@ namespace Engine
                         {
                             level_num += 1;
                         }
+                        tirsenemy.Clear();
+                        tirs.Clear();
                         NewWave();
                     }
 
@@ -337,12 +341,15 @@ namespace Engine
                     // Affichage nombre de vie
                     string name = $"Lives : {PLAYER_LIVES}";
                     string name_2 = $"Level : {level_num}";
+                    string name_3 = $"Score : {score}";
                     int pos_X = (10);
                     int pos_X_2 = Constant.MAIN_WINDOW_WIDTH - (int)Art.Font_Boot.MeasureString(name_2).Length() - 10;
+                    int pos_X_3 = Constant.MAIN_WINDOW_WIDTH - (int)Art.Font_Boot.MeasureString(name_3).Length() - 10;
                     int pos_Y = Constant.MAIN_WINDOW_HEIGHT - 20;
                     Color font_color_game_small = new Color(Constant.FONT_GAME_SMALL_COLOR_R, Constant.FONT_GAME_SMALL_COLOR_G, Constant.FONT_GAME_SMALL_COLOR_B);
                     spriteBatch.DrawString(Art.Font_Game_small, name, new Vector2(pos_X, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     spriteBatch.DrawString(Art.Font_Game_small, name_2, new Vector2(pos_X_2, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
+                    spriteBatch.DrawString(Art.Font_Game_small, name_3, new Vector2(pos_X_3, 10), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     player.Draw(spriteBatch); // draw du player
 
                     break;
