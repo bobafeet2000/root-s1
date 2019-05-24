@@ -47,7 +47,7 @@ namespace Engine
             Game, Over, inter
         }
         LevelState CurrentLevelState = LevelState.Game;
-        private object screenboot;
+        
 
         public enum EnemyType
         {
@@ -295,6 +295,9 @@ namespace Engine
                         }
 
                     player.Update(elapsetime); // update du player 
+
+                    if (level_num % 10 == 0)
+                        score += 10000;
 
                     if (PLAYER_LIVES == 0)
                     {

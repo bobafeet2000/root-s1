@@ -15,17 +15,20 @@ namespace Engine
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private float elapsetime;
+        private int choice = 0;
+        private bool connected=false; //bool pour savoir si le joueur est connecté
 
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
         private ScreenInstruction screeninstruction; // Ecran d'accueil
         private ScreenCredit screencredit; // Ecran de crédit
-        private ScreenMenuMulti screenmenumulti; // Ecran du menu du multi
+        private ScreenScore screenscore; // Ecran des scores
+        private ScreenMenuMulti screenmenumulti; // Ecran du menu du selection du joueur
+        private ScreenMenuMulti2 screenmenumulti2; //Ecran du menu multi
         private Session session; // Partie mono joueur
 
         private int timer; // timer à usage multiple
 
-        private int choice;
 
         // Récupération des constantes générales 
         Color backcolor = new Color(Constant.BKCOLOR_R, Constant.BKCOLOR_G, Constant.BKCOLOR_B);  // couleur du fond
@@ -35,7 +38,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instruction, Credit, PlayGame, Break, MultiMenu
+            Boot, MainMenu, Instruction, Credit, PlayGame, Break, Score, MultiMenu, Multi, PlayGameMulti
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -158,6 +161,12 @@ namespace Engine
                         CurrentGameState = GameState.Credit;
                         break;
                     }
+                    if (Input.KeyPressed(Keys.S))
+                    {
+                        //screenscore = new ScreenScore(Constant.GAME_SCORE);
+                        CurrentGameState = GameState.Score;
+                        break;
+                    }
                     if (Input.KeyPressed(Keys.M))
                     {
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
@@ -201,6 +210,17 @@ namespace Engine
                     screencredit.Update(elapsetime);
                     break;
 
+                case GameState.Score:
+
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        screenscore = null;
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    screenscore.Update(elapsetime);
+                    break;
+
                 case GameState.MultiMenu:
                     if (Input.KeyPressed(Keys.Escape))
                     {
@@ -210,17 +230,39 @@ namespace Engine
                     }
                     if (Input.KeyPressed(Keys.D1))
                     {
-                        screenmenumulti.SetChoice(1);
+                        screenmenumulti.SetChoice(choice=1);
                         break;
                     }
                     if (Input.KeyPressed(Keys.D2))
                     {
-                        screenmenumulti.SetChoice(2);
+                        screenmenumulti.SetChoice(choice=2);
+                        break;
+                    }
+                    if (Input.KeyPressed(Keys.Enter) && choice != 0)
+                    {
+                        screenmenumulti = null;
+                        screenmenumulti2 = new ScreenMenuMulti2(Constant.GAME_MENUMULTI2,choice,connected);
+                        CurrentGameState = GameState.Multi;
                         break;
                     }
                     screenmenumulti.Update(elapsetime);
                     break;
 
+                case GameState.Multi:
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        screenmenumulti2 = null;
+                        screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
+                        CurrentGameState = GameState.MultiMenu;
+                        break;
+                    }
+                    if (Input.KeyPressed(Keys.Enter))
+                    {
+                        connected = !connected;
+                    }
+                    screenmenumulti2.SetConnected(connected);
+                    screenmenumulti2.Update(elapsetime);
+                    break;
             }
 
             //Update base
@@ -259,9 +301,17 @@ namespace Engine
                 case GameState.Credit:
                     screencredit.Draw(spriteBatch);
                     break;
+                case GameState.Score:
+                    screenscore.Draw(spriteBatch);
+                    break;
                 case GameState.MultiMenu:
                     screenmenumulti.Draw(spriteBatch);
                     break;
+                case GameState.Multi:
+                    {
+                        screenmenumulti2.Draw(spriteBatch);
+                        break;
+                    }
             }
 
             // Affichage du compteur de frame si DEBUG

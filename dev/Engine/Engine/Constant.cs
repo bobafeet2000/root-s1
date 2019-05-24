@@ -22,7 +22,9 @@ namespace Engine
 
         public const string GAME_INSTRUCTION = "Instruction";
         public const string GAME_CREDIT = "CREDIT";
+        public const string GAME_SCORE = "HIGH SCORE";
         public const string GAME_MENUMULTI = "Multiplayer";
+        public const string GAME_MENUMULTI2 = "Looking for players";
         public const string GAME_OVER = "Game Over";
         public const string GAME_NEXT = "Next Level";
         public const string CONTENT_DIR = "Content";

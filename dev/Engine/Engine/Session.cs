@@ -98,9 +98,6 @@ namespace Engine
                         }
                         break;
                     }
-
-                
-
             }
         }
 
@@ -130,8 +127,6 @@ namespace Engine
                     Color font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B);
                     spriteBatch.DrawString(Art.Font_Game, name, new Vector2(pos_X, pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A);
                     break;
-
-           
             }
         }
     }
