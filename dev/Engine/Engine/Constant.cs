@@ -123,6 +123,7 @@ namespace Engine
         public const string SOUND_TIR = "song_tir";
         public const string SOUND_TIR_ENEMY = "song_tirenemy";
         public const string SOUND_BOOT_MSG = "song_beep";
+        public const string SOUND_GAME_OVER = "song_gameover";
 
 
     }

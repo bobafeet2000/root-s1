@@ -40,6 +40,7 @@ namespace Engine
         public static SoundEffect Song_explosion { get; private set; }
         public static SoundEffect Song_death { get; private set; }
         public static SoundEffect Song_boot_msg { get; private set; }
+        public static SoundEffect Song_gameover { get; private set; }  /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
 
         public static void Load(ContentManager content)
@@ -74,6 +75,7 @@ namespace Engine
             Song_tir = content.Load<SoundEffect>(Constant.SOUND_TIR);
             Song_tir_enemy = content.Load<SoundEffect>(Constant.SOUND_TIR_ENEMY);
             Song_boot_msg = content.Load<SoundEffect>(Constant.SOUND_BOOT_MSG);
+            Song_gameover = content.Load<SoundEffect>(Constant.SOUND_GAME_OVER);  /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// 
 
         }
     }

@@ -27,11 +27,15 @@ namespace Engine
         public SoundEffectInstance sound_death { get; protected set; }
         public SoundEffectInstance sound_tir { get; protected set; }
         public SoundEffectInstance sound_tir_enemy { get; protected set; }
+        public SoundEffectInstance sound_gameover { get; protected set; }
+
         public ScreenOver screen_over { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
         public int PLAYER_LIVES = 5;
         public int blink_text = 0;
+
+        public bool gameover_sound = false;
 
 
         public enum LevelState
@@ -139,13 +143,13 @@ namespace Engine
         public void NewWave()
         {
             int NumberEnemy = 2;
-            if(NumberEnemy+level_num <= 8)
+            if(NumberEnemy+level_num <= 5)
             {
                 NumberEnemy += level_num;
             }
             else
             {
-                NumberEnemy = 8;
+                NumberEnemy =5;
             }
             EnemyType? PreviousEnemy = null;
             int PosX = 50;
@@ -282,6 +286,7 @@ namespace Engine
                     break;
 
                 case LevelState.Over :
+                   
                     blink_text += (int)elapsetime;
                     break;
             }
@@ -292,6 +297,8 @@ namespace Engine
             switch (CurrentLevelState)
             {
                 case LevelState.Game:
+
+                    
 
                     foreach (var e in enemies)
                     {
@@ -312,6 +319,13 @@ namespace Engine
                     break;
 
                 case LevelState.Over:
+
+                    if (!gameover_sound)
+                    {
+                        Art.Song_gameover.Play();
+                        gameover_sound = true;
+                    }
+                    
                     if ((blink_text < 600)) screen_over.Draw(spriteBatch);
                     else if (blink_text > 1200) blink_text = 0;
 
