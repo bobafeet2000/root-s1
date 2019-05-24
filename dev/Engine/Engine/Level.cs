@@ -36,14 +36,16 @@ namespace Engine
         public int blink_text = 0;
 
         public bool gameover_sound = false;
+        public int timer = 0;
 
 
         public enum LevelState
         {
             //Tous les états possibles de la partie
-            Game, Over,
+            Game, Over,inter
         }
         LevelState CurrentLevelState = LevelState.Game;
+        private object screenboot;
 
 
         public enum EnemyType
@@ -224,19 +226,42 @@ namespace Engine
 
                     collision_detection();
 
+
                     if (!enemies.Any())
                     {
+<<<<<<< HEAD
                         level_num += 1;
                         int temps = 0;
                         while (temps > 6000) // 6 secs
                             temps += (int)elapsetime;
                         NewWave();
                         if ((PERCENTAGE_SHOT / 3) * 2 >= 15)
+=======
+                        if (level_num!=1)
+>>>>>>> WIP
                         {
-                            PERCENTAGE_SHOT = (PERCENTAGE_SHOT / 3) * 2;
+                            CurrentLevelState = LevelState.inter;
+                            if ((PERCENTAGE_SHOT / 3) * 2 >= 15)
+                            {
+                                PERCENTAGE_SHOT = (PERCENTAGE_SHOT / 3) * 2;
+                            }
+                            level_num += 1;
                         }
+<<<<<<< HEAD
 
                     }
+=======
+                        else
+                        {
+                            level_num += 1;
+                        }
+                        NewWave();
+                    }
+
+             
+
+
+>>>>>>> WIP
 
                     foreach (var e in enemies)
                     {
@@ -292,6 +317,21 @@ namespace Engine
                    
                     blink_text += (int)elapsetime;
                     break;
+
+                case LevelState.inter :
+                    timer += (int)elapsetime;
+                    if (timer > Constant.GAME_BOOT_LAPS)
+                    {
+                        timer = 0;
+                        CurrentLevelState = LevelState.Game;
+                        
+                    }
+                    else
+                    {
+                        screen_over = new ScreenOver(Constant.GAME_OVER);
+                    }
+                    break;
+
             }
         }
 
@@ -300,6 +340,12 @@ namespace Engine
             switch (CurrentLevelState)
             {
                 case LevelState.Game:
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> WIP
                     foreach (var e in enemies)
                     {
                         e.Draw(spriteBatch);
@@ -328,11 +374,12 @@ namespace Engine
                         Art.Song_gameover.Play();
                         gameover_sound = true;
                     }
-                    
+
                     if ((blink_text < 600)) screen_over.Draw(spriteBatch);
                     else if (blink_text > 1200) blink_text = 0;
 
                     break;
+               
             }
         }
     }
