@@ -24,6 +24,7 @@ namespace Engine
         public const string GAME_CREDIT = "CREDIT";
         public const string GAME_MENUMULTI = "Multiplayer";
         public const string GAME_OVER = "Game Over";
+        public const string GAME_NEXT = "Next Level";
         public const string CONTENT_DIR = "Content";
         public const int MAIN_WINDOW_WIDTH = 448;               // 448 Résolution borne Galaga * 2
         public const int MAIN_WINDOW_HEIGHT = 576;              // 576 Résolution borne Galaga * 2

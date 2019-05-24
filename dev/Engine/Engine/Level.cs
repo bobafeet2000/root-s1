@@ -30,6 +30,7 @@ namespace Engine
         public SoundEffectInstance sound_gameover { get; protected set; }
 
         public ScreenOver screen_over { get; protected set; }
+        public ScreenNext screen_next { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
         public int PLAYER_LIVES = 5;
@@ -42,11 +43,10 @@ namespace Engine
         public enum LevelState
         {
             //Tous les états possibles de la partie
-            Game, Over,inter
+            Game, Over, inter
         }
         LevelState CurrentLevelState = LevelState.Game;
         private object screenboot;
-
 
         public enum EnemyType
         {
@@ -87,7 +87,7 @@ namespace Engine
                     }
                 }
             }
-            if(tirsenemy.Count > 0)
+            if (tirsenemy.Count > 0)
             {
                 for (int i = tirsenemy.Count() - 1; i >= 0; i--)
                 {
@@ -102,7 +102,7 @@ namespace Engine
             }
             if (enemies.Count > 0)
             {
-                for (int i = enemies.Count()-1; i >= 0; i--)
+                for (int i = enemies.Count() - 1; i >= 0; i--)
                 {
                     if (enemies[i].rectangle.Intersects(player.rectangle))
                     {
@@ -146,13 +146,13 @@ namespace Engine
         public void NewWave()
         {
             int NumberEnemy = 0;
-            if(NumberEnemy+level_num <= 5)
+            if (NumberEnemy + level_num <= 5)
             {
                 NumberEnemy += level_num;
             }
             else
             {
-                NumberEnemy =5;
+                NumberEnemy = 5;
             }
             EnemyType? PreviousEnemy = null;
             int PosX = 50;
@@ -229,28 +229,16 @@ namespace Engine
 
                     if (!enemies.Any())
                     {
-<<<<<<< HEAD
-                        level_num += 1;
-                        int temps = 0;
-                        while (temps > 6000) // 6 secs
-                            temps += (int)elapsetime;
-                        NewWave();
-                        if ((PERCENTAGE_SHOT / 3) * 2 >= 15)
-=======
-                        if (level_num!=1)
->>>>>>> WIP
+                        if (level_num != 0)
                         {
                             CurrentLevelState = LevelState.inter;
+                            screen_next = new ScreenNext(Constant.GAME_NEXT);
                             if ((PERCENTAGE_SHOT / 3) * 2 >= 15)
                             {
                                 PERCENTAGE_SHOT = (PERCENTAGE_SHOT / 3) * 2;
                             }
                             level_num += 1;
                         }
-<<<<<<< HEAD
-
-                    }
-=======
                         else
                         {
                             level_num += 1;
@@ -258,10 +246,9 @@ namespace Engine
                         NewWave();
                     }
 
-             
 
 
->>>>>>> WIP
+
 
                     foreach (var e in enemies)
                     {
@@ -283,25 +270,25 @@ namespace Engine
                     }
 
                     if (tirs.Count() > 0) for (int i = 0; i < tirs.Count(); i++)
-                    {
-                        tirs[i].Update(elapsetime);
-                        if ((tirs[i].pos_Y < 0) || (tirs[i].dead))
                         {
-                            tirs.Remove(tirs[i]);
+                            tirs[i].Update(elapsetime);
+                            if ((tirs[i].pos_Y < 0) || (tirs[i].dead))
+                            {
+                                tirs.Remove(tirs[i]);
+                            }
                         }
-                    }
 
                     ReturnFire();
 
                     // update de la liste des tirs enemy
                     if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++)
-                    {
-                        tirsenemy[i].Update(elapsetime);
-                        if (tirsenemy[i].pos_Y > Constant.MAIN_WINDOW_HEIGHT)
                         {
-                            tirsenemy.Remove(tirsenemy[i]);
+                            tirsenemy[i].Update(elapsetime);
+                            if (tirsenemy[i].pos_Y > Constant.MAIN_WINDOW_HEIGHT)
+                            {
+                                tirsenemy.Remove(tirsenemy[i]);
+                            }
                         }
-                    }
 
                     player.Update(elapsetime); // update du player 
 
@@ -313,22 +300,18 @@ namespace Engine
 
                     break;
 
-                case LevelState.Over :
-                   
+                case LevelState.Over:
+
                     blink_text += (int)elapsetime;
                     break;
 
-                case LevelState.inter :
+                case LevelState.inter:
                     timer += (int)elapsetime;
                     if (timer > Constant.GAME_BOOT_LAPS)
                     {
                         timer = 0;
                         CurrentLevelState = LevelState.Game;
-                        
-                    }
-                    else
-                    {
-                        screen_over = new ScreenOver(Constant.GAME_OVER);
+                        screen_next=null;
                     }
                     break;
 
@@ -340,12 +323,9 @@ namespace Engine
             switch (CurrentLevelState)
             {
                 case LevelState.Game:
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> WIP
                     foreach (var e in enemies)
                     {
                         e.Draw(spriteBatch);
@@ -358,7 +338,7 @@ namespace Engine
                     string name = $"Lives : {PLAYER_LIVES}";
                     string name_2 = $"Level : {level_num}";
                     int pos_X = (10);
-                    int pos_X_2 = Constant.MAIN_WINDOW_WIDTH-(int)Art.Font_Boot.MeasureString(name_2).Length()+15;
+                    int pos_X_2 = Constant.MAIN_WINDOW_WIDTH - (int)Art.Font_Boot.MeasureString(name_2).Length() - 10;
                     int pos_Y = Constant.MAIN_WINDOW_HEIGHT - 20;
                     Color font_color_game_small = new Color(Constant.FONT_GAME_SMALL_COLOR_R, Constant.FONT_GAME_SMALL_COLOR_G, Constant.FONT_GAME_SMALL_COLOR_B);
                     spriteBatch.DrawString(Art.Font_Game_small, name, new Vector2(pos_X, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
@@ -379,7 +359,13 @@ namespace Engine
                     else if (blink_text > 1200) blink_text = 0;
 
                     break;
-               
+
+                case LevelState.inter:
+
+                    if ((blink_text < 600)) screen_next.Draw(spriteBatch);
+                    else if (blink_text > 1200) blink_text = 0;
+
+                    break;
             }
         }
     }
