@@ -45,6 +45,7 @@ namespace Engine
         }
         LevelState CurrentLevelState = LevelState.Game;
 
+
         public enum EnemyType
         {
             enemy1,
@@ -142,7 +143,7 @@ namespace Engine
 
         public void NewWave()
         {
-            int NumberEnemy = 2;
+            int NumberEnemy = 0;
             if(NumberEnemy+level_num <= 5)
             {
                 NumberEnemy += level_num;
@@ -209,7 +210,7 @@ namespace Engine
             }
 
         }
-        public void End() 
+        public void End()
         {
             sound_explosion.Stop();
             sound_tir.Stop();
@@ -226,14 +227,16 @@ namespace Engine
                     if (!enemies.Any())
                     {
                         level_num += 1;
+                        int temps = 0;
+                        while (temps > 6000) // 6 secs
+                            temps += (int)elapsetime;
                         NewWave();
-                        if ((PERCENTAGE_SHOT /3) *2 >= 15)
+                        if ((PERCENTAGE_SHOT / 3) * 2 >= 15)
                         {
                             PERCENTAGE_SHOT = (PERCENTAGE_SHOT / 3) * 2;
                         }
-                        
-                    }
 
+                    }
 
                     foreach (var e in enemies)
                     {
@@ -255,25 +258,25 @@ namespace Engine
                     }
 
                     if (tirs.Count() > 0) for (int i = 0; i < tirs.Count(); i++)
+                    {
+                        tirs[i].Update(elapsetime);
+                        if ((tirs[i].pos_Y < 0) || (tirs[i].dead))
                         {
-                            tirs[i].Update(elapsetime);
-                            if ((tirs[i].pos_Y < 0) || (tirs[i].dead))
-                            {
-                                tirs.Remove(tirs[i]);
-                            }
+                            tirs.Remove(tirs[i]);
                         }
+                    }
 
                     ReturnFire();
 
                     // update de la liste des tirs enemy
                     if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++)
+                    {
+                        tirsenemy[i].Update(elapsetime);
+                        if (tirsenemy[i].pos_Y > Constant.MAIN_WINDOW_HEIGHT)
                         {
-                            tirsenemy[i].Update(elapsetime);
-                            if (tirsenemy[i].pos_Y > Constant.MAIN_WINDOW_HEIGHT)
-                            {
-                                tirsenemy.Remove(tirsenemy[i]);
-                            }
+                            tirsenemy.Remove(tirsenemy[i]);
                         }
+                    }
 
                     player.Update(elapsetime); // update du player 
 
@@ -297,9 +300,6 @@ namespace Engine
             switch (CurrentLevelState)
             {
                 case LevelState.Game:
-
-                    
-
                     foreach (var e in enemies)
                     {
                         e.Draw(spriteBatch);
@@ -310,10 +310,13 @@ namespace Engine
 
                     // Affichage nombre de vie
                     string name = $"Lives : {PLAYER_LIVES}";
+                    string name_2 = $"Level : {level_num}";
                     int pos_X = (10);
+                    int pos_X_2 = Constant.MAIN_WINDOW_WIDTH-(int)Art.Font_Boot.MeasureString(name_2).Length()+15;
                     int pos_Y = Constant.MAIN_WINDOW_HEIGHT - 20;
                     Color font_color_game_small = new Color(Constant.FONT_GAME_SMALL_COLOR_R, Constant.FONT_GAME_SMALL_COLOR_G, Constant.FONT_GAME_SMALL_COLOR_B);
                     spriteBatch.DrawString(Art.Font_Game_small, name, new Vector2(pos_X, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
+                    spriteBatch.DrawString(Art.Font_Game_small, name_2, new Vector2(pos_X_2, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     player.Draw(spriteBatch); // draw du player
 
                     break;

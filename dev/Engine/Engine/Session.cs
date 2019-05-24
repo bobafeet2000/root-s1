@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 namespace Engine
-{
+{ 
     public class Session 
     {
         public Background background0 { get; protected set; }
@@ -19,7 +19,7 @@ namespace Engine
         public SoundEffectInstance sound_start { get; protected set; }
         public ScreenText screen_intro { get; protected set; }
         public Level mylevel { get; protected set; }
-        public int num_level = 1;
+        public int num_level = 0;
         private int intro = 0;
         private bool intro_sound = false;
         public int blink_text = 0;
