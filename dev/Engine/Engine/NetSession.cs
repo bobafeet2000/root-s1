@@ -18,7 +18,7 @@ namespace Engine
         public Background background2 { get; protected set; }
         public SoundEffectInstance sound_start { get; protected set; }
         public ScreenText screen_intro { get; protected set; }
-        public Level mylevel { get; protected set; }
+        public NetLevel mylevel { get; protected set; }
         public int num_level = 0;
         private int intro = 0;
         private bool intro_sound = false;
@@ -70,7 +70,7 @@ namespace Engine
                     {
                         CurrentSessionState = NetSessionState.Game;
                         screen_intro = null;
-                        mylevel = new Level(num_level);
+                        mylevel = new NetLevel(num_level);
 
                     }
                     break;

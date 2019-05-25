@@ -19,14 +19,15 @@ namespace Engine
         public const int GAME_BOOT_LAPS = 3200;
 
         public static readonly string[] GAME_BOOT_MSG = { "mov bh , 32", "mov bl , 40", "mov si , WORD Descriptor", "mov ah , 0x89", "cli", "int 15h", "jmp backtotheroots" };
+
         public static readonly string[,] HIGH_SCORES_DEFAULT = new string[,]
-        {
+       {
             {"75200", "Nasaboy"},
             {"63400", "Boba"},
             {"42000", "Belvedere"},
             {"200", "Jewny Halliday"},
             {"0", STRING_PLAYER}
-        };
+       };
 
         public const string GAME_INSTRUCTION = "Instruction";
         public const string GAME_CREDIT = "CREDIT";
@@ -117,6 +118,7 @@ namespace Engine
         public const float FONT_GAME_COLOR_A = 1f;
 
         public const string TEXTURE_PLAYER = "player";
+        public const string TEXTURE_PLAYER2 = "player2";
         public const int PLAYER_SPEED = 5;                                                      // plus indice eleve moins ca va vite
         public const int PLAYER_NBTIR = 2;
         public const int PLAYER_SPEEDTIR = 1;

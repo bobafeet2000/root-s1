@@ -12,9 +12,10 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Engine
 {
-    public class Level
+    public class NetLevel
     {
         public Player player { get; protected set; }
+        public Player2 player2 { get; protected set; }
         public int nbtir { get; protected set; }
         public Enemy enemy1 { get; protected set; }
         public Enemy enemy2 { get; protected set; }
@@ -24,6 +25,7 @@ namespace Engine
         public List<Enemy> enemies { get; protected set; }
         public List<Explosion> explosion = new List<Explosion>();
         public List<Tir> tirs { get; protected set; }
+        public List<Tir> tirs2 { get; protected set; }
         public List<Tirenemy> tirsenemy { get; protected set; }
         public SoundEffectInstance sound_explosion { get; protected set; }
         public SoundEffectInstance sound_death { get; protected set; }
@@ -48,7 +50,7 @@ namespace Engine
             Game, Over, inter
         }
         LevelState CurrentLevelState = LevelState.Game;
-        
+
 
         public enum EnemyType
         {
@@ -58,14 +60,16 @@ namespace Engine
             enemy4,
             enemy1_1,
         }
-        public Level(int x)
+        public NetLevel(int x)
         {
             level_num = x;
             player = new Player();
+            player2 = new Player2(); // le joueur 2
             enemies = new List<Enemy>();
             tirsenemy = new List<Tirenemy>();
 
             tirs = new List<Tir>();
+            tirs2 = new List<Tir>(); // le joueur 2
             nbtir = Constant.PLAYER_NBTIR;
 
             // A AJOUTER : lecture du pattern level          
@@ -95,7 +99,7 @@ namespace Engine
                             score += 100;
                             sound_death = Art.Song_death.CreateInstance();// nouvelle instance sound_effect qui sera joué par dessus les précédentes
                             sound_death.Play();
-                            
+
                         }
                     }
                 }
@@ -237,15 +241,15 @@ namespace Engine
                 PosY += 50;
 
             }
-            for(int y = 0; y < enemies.Count-1; y++)
+            for (int y = 0; y < enemies.Count - 1; y++)
             {
-                
-                if(enemies[y].pos_X == enemies[y+1].pos_X && enemies[y].pos_Y == enemies[y + 1].pos_Y)
+
+                if (enemies[y].pos_X == enemies[y + 1].pos_X && enemies[y].pos_Y == enemies[y + 1].pos_Y)
                 {
                     enemies.Remove(enemies[y + 1]);
                     y -= 1;
                 }
-                
+
             }
         }
         public void End()
@@ -318,7 +322,7 @@ namespace Engine
 
                     ReturnFire();
 
-                    for (int i = explosion.Count-1; i >= 0; i--)
+                    for (int i = explosion.Count - 1; i >= 0; i--)
                     {
                         explosion[i].Update(elapsetime);
                         if (explosion[i].frame_courante == 4)
@@ -335,14 +339,28 @@ namespace Engine
                             }
                         }
 
+                    if (Game.choice == 1)
+                    {
+                        Game.host.Sendmsg(Game.netsession.mylevel.player.pos_X);
+                        int xtemp = Game.host.Readmsg(Game.netsession.mylevel.player.pos_X);
+                        if (xtemp !=0) Game.netsession.mylevel.player2.Setpos(xtemp, Game.netsession.mylevel.player2.pos_Y);
+                    }
+                    if (Game.choice == 2)
+                    {
+                        int xtemp = Game.client.Readmsg(Game.netsession.mylevel.player.pos_X);
+                        if (xtemp !=0) Game.netsession.mylevel.player2.Setpos(xtemp, Game.netsession.mylevel.player2.pos_Y);
+                    }
+
                     player.Update(elapsetime); // update du player 
+
+                    player2.Update(elapsetime); // update du player 2
 
                     if (level_num % 10 == 0)
                     {
                         score += 10000;
                     }
 
-                    if (score % 10000 == 0 && score!=0)
+                    if (score % 10000 == 0 && score != 0)
                         PLAYER_LIVES += 1;
 
                     if (PLAYER_LIVES == 0)
@@ -364,7 +382,7 @@ namespace Engine
                     {
                         timer = 0;
                         CurrentLevelState = LevelState.Game;
-                        screen_next=null;
+                        screen_next = null;
                     }
                     break;
 
@@ -382,13 +400,13 @@ namespace Engine
                     }
 
                     if (explosion.Count != 0)
+                    {
+                        for (int i = 0; i < explosion.Count(); i++)
                         {
-                            for (int i = 0; i < explosion.Count(); i++)
-                            {
 
                             explosion[i].Draw(spriteBatch);
-                            }
                         }
+                    }
 
                     if (tirs.Count() > 0) for (int i = 0; i < tirs.Count(); i++) tirs[i].Draw(spriteBatch); // draw de la liste des tirs player
                     if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++) tirsenemy[i].Draw(spriteBatch); // draw de la liste des tirs ennemy                                                                                                        
@@ -406,6 +424,7 @@ namespace Engine
                     spriteBatch.DrawString(Art.Font_Game_small, name_2, new Vector2(pos_X_2, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     spriteBatch.DrawString(Art.Font_Game_small, name_3, new Vector2(pos_X_3, 10), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     player.Draw(spriteBatch); // draw du player
+                    player2.Draw(spriteBatch); // draw du player 2
 
                     break;
 

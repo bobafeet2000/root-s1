@@ -67,6 +67,7 @@
     <Compile Include="Input.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="NetLevel.cs" />
     <Compile Include="NetSession.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Parser.cs" />

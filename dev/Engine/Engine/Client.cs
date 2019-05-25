@@ -26,25 +26,31 @@ namespace Engine
             netclient.DiscoverLocalPeers(Message.useport);
         }
 
-        public void Readmsg()
+        public int Readmsg(int x)
         {
             NetIncomingMessage msg;
-            int a;
+            int x2=0;
 
             while ((msg = netclient.ReadMessage()) != null)
             {
                 switch (msg.MessageType)
                 {
                     case NetIncomingMessageType.DiscoveryResponse:
+                        netclient.Connect(msg.SenderEndPoint);
                         Game.peer = true;
                         break;
+                    case NetIncomingMessageType.Data:                       
+                        x2 = msg.ReadInt32();
+                        NetOutgoingMessage sendMsg = netclient.CreateMessage();
+                        sendMsg.Write(x);                 
+                        netclient.SendMessage(sendMsg,msg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                        break;
                     default:
-
                         break;
                 }
-                //Server.Recycle(msg);
+                
             }
-
+            return x2;
         }
     }
 }

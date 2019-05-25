@@ -15,6 +15,7 @@ namespace Engine
     {
         // Textures
         public static Texture2D Texture_Player { get; private set; }
+        public static Texture2D Texture_Player2 { get; private set; }
         public static Texture2D Texture_Enemy1 { get; private set; }
         public static Texture2D Texture_Enemy2 { get; private set; }
         public static Texture2D Texture_Enemy3 { get; private set; }
@@ -50,6 +51,7 @@ namespace Engine
 
             // Sprite player
             Texture_Player = content.Load<Texture2D>(Constant.TEXTURE_PLAYER);
+            Texture_Player2 = content.Load<Texture2D>(Constant.TEXTURE_PLAYER2);
             // Sprite enemy
             Texture_Enemy1 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY1);
             Texture_Enemy2 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY2);

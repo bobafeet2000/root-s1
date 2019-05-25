@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -16,34 +16,34 @@ namespace Engine
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private float elapsetime;
-        private int choice = 0;
+        static public int choice = 0;
         private bool connected=false; //bool pour savoir si le joueur connecté
         private int connectedelaps=0;   // compteur pour afficher les joueurs avant de lancer la partie
         static public bool peer = false;
+
         public static string[,] HIGH_SCORES()
         {
             if (File.Exists(@"Content\score.smb"))
             {
                 if (Parser.Parser.Parted(@"Content\score.smb") == "0")
                     return Constant.HIGH_SCORES_DEFAULT;
-                else return Parser.Parser.Tab_Construct(@"Content\score.smb",Parser.Parser.Parted(@"Content\score.smb"), Constant.HIGH_SCORES_DEFAULT);
+                else return Parser.Parser.Tab_Construct(@"Content\score.smb", Parser.Parser.Parted(@"Content\score.smb"), Constant.HIGH_SCORES_DEFAULT);
             }
             else return Constant.HIGH_SCORES_DEFAULT;
         }
         public static string[,] HIGH_SCORES_ = HIGH_SCORES();
 
-
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
         private ScreenInstruction screeninstruction; // Ecran d'accueil
         private ScreenCredit screencredit; // Ecran de crédit
-        private ScreenScore screenscore; // ECran des Scores
+        private ScreenScore screenscore; // Ecran des Scores
         private ScreenMenuMulti screenmenumulti; // Ecran du menu du selection du joueur
         private ScreenMenuMulti2 screenmenumulti2; //Ecran du menu multi
         private Session session; // Partie mono joueur
-        private Host host;
-        private Client client;
-        private NetSession netsession; // Partie multi joueur
+        static public Host host;
+        static public Client client;
+        static public NetSession netsession; // Partie multi joueur
 
         private int timer; // timer à usage multiple
 
@@ -56,7 +56,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instruction, Credit, Score, PlayGame, Break, MultiMenu, Multi, PlayGameMulti
+            Boot, MainMenu, Instruction, Score, Credit, PlayGame, Break, MultiMenu, Multi, PlayGameMulti
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -198,7 +198,7 @@ namespace Engine
 
                     if (Input.KeyPressed(Keys.Escape))
                     {
-                        Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb",Level.score.ToString(), Game.HIGH_SCORES_);
+                        Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb", Level.score.ToString(), Game.HIGH_SCORES_);
                         session.End();
                         session = null;
                         CurrentGameState = GameState.MainMenu;
@@ -219,6 +219,7 @@ namespace Engine
                     break;
 
                 case GameState.Credit:
+
                     if (Input.KeyPressed(Keys.Escape))
                     {
                         screencredit = null;
@@ -280,8 +281,8 @@ namespace Engine
                     {
                         screenmenumulti2 = null;
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
-                        peer = false;
-                        if (choice==1) host.Server.Shutdown("bye"); // on libère les socket
+                        peer = false;                  
+                        if (choice==1) host.Stop(); // on libère les socket si on est le Host
                         host = null;
                         client = null;
                         connected = false;
@@ -306,8 +307,8 @@ namespace Engine
                     }
                     screenmenumulti2.SetConnected(connected);
                     screenmenumulti2.Update(elapsetime);
-                    if (choice==1) host.Readmsg();
-                    if (choice==2) client.Readmsg();
+                    if (choice==1) host.Readmsg(0);
+                    if (choice==2) client.Readmsg(0);
 
                     break;
 
@@ -319,7 +320,7 @@ namespace Engine
                         netsession = null;
                         connected = false;
                         peer = false;
-                        if (choice == 1) host.Server.Shutdown("bye"); // on libère les socket
+                        if (choice == 1) host.Stop(); // on libère les socket si on est le Host
                         host = null;
                         client = null;
                         connectedelaps = 0;
@@ -327,7 +328,8 @@ namespace Engine
                         break;
                     }
                     netsession.Update(elapsetime);
-                    break;
+
+                        break;
             }
 
             //Update base

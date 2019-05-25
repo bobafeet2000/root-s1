@@ -24,8 +24,9 @@ namespace Engine
             Server.Start();
         }
 
-        public void Readmsg()
+        public int Readmsg(int x)
         {
+            int x2 = 0;
             NetIncomingMessage msg;
             while ((msg = Server.ReadMessage()) != null)
             {
@@ -45,13 +46,35 @@ namespace Engine
                     case NetIncomingMessageType.DebugMessage:
                     case NetIncomingMessageType.WarningMessage:
                     case NetIncomingMessageType.ErrorMessage:
+                    case NetIncomingMessageType.Data:
+                        x2 = msg.ReadInt32();
+                        NetOutgoingMessage sendMsg = Server.CreateMessage();
+                        sendMsg.Write(x);
+                        Server.SendMessage(sendMsg, msg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                        break;
                     default:
 
                         break;
                 }
                 Server.Recycle(msg);
             }
+            return x2;
         
+        }
+
+        public void Sendmsg(int x)
+        {
+            NetOutgoingMessage sendMsg = Server.CreateMessage();
+
+            //sendMsg.Write("Hello");
+            sendMsg.Write(x);
+
+            Server.SendMessage(sendMsg,Server.Connections[0], NetDeliveryMethod.ReliableOrdered);
+        }
+
+        public void Stop()
+        {
+            Server.Shutdown("bye");
         }
 
     }

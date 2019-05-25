@@ -99,6 +99,35 @@ namespace Engine
         }
     }
 
+    public class Player2 : Object
+    {
+        public Player2()
+        {
+
+            this.color = Color.White;
+            this.sprite = new Sprite(Art.Texture_Player2, this.color);
+
+            // Position de départ
+            pos_Y = Constant.MAIN_WINDOW_HEIGHT - this.sprite.Rect.Height * 2;
+            pos_X = Constant.MAIN_WINDOW_WIDTH / 2 - (this.sprite.Rect.Width / 2);
+        }
+
+        public Rectangle rectangle
+        {
+            get { return new Rectangle(pos_X + 4, pos_Y + 4, sprite.Texture.Width - 8, sprite.Texture.Height - 8); }
+        }
+
+        public override void Update(float elapsetime)
+        {
+
+
+            this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            this.sprite.Draw(spriteBatch);
+        }
+    }
     public class Enemy : Object
     {
         public int direction { get; private set; } // a faire évoluer en Vector2
