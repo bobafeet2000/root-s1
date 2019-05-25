@@ -147,57 +147,65 @@ namespace Engine
 
         public void NewWave()
         {
-            int NumberEnemy = 0;
-            if (NumberEnemy + level_num <= 5)
+            int PosX = 50;
+            int PosY = 50;
+            int NumberEnemyX = 1;
+            int NumberEnemyY = 0;
+            if (NumberEnemyX + level_num <= 5)
             {
-                NumberEnemy += level_num;
+                NumberEnemyX += level_num;
             }
             else
             {
-                NumberEnemy = 5;
+                NumberEnemyX = 5;
             }
-            EnemyType? PreviousEnemy = null;
-            int PosX = 50;
-            int PosY = 50;
-
-            for (int j = 0; j < NumberEnemy; j++)
+            NumberEnemyY = NumberEnemyX / 2;
+            var random = new Random();
+            var list = new List<Enemy>();
+            Enemy enemytoadd = null;
+            Enemy previousenemy = null;
+            for (int i = 0; i <= NumberEnemyY; i++)
             {
 
-                for (int i = 0; i < NumberEnemy; i++)
+                for (int j = 0; j <= NumberEnemyX; j++)
                 {
-                    EnemyType EnemyToAdd = RandomEnumValue<EnemyType>();
-                    while (EnemyToAdd == PreviousEnemy)
-                        EnemyToAdd = RandomEnumValue<EnemyType>();
-
-                    if (EnemyToAdd == EnemyType.enemy1_1)
+                    list = new List<Enemy> { enemy1, enemy1_1, enemy2, enemy3, enemy4 };
+                    if (enemytoadd != null)
+                    {
+                        previousenemy = enemytoadd;
+                        list.Remove(previousenemy);
+                    }
+                    int index = random.Next(0, list.Count);
+                    enemytoadd = list[index];
+                    if (enemytoadd == enemy1_1)
                     {
                         enemy1_1 = new Enemy(Art.Texture_Enemy1_1, Constant.FRAME_ENEMY1_1, Constant.CYCLE_ENEMY1_1);
                         enemy1_1.Setpos(PosX, PosY);
                         enemies.Add(enemy1_1);
                     }
 
-                    if (EnemyToAdd == EnemyType.enemy2)
+                    if (enemytoadd == enemy2)
                     {
                         enemy2 = new Enemy(Art.Texture_Enemy2, Constant.FRAME_ENEMY2, Constant.CYCLE_ENEMY2);
                         enemy2.Setpos(PosX, PosY);
                         enemies.Add(enemy2);
                     }
 
-                    if (EnemyToAdd == EnemyType.enemy3)
+                    if (enemytoadd == enemy3)
                     {
                         enemy3 = new Enemy(Art.Texture_Enemy3, Constant.FRAME_ENEMY3, Constant.CYCLE_ENEMY3);
                         enemy3.Setpos(PosX, PosY);
                         enemies.Add(enemy3);
                     }
 
-                    if (EnemyToAdd == EnemyType.enemy4)
+                    if (enemytoadd == enemy4)
                     {
                         enemy4 = new Enemy(Art.Texture_Enemy4, Constant.FRAME_ENEMY4, Constant.CYCLE_ENEMY4);
                         enemy4.Setpos(PosX, PosY);
                         enemies.Add(enemy4);
                     }
 
-                    if (EnemyToAdd == EnemyType.enemy1)
+                    if (enemytoadd == enemy1)
                     {
 
                         enemy1 = new Enemy(Art.Texture_Enemy1, Constant.FRAME_ENEMY1, Constant.CYCLE_ENEMY1);
@@ -205,14 +213,13 @@ namespace Engine
                         enemies.Add(enemy1);
 
                     }
-                    PreviousEnemy = EnemyToAdd;
                     PosX += 50;
                 }
 
                 PosX = 50;
                 PosY += 50;
-            }
 
+            }
         }
         public void End()
         {
