@@ -53,7 +53,7 @@ namespace Parser
                         int.TryParse(score[j + 1], out int h);
                         if (f > h)
                         {
-                            Swap<string>(ref score[j], ref score[j + 1];
+                            Swap<string>(ref score[j], ref score[j + 1]);
                         }
                     }
                 }

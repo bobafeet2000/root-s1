@@ -8,11 +8,12 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Engine</RootNamespace>
     <AssemblyName>Engine</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,6 +34,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
@@ -41,25 +44,29 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Content\namco_12.xnb" />
     <None Include="Content\namco_18.xnb" />
     <None Include="Content\namco_27.xnb" />
     <None Include="Content\namco_36.xnb" />
-    <None Include="Content\namco_9.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FNA">
       <HintPath>.\FNA.dll</HintPath>
     </Reference>
+    <Reference Include="Lidgren.Network">
+      <HintPath>.\Lidgren.Network.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
-    <Compile Include="Parser.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Art.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="NetSession.cs" />
     <Compile Include="Object.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="Sprite.cs" />

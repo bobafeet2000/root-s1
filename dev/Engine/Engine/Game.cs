@@ -16,16 +16,17 @@ namespace Engine
         private SpriteBatch spriteBatch;
         private float elapsetime;
         private int choice = 0;
-        private bool connected=false; //bool pour savoir si le joueur est connecté
+        private bool connected=false; //bool pour savoir si le joueur connecté
+        private int connectedelaps=0;   // compteur pour afficher les joueurs avant de lancer la partie
 
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
         private ScreenInstruction screeninstruction; // Ecran d'accueil
         private ScreenCredit screencredit; // Ecran de crédit
-        private ScreenScore screenscore; // Ecran des scores
         private ScreenMenuMulti screenmenumulti; // Ecran du menu du selection du joueur
         private ScreenMenuMulti2 screenmenumulti2; //Ecran du menu multi
         private Session session; // Partie mono joueur
+        private NetSession netsession; // Partie multi joueur
 
         private int timer; // timer à usage multiple
 
@@ -38,7 +39,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instruction, Credit, PlayGame, Break, Score, MultiMenu, Multi, PlayGameMulti
+            Boot, MainMenu, Instruction, Credit, PlayGame, Break, MultiMenu, Multi, PlayGameMulti
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -161,12 +162,6 @@ namespace Engine
                         CurrentGameState = GameState.Credit;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.S))
-                    {
-                        //screenscore = new ScreenScore(Constant.GAME_SCORE);
-                        CurrentGameState = GameState.Score;
-                        break;
-                    }
                     if (Input.KeyPressed(Keys.M))
                     {
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
@@ -210,17 +205,6 @@ namespace Engine
                     screencredit.Update(elapsetime);
                     break;
 
-                case GameState.Score:
-
-                    if (Input.KeyPressed(Keys.Escape))
-                    {
-                        screenscore = null;
-                        CurrentGameState = GameState.MainMenu;
-                        break;
-                    }
-                    screenscore.Update(elapsetime);
-                    break;
-
                 case GameState.MultiMenu:
                     if (Input.KeyPressed(Keys.Escape))
                     {
@@ -253,15 +237,43 @@ namespace Engine
                     {
                         screenmenumulti2 = null;
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
+                        connected = false;
+                        connectedelaps = 0;
                         CurrentGameState = GameState.MultiMenu;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.Enter))
+                    if (Input.KeyPressed(Keys.Enter)) // là il faut lancer les couches réseau et tester la connexion à une partie ou à un joueur
                     {
-                        connected = !connected;
+                        connected = true;              
+                    }
+                    if (connected == true)
+                    {
+                        connectedelaps++;
+                    }
+                    if (connectedelaps>120)
+                    {
+                        screenmenumulti2 = null;
+                        netsession = new NetSession();
+                        CurrentGameState = GameState.PlayGameMulti;
+                        break;
                     }
                     screenmenumulti2.SetConnected(connected);
                     screenmenumulti2.Update(elapsetime);
+
+                    break;
+
+                case GameState.PlayGameMulti:
+
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        netsession.End();
+                        netsession = null;
+                        connected = false;
+                        connectedelaps = 0;
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    netsession.Update(elapsetime);
                     break;
             }
 
@@ -301,17 +313,15 @@ namespace Engine
                 case GameState.Credit:
                     screencredit.Draw(spriteBatch);
                     break;
-                case GameState.Score:
-                    screenscore.Draw(spriteBatch);
-                    break;
                 case GameState.MultiMenu:
                     screenmenumulti.Draw(spriteBatch);
                     break;
                 case GameState.Multi:
-                    {
-                        screenmenumulti2.Draw(spriteBatch);
-                        break;
-                    }
+                    screenmenumulti2.Draw(spriteBatch);
+                    break;
+                case GameState.PlayGameMulti:
+                    netsession.Draw(spriteBatch);
+                    break;
             }
 
             // Affichage du compteur de frame si DEBUG

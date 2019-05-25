@@ -10,8 +10,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 namespace Engine
-{ 
-    public class Session 
+{
+    public class NetSession
     {
         public Background background0 { get; protected set; }
         public Background background1 { get; protected set; }
@@ -24,20 +24,20 @@ namespace Engine
         private bool intro_sound = false;
         public int blink_text = 0;
 
-        public enum SessionState
+        public enum NetSessionState
         {
             //Tous les états possibles de la partie
             Intro, Game, Break
         }
-        SessionState CurrentSessionState = SessionState.Intro;
+        NetSessionState CurrentSessionState = NetSessionState.Intro;
 
-        public Session()
+        public NetSession()
         {
-            background0 = new Background(0,16);
-            background1 = new Background(1,8);
-            background2 = new Background(2,4);
+            background0 = new Background(0, 16);
+            background1 = new Background(1, 8);
+            background2 = new Background(2, 4);
             screen_intro = new ScreenText(Constant.GAME_INTRO);
-           
+
             sound_start = Art.Song_start.CreateInstance(); // on charge le son d'intro         
         }
 
@@ -48,13 +48,13 @@ namespace Engine
 
         public void Update(float elapsetime)
         {
-             background0.Update(elapsetime);
-             background1.Update(elapsetime);
-             background2.Update(elapsetime);  
-             
-             switch (CurrentSessionState)
-             {
-                case SessionState.Intro:
+            background0.Update(elapsetime);
+            background1.Update(elapsetime);
+            background2.Update(elapsetime);
+
+            switch (CurrentSessionState)
+            {
+                case NetSessionState.Intro:
 
                     if (!intro_sound)
                     {
@@ -68,38 +68,38 @@ namespace Engine
 
                     if (intro > Constant.GAME_INTRO_LAPS)
                     {
-                        CurrentSessionState = SessionState.Game;
+                        CurrentSessionState = NetSessionState.Game;
                         screen_intro = null;
                         mylevel = new Level(num_level);
 
-                    } 
+                    }
                     break;
 
-                case SessionState.Game:
+                case NetSessionState.Game:
                     {
                         if (Input.KeyPressed(Keys.P))
                         {
-                            CurrentSessionState = SessionState.Break;
+                            CurrentSessionState = NetSessionState.Break;
                         }
                         if (Input.KeyPressed(Keys.R))
                         {
                             //TODO: Quand on appuie sur la touche R, lancer une nouvelle partie
                         }
                         mylevel.Update(elapsetime);
-                        
+
                         break;
                     }
 
-                case SessionState.Break:
+                case NetSessionState.Break:
                     {
                         if (Input.KeyPressed(Keys.P))
                         {
-                            CurrentSessionState = SessionState.Game;
+                            CurrentSessionState = NetSessionState.Game;
                         }
                         break;
                     }
 
-                
+
 
             }
         }
@@ -112,17 +112,17 @@ namespace Engine
 
             switch (CurrentSessionState)
             {
-                case SessionState.Intro:
+                case NetSessionState.Intro:
                     if ((blink_text < 600)) screen_intro.Draw(spriteBatch);
                     else if (blink_text > 1200) blink_text = 0;
 
                     break;
 
-                case SessionState.Game:
+                case NetSessionState.Game:
                     mylevel.Draw(spriteBatch);
                     break;
 
-                case SessionState.Break:
+                case NetSessionState.Break:
                     mylevel.Draw(spriteBatch);
                     string name = "PAUSE";
                     int pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
@@ -131,7 +131,7 @@ namespace Engine
                     spriteBatch.DrawString(Art.Font_Game, name, new Vector2(pos_X, pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A);
                     break;
 
-           
+
             }
         }
     }

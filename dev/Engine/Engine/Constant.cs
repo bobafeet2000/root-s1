@@ -38,10 +38,11 @@ namespace Engine
         public const string STRING_QUIT = "Press ECHAP key to quit the game";
         public const string STRING_QUIT_MENU = "Press ECHAP key to return to the menu";
         public const string STRING_TRY = "Press the R to try again";
-        public const string STRING_PLAYER_HOST = "Player 1 (HOST)";
+        public const string STRING_PLAYER_HOST = "Player 1 HOST";
         public const string STRING_PLAYER2 = "Player 2";
         public const string STRING_SELECT = "Press 1 or 2 to select your player";
-        public const string STRING_CONFIRM = "Press ENTER to confirm";
+        public const string STRING_CONFIRM = "Game will start automatically";
+        public const string STRING_DETECTED = " detected !";
         public const string STRING_START = "Press ENTER to start the game";
 
         public const string CONTENT_DIR = "Content";
