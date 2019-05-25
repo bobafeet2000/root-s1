@@ -495,7 +495,7 @@ namespace Engine
             this.name = name;
             name_2 = Constant.STRING_PLAYER_HOST;
             name_3 = Constant.STRING_PLAYER2;
-            name_4 = Constant.STRING_START;
+            name_4 = Constant.STRING_CONFIRM;
             name_5 = ". . .";
             name_6 = Constant.STRING_DETECTED;
 
