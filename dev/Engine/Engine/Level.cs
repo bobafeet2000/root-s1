@@ -85,10 +85,13 @@ namespace Engine
                             int y = enemies[j].pos_Y;
                             enemies.Remove(enemies[j]);
                             tirs[i].Isdead();// le tir est marqué comme dead pour être supprimé lors de l'update des tirs 
-                            Explosion explosions = new Explosion(4,150);
-                            explosions.pos_X = x;
-                            explosions.pos_Y = y;
-                            explosion.Add(explosions);
+                            if (enemies.Count != 0)
+                            {
+                                Explosion explosions = new Explosion(4, 150);
+                                explosions.pos_X = x;
+                                explosions.pos_Y = y;
+                                explosion.Add(explosions);
+                            }
                             score += 100;
                             sound_death = Art.Song_death.CreateInstance();// nouvelle instance sound_effect qui sera joué par dessus les précédentes
                             sound_death.Play();
@@ -103,8 +106,14 @@ namespace Engine
                 {
                     if (tirsenemy[i].rectangle.Intersects(player.rectangle))
                     {
+                        int x = player.pos_X + 15;
+                        int y = player.pos_Y + 15;
                         tirsenemy.Remove(tirsenemy[i]);
                         PLAYER_LIVES -= 1;
+                        Explosion explosions = new Explosion(4, 150);
+                        explosions.pos_X = x;
+                        explosions.pos_Y = y;
+                        explosion.Add(explosions);
                         sound_explosion = Art.Song_explosion.CreateInstance();
                         sound_explosion.Play();
                     }
