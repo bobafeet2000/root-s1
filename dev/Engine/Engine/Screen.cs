@@ -84,8 +84,8 @@ namespace Engine
         public ScreenHome(String name)
         {
             this.name = name;
-            name_2 = "Press ENTER to start the game";
-            name_3 = "Insert a Coin";
+            name_2 = Constant.STRING_START_GAME ;
+            name_3 = Constant.STRING_COIN;
             pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
             pos_X_2 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_2).Length() / 2);
             pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
@@ -113,7 +113,7 @@ namespace Engine
             spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
             spriteBatch.DrawString(Art.Font_Boot, name_2 , new Vector2(this.pos_X_2, Constant.MAIN_WINDOW_HEIGHT -50), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, pos_Y+30), font_color_game * Constant.FONT_GAME_COLOR_A);
-            spriteBatch.DrawString(Art.Font_Boot, "Press H key to display instructions", new Vector2(13, Constant.MAIN_WINDOW_HEIGHT-30), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, Constant.STRING_INSTRUCT_DISPLAY, new Vector2(13, Constant.MAIN_WINDOW_HEIGHT-30), font_color_game * Constant.FONT_GAME_COLOR_A);
         }
     }
 
@@ -133,9 +133,9 @@ namespace Engine
         public ScreenInstruction(String name)
         {
             this.name = name;
-            name_2 = "Press arrow keys to move your vessel";
-            name_3 = "Press CTRL key to shoot the enemies";
-            name_4 = "Press ECHAP key to quit the game";
+            name_2 = Constant.STRING_MOVE;
+            name_3 = Constant.STRING_SHOOT;
+            name_4 = Constant.STRING_QUIT;
             pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
             pos_X_2 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_2).Length() / 2);
             pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
@@ -204,8 +204,8 @@ namespace Engine
         public ScreenOver(String name)
         {
             this.name = name;
-            name_2 = "Press the ESC to return to the menu";
-            name_3 = "Press the R to try again";
+            name_2 = Constant.STRING_QUIT_MENU;
+            name_3 = Constant.STRING_TRY;
             pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             pos_X_2 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_2).Length() / 2);
@@ -327,10 +327,10 @@ namespace Engine
         public ScreenMenuMulti(String name)
         {
             this.name = name;
-            name_2 = "Player 1 (HOST)";
-            name_3 = "Player 2";
-            name_4 = "Press 1 or 2 to select your player";
-            name_5 = "Press ENTER to confirm";
+            name_2 = Constant.STRING_PLAYER_HOST;
+            name_3 = Constant.STRING_PLAYER2;
+            name_4 = Constant.STRING_SELECT;
+            name_5 = Constant.STRING_CONFIRM;
 
             pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
             pos_X_2 = 10;
@@ -411,9 +411,9 @@ namespace Engine
         public ScreenMenuMulti2(String name,int choice, bool connected)
         {
             this.name = name;
-            name_2 = "Player 1 (HOST)";
-            name_3 = "Player 2";
-            name_4 = "Press ENTER to start the game";
+            name_2 = Constant.STRING_PLAYER_HOST;
+            name_3 = Constant.STRING_PLAYER2;
+            name_4 = Constant.STRING_START;
             name_5 = ". . .";
 
             this.connected = connected;

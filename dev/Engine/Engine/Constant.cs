@@ -27,6 +27,23 @@ namespace Engine
         public const string GAME_MENUMULTI2 = "Looking for players";
         public const string GAME_OVER = "Game Over";
         public const string GAME_NEXT = "Next Level";
+
+        public const string STRING_LIVES = "Lives";
+        public const string STRING_LEVEL = "Level";
+        public const string STRING_COIN = "Insert a Coin";
+        public const string STRING_START_GAME = "Press ENTER to start the game";
+        public const string STRING_INSTRUCT_DISPLAY = "Press H key to display instructions";
+        public const string STRING_MOVE = "Press arrow keys to move your vessel";
+        public const string STRING_SHOOT = "Press CTRL key to shoot the enemies";
+        public const string STRING_QUIT = "Press ECHAP key to quit the game";
+        public const string STRING_QUIT_MENU = "Press ECHAP key to return to the menu";
+        public const string STRING_TRY = "Press the R to try again";
+        public const string STRING_PLAYER_HOST = "Player 1 (HOST)";
+        public const string STRING_PLAYER2 = "Player 2";
+        public const string STRING_SELECT = "Press 1 or 2 to select your player";
+        public const string STRING_CONFIRM = "Press ENTER to confirm";
+        public const string STRING_START = "Press ENTER to start the game";
+
         public const string CONTENT_DIR = "Content";
         public const int MAIN_WINDOW_WIDTH = 448;               // 448 Résolution borne Galaga * 2
         public const int MAIN_WINDOW_HEIGHT = 576;              // 576 Résolution borne Galaga * 2

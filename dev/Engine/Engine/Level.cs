@@ -297,7 +297,12 @@ namespace Engine
                     player.Update(elapsetime); // update du player 
 
                     if (level_num % 10 == 0)
+                    {
                         score += 10000;
+                    }
+
+                    if (score % 10000 == 0 && score!=0)
+                        PLAYER_LIVES += 1;
 
                     if (PLAYER_LIVES == 0)
                     {
@@ -330,9 +335,6 @@ namespace Engine
             switch (CurrentLevelState)
             {
                 case LevelState.Game:
-
-
-
                     foreach (var e in enemies)
                     {
                         e.Draw(spriteBatch);
@@ -342,8 +344,8 @@ namespace Engine
                     if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++) tirsenemy[i].Draw(spriteBatch); // draw de la liste des tirs ennemy                                                                                                        
 
                     // Affichage nombre de vie
-                    string name = $"Lives : {PLAYER_LIVES}";
-                    string name_2 = $"Level : {level_num}";
+                    string name = Constant.STRING_LIVES + $" : {PLAYER_LIVES}";
+                    string name_2 = Constant.STRING_LEVEL + $" : {level_num}";
                     string name_3 = $"Score : {score}";
                     int pos_X = (10);
                     int pos_X_2 = Constant.MAIN_WINDOW_WIDTH - (int)Art.Font_Boot.MeasureString(name_2).Length() - 10;
