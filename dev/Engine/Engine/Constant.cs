@@ -19,6 +19,14 @@ namespace Engine
         public const int GAME_BOOT_LAPS = 3200;
 
         public static readonly string[] GAME_BOOT_MSG = { "mov bh , 32", "mov bl , 40", "mov si , WORD Descriptor", "mov ah , 0x89", "cli", "int 15h", "jmp backtotheroots" };
+        public static readonly string[,] HIGH_SCORES_DEFAULT = new string[,]
+        {
+            {"75200", "Nasaboy"},
+            {"63400", "Boba"},
+            {"42000", "Belvedere"},
+            {"200", "Jewny Halliday"},
+            {"0", STRING_PLAYER}
+        };
 
         public const string GAME_INSTRUCTION = "Instruction";
         public const string GAME_CREDIT = "CREDIT";
@@ -39,6 +47,7 @@ namespace Engine
         public const string STRING_QUIT_MENU = "Press ECHAP key to return to the menu";
         public const string STRING_TRY = "Press the R to try again";
         public const string STRING_PLAYER_HOST = "Player 1 HOST";
+        public const string STRING_PLAYER = "Player 1";
         public const string STRING_PLAYER2 = "Player 2";
         public const string STRING_SELECT = "Press 1 or 2 to select your player";
         public const string STRING_CONFIRM = "Game will start automatically";
@@ -115,7 +124,7 @@ namespace Engine
         public const string TEXTURE_EXPLOSION = "Explosion";                        
         public const int FRAME_EXPLOSION_ENEMY = 4;
 
-        public const int SPEEDTIR_ENEMY = 5;
+        public const int SPEEDTIR_ENEMY = 3;
         public const string TEXTURE_ENEMY1 = "enemy1";
         public const int CYCLE_ENEMY1 = 400;                                                      // Cycle en ms
         public const int FRAME_ENEMY1 = 2;

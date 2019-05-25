@@ -40,39 +40,33 @@ namespace Parser
             rhs = temp;
         }
 
-        public static void Writer(string name, string[] score)
+        public void sortlist(string[,] nameoflist, int score)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    Int32.TryParse(nameoflist[j,0], out int g);
+
+                    Int32.TryParse(nameoflist[j + 1,0], out int h);
+        
+                    if (g > h)
+                    {
+                        Swap<string>(ref nameoflist[j,0], ref nameoflist[j + 1,0]);
+                        Swap<string>(ref nameoflist[j, 1], ref nameoflist[j + 1, 1]);
+                    }
+                }
+            }
+        }
+
+        public static void Writer(string file_name, string score)
         {
             try
             {
 
-                for (int i = 0; i < 5; i++)
+                using (StreamWriter sw = new StreamWriter(file_name))
                 {
-                    for (int j = 0; j < 5; j++)
-                    {
-                        int.TryParse(score[j], out int f);
-                        int.TryParse(score[j + 1], out int h);
-                        if (f > h)
-                        {
-                            Swap<string>(ref score[j], ref score[j + 1]);
-                        }
-                    }
-                }
-
-                using (StreamWriter sw = new StreamWriter(name))
-                {
-                    int x = 0;
-                    while (x < 5)
-                    {
-                        if (score[x] != "0")
-                        {
-                            sw.WriteLine(score[x]);
-                        }
-                        else
-                        {
-                            sw.WriteLine("0");
-                        }
-                        x++;
-                    }
+                    sw.WriteLine(score + ":");
                 }
 
             }
