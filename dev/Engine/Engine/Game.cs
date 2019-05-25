@@ -18,6 +18,7 @@ namespace Engine
         private int choice = 0;
         private bool connected=false; //bool pour savoir si le joueur connecté
         private int connectedelaps=0;   // compteur pour afficher les joueurs avant de lancer la partie
+        static public bool peer = false; 
 
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
@@ -26,6 +27,8 @@ namespace Engine
         private ScreenMenuMulti screenmenumulti; // Ecran du menu du selection du joueur
         private ScreenMenuMulti2 screenmenumulti2; //Ecran du menu multi
         private Session session; // Partie mono joueur
+        private Host host;
+        private Client client;
         private NetSession netsession; // Partie multi joueur
 
         private int timer; // timer à usage multiple
@@ -226,6 +229,16 @@ namespace Engine
                     {
                         screenmenumulti = null;
                         screenmenumulti2 = new ScreenMenuMulti2(Constant.GAME_MENUMULTI2,choice,connected);
+
+                        if (choice==1) // on lance une instance Host
+                        {
+                            host = new Host();
+                        }
+                        if (choice == 2) // on lance une instance Client
+                        {
+                            client = new Client();
+                        }
+
                         CurrentGameState = GameState.Multi;
                         break;
                     }
@@ -237,12 +250,16 @@ namespace Engine
                     {
                         screenmenumulti2 = null;
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
+                        peer = false;
+                        if (choice==1) host.Server.Shutdown("bye"); // on libère les socket
+                        host = null;
+                        client = null;
                         connected = false;
                         connectedelaps = 0;
                         CurrentGameState = GameState.MultiMenu;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.Enter)) // là il faut lancer les couches réseau et tester la connexion à une partie ou à un joueur
+                    if (peer) // là il faut lancer les couches réseau et tester la connexion à une partie ou à un joueur
                     {
                         connected = true;              
                     }
@@ -259,6 +276,8 @@ namespace Engine
                     }
                     screenmenumulti2.SetConnected(connected);
                     screenmenumulti2.Update(elapsetime);
+                    if (choice==1) host.Readmsg();
+                    if (choice==2) client.Readmsg();
 
                     break;
 
@@ -269,6 +288,10 @@ namespace Engine
                         netsession.End();
                         netsession = null;
                         connected = false;
+                        peer = false;
+                        if (choice == 1) host.Server.Shutdown("bye"); // on libère les socket
+                        host = null;
+                        client = null;
                         connectedelaps = 0;
                         CurrentGameState = GameState.MainMenu;
                         break;
