@@ -40,6 +40,8 @@ namespace Engine
         public int blink_text = 0;
         public bool gameover_sound = false;
         public int timer = 0;
+        public bool once = true;
+        public bool once2 = true;
 
 
         public enum LevelState
@@ -337,13 +339,25 @@ namespace Engine
 
                     player.Update(elapsetime); // update du player 
 
-                    if (level_num % 10 == 0)
+                    if (level_num % 10 == 0 && once)
                     {
                         score += 10000;
+                        once = false;
+                    }
+                    if (level_num % 10 != 0 && !once)
+                    {
+                        once = true;
                     }
 
-                    if (score % 10000 == 0 && score!=0)
+                    if (score % 10000 == 0 && score!=0 && once2)
+                    {
                         PLAYER_LIVES += 1;
+                        once = false;
+                    }
+                    if (score % 10000 != 0 && !once2)
+                    {
+                        once2 = true;
+                    }
 
                     if (PLAYER_LIVES == 0)
                     {
