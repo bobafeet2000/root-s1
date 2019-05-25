@@ -66,6 +66,7 @@ namespace Engine
             player = new Player();
             enemies = new List<Enemy>();
             tirsenemy = new List<Tirenemy>();
+            score = 0;
 
             tirs = new List<Tir>();
             nbtir = Constant.PLAYER_NBTIR;
