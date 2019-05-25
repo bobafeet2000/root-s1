@@ -119,8 +119,6 @@ namespace Engine
 
         public override void Update(float elapsetime)
         {
-
-
             this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
         }
         public override void Draw(SpriteBatch spriteBatch)

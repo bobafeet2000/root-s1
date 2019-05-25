@@ -34,6 +34,7 @@ namespace Engine
         public ScreenOver screen_over { get; protected set; }
         public ScreenNext screen_next { get; protected set; }
         public int level_num;
+        public int delay = 0;
         public int PERCENTAGE_SHOT = 200;
         public static int score = 0;
         public int PLAYER_LIVES = 5;
@@ -107,18 +108,28 @@ namespace Engine
             {
                 for (int i = tirsenemy.Count() - 1; i >= 0; i--)
                 {
-                    if (tirsenemy[i].rectangle.Intersects(player.rectangle))
+                    if (tirsenemy[i].rectangle.Intersects(player.rectangle) && !player.dead)
                     {
                         int x = player.pos_X + 15;
                         int y = player.pos_Y + 15;
                         tirsenemy.Remove(tirsenemy[i]);
-                        PLAYER_LIVES -= 1;
-                        Explosion explosions = new Explosion(4, 150);
-                        explosions.pos_X = x;
-                        explosions.pos_Y = y;
-                        explosion.Add(explosions);
-                        sound_explosion = Art.Song_explosion.CreateInstance();
-                        sound_explosion.Play();
+                        if (PLAYER_LIVES - 1 == 0)
+                        {
+                            player.Isdead();
+                            Explosion explosions = new Explosion(4, 150);
+                            explosions.pos_X = x+7;
+                            explosions.pos_Y = y+10;
+                            explosion.Add(explosions);
+                            sound_explosion = Art.Song_explosion.CreateInstance();
+                            sound_explosion.Play();
+                            PLAYER_LIVES -= 1;
+                        }
+                        else
+                        {
+                            PLAYER_LIVES -= 1;
+                            sound_explosion = Art.Song_explosion.CreateInstance();
+                            sound_explosion.Play();
+                        }
                     }
                 }
             }
@@ -338,7 +349,8 @@ namespace Engine
                             }
                         }
 
-                    player.Update(elapsetime); // update du player 
+                    if (player.dead != true)
+                        player.Update(elapsetime); // update du player 
 
                     if (level_num % 10 == 0 && once)
                     {
@@ -362,11 +374,15 @@ namespace Engine
 
                     if (PLAYER_LIVES == 0)
                     {
-                        Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb",score.ToString(), Game.HIGH_SCORES_);
-                        CurrentLevelState = LevelState.Over;
-                        screen_over = new ScreenOver(Constant.GAME_OVER);
-                    }
+                        if (delay > 30)
+                        {
+                                Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb", score.ToString(), Game.HIGH_SCORES_);
+                                screen_over = new ScreenOver(Constant.GAME_OVER);
+                                CurrentLevelState = LevelState.Over;
+                        }
 
+                        delay += 1;
+                    }
                     break;
 
                 case LevelState.Over:
@@ -421,7 +437,8 @@ namespace Engine
                     spriteBatch.DrawString(Art.Font_Game_small, name, new Vector2(pos_X, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     spriteBatch.DrawString(Art.Font_Game_small, name_2, new Vector2(pos_X_2, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     spriteBatch.DrawString(Art.Font_Game_small, name_3, new Vector2(pos_X_3, 10), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
-                    player.Draw(spriteBatch); // draw du player
+                    if (player.dead!=true)
+                        player.Draw(spriteBatch);// draw du player
 
                     break;
 
