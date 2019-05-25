@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
@@ -219,6 +220,16 @@ namespace Engine
                 PosX = 50;
                 PosY += 50;
 
+            }
+            for(int y = 0; y < enemies.Count-1; y++)
+            {
+                
+                if(enemies[y].pos_X == enemies[y+1].pos_X && enemies[y].pos_Y == enemies[y + 1].pos_Y)
+                {
+                    enemies.Remove(enemies[y + 1]);
+                    y -= 1;
+                }
+                
             }
         }
         public void End()
