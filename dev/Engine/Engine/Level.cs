@@ -352,7 +352,7 @@ namespace Engine
                     if (score % 10000 == 0 && score!=0 && once2)
                     {
                         PLAYER_LIVES += 1;
-                        once = false;
+                        once2 = false;
                     }
                     if (score % 10000 != 0 && !once2)
                     {
