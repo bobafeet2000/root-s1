@@ -22,6 +22,7 @@ namespace Engine
         public Enemy enemy4 { get; protected set; }
         public Enemy enemy1_1 { get; protected set; }
         public List<Enemy> enemies { get; protected set; }
+        public List<Explosion> explosion = new List<Explosion>();
         public List<Tir> tirs { get; protected set; }
         public List<Tirenemy> tirsenemy { get; protected set; }
         public SoundEffectInstance sound_explosion { get; protected set; }
@@ -37,7 +38,6 @@ namespace Engine
         public int score = 0;
         public int PLAYER_LIVES = 5;
         public int blink_text = 0;
-
         public bool gameover_sound = false;
         public int timer = 0;
 
@@ -81,11 +81,18 @@ namespace Engine
                     {
                         if (tirs[i].rectangle.Intersects(enemies[j].rectangle))
                         {
+                            int x = enemies[j].pos_X;
+                            int y = enemies[j].pos_Y;
                             enemies.Remove(enemies[j]);
                             tirs[i].Isdead();// le tir est marqué comme dead pour être supprimé lors de l'update des tirs 
+                            Explosion explosions = new Explosion(4,150);
+                            explosions.pos_X = x;
+                            explosions.pos_Y = y;
+                            explosion.Add(explosions);
                             score += 100;
                             sound_death = Art.Song_death.CreateInstance();// nouvelle instance sound_effect qui sera joué par dessus les précédentes
                             sound_death.Play();
+                            
                         }
                     }
                 }
@@ -302,6 +309,13 @@ namespace Engine
 
                     ReturnFire();
 
+                    for (int i = explosion.Count-1; i >= 0; i--)
+                    {
+                        explosion[i].Update(elapsetime);
+                        if (explosion[i].frame_courante == 4)
+                            explosion.Remove(explosion[i]);
+                    }
+
                     // update de la liste des tirs enemy
                     if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++)
                         {
@@ -357,6 +371,15 @@ namespace Engine
                     {
                         e.Draw(spriteBatch);
                     }
+
+                    if (explosion.Count != 0)
+                        {
+                            for (int i = 0; i < explosion.Count(); i++)
+                            {
+
+                            explosion[i].Draw(spriteBatch);
+                            }
+                        }
 
                     if (tirs.Count() > 0) for (int i = 0; i < tirs.Count(); i++) tirs[i].Draw(spriteBatch); // draw de la liste des tirs player
                     if (tirsenemy.Any()) for (int i = 0; i < tirsenemy.Count(); i++) tirsenemy[i].Draw(spriteBatch); // draw de la liste des tirs ennemy                                                                                                        

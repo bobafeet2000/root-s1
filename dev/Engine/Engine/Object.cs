@@ -275,4 +275,47 @@ namespace Engine
 
         }
     }
+
+    public class Explosion : Object
+    {
+        public int cmp { get; private set; }
+        public int cycle { get; private set; }
+        public int frame { get; private set; }
+        public int frame_courante { get; private set; }
+        new public int pos_X { get; set; }
+        new public int pos_Y { get; set; }
+
+        public Explosion(int frame, int cycle)
+        {
+            this.cmp = 0;
+            this.color = Color.White;
+            this.frame = frame;
+            this.frame_courante = 1;
+            this.cycle = cycle;
+            this.sprite = new Sprite(Art.Texture_Explosion, this.color);
+            this.sprite.SetOrigin(new Vector2((sprite.Texture.Width / frame) / 2, (sprite.Texture.Height / 2))); // on fixe le centre pour la rotation
+
+
+        }
+        public override void Update(float elapsetime)
+        {
+            cmp += (int)elapsetime;
+            if (cmp > (this.cycle))
+            {
+                cmp = 0;
+                frame_courante++;
+                if (frame_courante > frame) frame_courante = 1;
+            }
+
+            this.sprite.SetRect(new Rectangle((frame_courante - 1) * (sprite.Texture.Width / frame), 0, (sprite.Texture.Width / frame), sprite.Texture.Height));
+
+            this.sprite.SetPosition(new Vector2(this.pos_X, pos_Y));
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+
+            this.sprite.Draw(spriteBatch);
+        }
+    }
+
 }

@@ -112,7 +112,7 @@ namespace Engine
         public const int PLAYER_NBTIR = 2;
         public const int PLAYER_SPEEDTIR = 1;
 
-        public const string TEXTURE_EXPLOSION_ENEMY = "Explosion_Player";                        
+        public const string TEXTURE_EXPLOSION = "Explosion";                        
         public const int FRAME_EXPLOSION_ENEMY = 4;
 
         public const int SPEEDTIR_ENEMY = 5;

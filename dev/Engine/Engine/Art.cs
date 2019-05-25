@@ -19,6 +19,7 @@ namespace Engine
         public static Texture2D Texture_Enemy2 { get; private set; }
         public static Texture2D Texture_Enemy3 { get; private set; }
         public static Texture2D Texture_Enemy4 { get; private set; }
+        public static Texture2D Texture_Explosion { get; private set; }
 
         // Textures nouveau skin
         public static Texture2D Texture_Enemy1_1 { get; private set; }
@@ -54,7 +55,8 @@ namespace Engine
             Texture_Enemy2 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY2);
             Texture_Enemy3 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY3);
             Texture_Enemy4 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY4);
-            Texture_Enemy1_1 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY1_1); 
+            Texture_Enemy1_1 = content.Load<Texture2D>(Constant.TEXTURE_ENEMY1_1);
+            Texture_Explosion = content.Load<Texture2D>(Constant.TEXTURE_EXPLOSION);
             // Sprite star
             Texture_Star0 = content.Load<Texture2D>(Constant.TEXTURE_STAR0);
             Texture_Star1 = content.Load<Texture2D>(Constant.TEXTURE_STAR1);
