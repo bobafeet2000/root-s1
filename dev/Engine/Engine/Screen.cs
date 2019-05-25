@@ -320,6 +320,75 @@ namespace Engine
         }
     }
 
+    public class ScreenScore : Screen
+    {
+        public String name_2 { get; protected set; }
+        public String name_3 { get; protected set; }
+        public String name_4 { get; protected set; }
+        public String name_5 { get; protected set; }
+        public String name_6 { get; protected set; }
+
+        public int pos_X_2 { get; protected set; }
+        public int pos_X_3 { get; protected set; }
+        public int pos_X_4 { get; protected set; }
+        public int pos_X_5 { get; protected set; }
+        public int pos_X_6 { get; protected set; }
+        public int pos_Y_2 { get; protected set; }
+        public int pos_Y_3 { get; protected set; }
+        public int pos_Y_4 { get; protected set; }
+        public int pos_Y_5 { get; protected set; }
+        public int pos_Y_6 { get; protected set; }
+
+        public ScreenScore(String name)
+        {
+            this.name = name;
+            name_2 = "1. " + Game.HIGH_SCORES_[0, 1] + "  " + Game.HIGH_SCORES_[0, 0];
+            name_3 = "2. " + Game.HIGH_SCORES_[1, 1] + "  " + Game.HIGH_SCORES_[1, 0];
+            name_4 = "3. " + Game.HIGH_SCORES_[2, 1] + "  " + Game.HIGH_SCORES_[2, 0];
+            name_5 = "4. " + Game.HIGH_SCORES_[3, 1] + "  " + Game.HIGH_SCORES_[3, 0];
+            name_6 = "5. " + Game.HIGH_SCORES_[4, 1] + "  " + Game.HIGH_SCORES_[4, 0];
+            pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
+            pos_X_2 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_2).Length() / 2);
+            pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
+            pos_X_4 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_4).Length() / 2);
+            pos_X_5 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_5).Length() / 2);
+            pos_X_6 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_6).Length() / 2);
+            pos_Y = Constant.MAIN_WINDOW_HEIGHT / 4;
+            pos_Y_2 = pos_Y + 50;
+            pos_Y_3 = pos_Y_2 + 50;
+            pos_Y_4 = pos_Y_3 + 50;
+            pos_Y_5 = pos_Y_4 + 50;
+            pos_Y_6 = pos_Y_5 + 50;
+            font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+
+            background0 = new Background(0, 16);
+            background1 = new Background(1, 8);
+            background2 = new Background(2, 4);
+
+        }
+
+        public override void Update(float elapsetime)
+        {
+            background0.Update(elapsetime);
+            background1.Update(elapsetime);
+            background2.Update(elapsetime);
+
+        }
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            background0.Draw(spriteBatch);
+            background1.Draw(spriteBatch);
+            background2.Draw(spriteBatch);
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
+            spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_4, new Vector2(this.pos_X_4, this.pos_Y_4), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_5, new Vector2(this.pos_X_5, this.pos_Y_5), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_6, new Vector2(this.pos_X_6, this.pos_Y_6), font_color_game * Constant.FONT_GAME_COLOR_A);
+
+        }
+    }
+
     public class ScreenMenuMulti : Screen
     {
         public String name_2 { get; protected set; }

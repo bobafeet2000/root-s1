@@ -1,30 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Engine;
 
 // score:
 namespace Parser
 {
     public class Parser
     {
-        public static string[] Parted(string name)
+        public static string Parted(string filename)
         {
             try
             {
-                string[] results = new string[5];
-                int i = 0;
-                using (StreamReader sr = new StreamReader(name))
+                string linne = "";
+                using (StreamReader sr = new StreamReader(filename))
                 {
-                    string[] linne = new string[1];
-                    while (!sr.EndOfStream || i == 4)
-                    {
-                        string line = sr.ReadLine();
-                        linne = line.Split(':');
-                        results[i] = linne[0];
-                        i++;
-                    }
+                    linne = sr.ReadLine();
+                    
                 }
-                return results;
+                return linne;
             }
             catch (Exception e)
             {
@@ -40,33 +34,49 @@ namespace Parser
             rhs = temp;
         }
 
-        public void sortlist(string[,] nameoflist, int score)
+        public static void sortlist(string[,] nameoflist)
         {
             for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     Int32.TryParse(nameoflist[j,0], out int g);
 
                     Int32.TryParse(nameoflist[j + 1,0], out int h);
         
-                    if (g > h)
+                    if (g < h)
                     {
-                        Swap<string>(ref nameoflist[j,0], ref nameoflist[j + 1,0]);
-                        Swap<string>(ref nameoflist[j, 1], ref nameoflist[j + 1, 1]);
+                        Swap<string>(ref nameoflist[j+1,0], ref nameoflist[j,0]);
+                        Swap<string>(ref nameoflist[j+1, 1], ref nameoflist[j , 1]);
                     }
                 }
             }
         }
 
-        public static void Writer(string file_name, string score)
+        public static string[,] Tab_Construct(string file_name, string score, string[,] GAME_SCORE)
         {
+            int index = 4;
+            for (int i = 0; i < 5; i++)
+            {
+                if (GAME_SCORE[i, 1] == Constant.STRING_PLAYER)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            Int32.TryParse(GAME_SCORE[index, 0], out int res1);
+            Int32.TryParse(score, out int res2);
+            if (res1 < res2)
+                GAME_SCORE[index, 0] = score;
             try
             {
-
                 using (StreamWriter sw = new StreamWriter(file_name))
                 {
-                    sw.WriteLine(score + ":");
+                    if (!File.Exists(file_name))
+                    {
+                        File.Create(file_name);
+                    }
+                    sw.WriteLine(GAME_SCORE[index, 0]);
                 }
 
             }
@@ -75,6 +85,8 @@ namespace Parser
                 Console.WriteLine("bruh");
                 throw;
             }
+            sortlist(GAME_SCORE);
+            return GAME_SCORE;
         }
     }
 }

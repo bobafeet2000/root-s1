@@ -35,7 +35,7 @@ namespace Engine
         public ScreenNext screen_next { get; protected set; }
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
-        public int score = 0;
+        public static int score = 0;
         public int PLAYER_LIVES = 5;
         public int blink_text = 0;
         public bool gameover_sound = false;
@@ -347,6 +347,7 @@ namespace Engine
 
                     if (PLAYER_LIVES == 0)
                     {
+                        Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb",score.ToString(), Game.HIGH_SCORES_);
                         CurrentLevelState = LevelState.Over;
                         screen_over = new ScreenOver(Constant.GAME_OVER);
                     }

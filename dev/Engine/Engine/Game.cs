@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -18,12 +19,25 @@ namespace Engine
         private int choice = 0;
         private bool connected=false; //bool pour savoir si le joueur connecté
         private int connectedelaps=0;   // compteur pour afficher les joueurs avant de lancer la partie
-        static public bool peer = false; 
+        static public bool peer = false;
+        public static string[,] HIGH_SCORES()
+        {
+            if (File.Exists(@"Content\score.smb"))
+            {
+                if (Parser.Parser.Parted(@"Content\score.smb") == "0")
+                    return Constant.HIGH_SCORES_DEFAULT;
+                else return Parser.Parser.Tab_Construct(@"Content\score.smb",Parser.Parser.Parted(@"Content\score.smb"), Constant.HIGH_SCORES_DEFAULT);
+            }
+            else return Constant.HIGH_SCORES_DEFAULT;
+        }
+        public static string[,] HIGH_SCORES_ = HIGH_SCORES();
+
 
         private ScreenBoot screenboot; // Ecran de boot
         private ScreenHome screenhome; // Ecran d'accueil
         private ScreenInstruction screeninstruction; // Ecran d'accueil
         private ScreenCredit screencredit; // Ecran de crédit
+        private ScreenScore screenscore; // ECran des Scores
         private ScreenMenuMulti screenmenumulti; // Ecran du menu du selection du joueur
         private ScreenMenuMulti2 screenmenumulti2; //Ecran du menu multi
         private Session session; // Partie mono joueur
@@ -42,7 +56,7 @@ namespace Engine
         public enum GameState
         {
             //Tous les états possibles du jeu
-            Boot, MainMenu, Instruction, Credit, PlayGame, Break, MultiMenu, Multi, PlayGameMulti
+            Boot, MainMenu, Instruction, Credit, Score, PlayGame, Break, MultiMenu, Multi, PlayGameMulti
         }
         GameState CurrentGameState = GameState.Boot;
 
@@ -165,6 +179,12 @@ namespace Engine
                         CurrentGameState = GameState.Credit;
                         break;
                     }
+                    if (Input.KeyPressed(Keys.S))
+                    {
+                        screenscore = new ScreenScore(Constant.GAME_SCORE);
+                        CurrentGameState = GameState.Score;
+                        break;
+                    }
                     if (Input.KeyPressed(Keys.M))
                     {
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
@@ -178,6 +198,7 @@ namespace Engine
 
                     if (Input.KeyPressed(Keys.Escape))
                     {
+                        Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb",Level.score.ToString(), Game.HIGH_SCORES_);
                         session.End();
                         session = null;
                         CurrentGameState = GameState.MainMenu;
@@ -198,7 +219,6 @@ namespace Engine
                     break;
 
                 case GameState.Credit:
-
                     if (Input.KeyPressed(Keys.Escape))
                     {
                         screencredit = null;
@@ -206,6 +226,16 @@ namespace Engine
                         break;
                     }
                     screencredit.Update(elapsetime);
+                    break;
+
+                case GameState.Score:
+                    if (Input.KeyPressed(Keys.Escape))
+                    {
+                        screenscore = null;
+                        CurrentGameState = GameState.MainMenu;
+                        break;
+                    }
+                    screenscore.Update(elapsetime);
                     break;
 
                 case GameState.MultiMenu:
@@ -335,6 +365,9 @@ namespace Engine
                     break;
                 case GameState.Credit:
                     screencredit.Draw(spriteBatch);
+                    break;
+                case GameState.Score:
+                    screenscore.Draw(spriteBatch);
                     break;
                 case GameState.MultiMenu:
                     screenmenumulti.Draw(spriteBatch);
