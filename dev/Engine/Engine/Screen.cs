@@ -122,13 +122,19 @@ namespace Engine
         public String name_2 { get; protected set; }
         public String name_3 { get; protected set; }
         public String name_4 { get; protected set; }
+        public String name_5 { get; protected set; }
+        public String name_6 { get; protected set; }
 
         public int pos_X_2 { get; protected set; }
         public int pos_X_3 { get; protected set; }
         public int pos_X_4 { get; protected set; }
+        public int pos_X_5 { get; protected set; }
+        public int pos_X_6 { get; protected set; }
         public int pos_Y_2 { get; protected set; }
         public int pos_Y_3 { get; protected set; }
         public int pos_Y_4 { get; protected set; }
+        public int pos_Y_5 { get; protected set; }
+        public int pos_Y_6 { get; protected set; }
 
         public ScreenInstruction(String name)
         {
@@ -136,14 +142,20 @@ namespace Engine
             name_2 = Constant.STRING_MOVE;
             name_3 = Constant.STRING_SHOOT;
             name_4 = Constant.STRING_QUIT;
+            name_5 = Constant.STRING_SCORE_MENU;
+            name_6 = Constant.STRING_START_MULTI;
             pos_X = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Game.MeasureString(name).Length() / 2);
             pos_X_2 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_2).Length() / 2);
             pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
             pos_X_4 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_4).Length() / 2);
-            pos_Y = Constant.MAIN_WINDOW_HEIGHT / 4;
+            pos_X_5 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_5).Length() / 2);
+            pos_X_6 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_6).Length() / 2);
+            pos_Y = Constant.MAIN_WINDOW_HEIGHT / 4 - 96;
             pos_Y_2 = Constant.MAIN_WINDOW_HEIGHT / 3;
             pos_Y_3 = Constant.MAIN_WINDOW_HEIGHT / 2;
             pos_Y_4 = pos_Y_2 * 2;
+            pos_Y_5 = pos_Y_4 + 96;
+            pos_Y_6 = pos_Y_2 - 96;
             font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
 
             background0 = new Background(0, 16);
@@ -168,6 +180,8 @@ namespace Engine
             spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_4, new Vector2(this.pos_X_4, this.pos_Y_4), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_5, new Vector2(this.pos_X_5, this.pos_Y_5), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_6, new Vector2(this.pos_X_6, this.pos_Y_6), font_color_game * Constant.FONT_GAME_COLOR_A);
         }
     }
 

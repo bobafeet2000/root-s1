@@ -265,8 +265,8 @@ namespace Engine
         }
         public void End()
         {
-            if (explosion.Count!=0)
-                sound_explosion.Stop();
+            /*if (explosion.Count!=0)
+                sound_explosion.Stop();*/
             if (PLAYER_LIVES==0)
                 sound_gameover.Stop();
             if (tirs.Count!=0)

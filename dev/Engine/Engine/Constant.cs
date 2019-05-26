@@ -41,6 +41,8 @@ namespace Engine
         public const string STRING_LEVEL = "Level";
         public const string STRING_COIN = "Insert a Coin";
         public const string STRING_START_GAME = "Press ENTER to start the game";
+        public const string STRING_START_MULTI = "Press M to access multiplayer";
+        public const string STRING_SCORE_MENU = "Press S to see the LEADERBOARD";
         public const string STRING_INSTRUCT_DISPLAY = "Press H key to display instructions";
         public const string STRING_MOVE = "Press arrow keys to move your vessel";
         public const string STRING_SHOOT = "Press CTRL key to shoot the enemies";

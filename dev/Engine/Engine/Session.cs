@@ -37,7 +37,12 @@ namespace Engine
             background1 = new Background(1,8);
             background2 = new Background(2,4);
             screen_intro = new ScreenText(Constant.GAME_INTRO);
-           
+            CurrentSessionState = SessionState.Intro;
+            num_level = 0;
+            intro = 0;
+            intro_sound = false;
+            blink_text = 0;
+
             sound_start = Art.Song_start.CreateInstance(); // on charge le son d'intro         
         }
 
@@ -83,7 +88,8 @@ namespace Engine
                         {
                             CurrentSessionState = SessionState.Break;
                         }
-                        mylevel.Update(elapsetime);
+                        if (mylevel != null)
+                            mylevel.Update(elapsetime);
                         
                         break;
                     }
@@ -117,7 +123,8 @@ namespace Engine
                     break;
 
                 case SessionState.Game:
-                    mylevel.Draw(spriteBatch);
+                    if (mylevel != null)
+                        mylevel.Draw(spriteBatch);
                     break;
 
                 case SessionState.Break:
