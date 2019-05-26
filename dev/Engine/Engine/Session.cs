@@ -44,6 +44,8 @@ namespace Engine
         public void End()
         {
             sound_start.Stop();
+            if (CurrentSessionState==SessionState.Game)
+                mylevel.End();
         }
 
         public void Update(float elapsetime)
@@ -80,10 +82,6 @@ namespace Engine
                         if (Input.KeyPressed(Keys.P))
                         {
                             CurrentSessionState = SessionState.Break;
-                        }
-                        if (Input.KeyPressed(Keys.R))
-                        {
-                            //TODO: Quand on appuie sur la touche R, lancer une nouvelle partie
                         }
                         mylevel.Update(elapsetime);
                         

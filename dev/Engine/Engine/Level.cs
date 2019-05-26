@@ -37,7 +37,7 @@ namespace Engine
         public int delay = 0;
         public int PERCENTAGE_SHOT = 200;
         public static int score = 0;
-        public int PLAYER_LIVES = 5;
+        public static int PLAYER_LIVES;
         public int blink_text = 0;
         public bool gameover_sound = false;
         public int timer = 0;
@@ -68,6 +68,7 @@ namespace Engine
             enemies = new List<Enemy>();
             tirsenemy = new List<Tirenemy>();
             score = 0;
+            PLAYER_LIVES = Constant.PLAYER_LIVES;
 
             tirs = new List<Tir>();
             nbtir = Constant.PLAYER_NBTIR;
@@ -264,8 +265,14 @@ namespace Engine
         }
         public void End()
         {
-            sound_explosion.Stop();
-            sound_tir.Stop();
+            if (explosion.Count!=0)
+                sound_explosion.Stop();
+            if (PLAYER_LIVES==0)
+                sound_gameover.Stop();
+            if (tirs.Count!=0)
+                sound_tir.Stop();
+            if (tirsenemy.Count != 0)
+                sound_tir_enemy.Stop();
         }
 
         public void Update(float elapsetime)
@@ -446,7 +453,8 @@ namespace Engine
 
                     if (!gameover_sound)
                     {
-                        Art.Song_gameover.Play();
+                        sound_gameover = Art.Song_gameover.CreateInstance();
+                        sound_gameover.Play();
                         gameover_sound = true;
                     }
 

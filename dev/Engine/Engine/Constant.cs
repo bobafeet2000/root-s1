@@ -122,6 +122,7 @@ namespace Engine
         public const int PLAYER_SPEED = 5;                                                      // plus indice eleve moins ca va vite
         public const int PLAYER_NBTIR = 2;
         public const int PLAYER_SPEEDTIR = 1;
+        public const int PLAYER_LIVES = 5;
 
         public const string TEXTURE_EXPLOSION = "Explosion";                        
         public const int FRAME_EXPLOSION_ENEMY = 4;

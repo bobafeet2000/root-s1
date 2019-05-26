@@ -204,6 +204,14 @@ namespace Engine
                         CurrentGameState = GameState.MainMenu;
                         break;
                     }
+                    if (Input.KeyPressed(Keys.R) && Level.PLAYER_LIVES==0)
+                    {
+                        Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb", Level.score.ToString(), Game.HIGH_SCORES_);
+                        session.End();
+                        session = null;
+                        session = new Session();
+                        break;
+                    }
                     session.Update(elapsetime);
                     break;
 
