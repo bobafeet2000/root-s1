@@ -318,7 +318,7 @@ namespace Engine
                         e.Update(elapsetime);
                     }
 
-                    if (Input.KeyPressed(Keys.LeftControl))
+                    if (Input.KeyPressed(Keys.LeftControl) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A))
                     {
                         if (tirs.Count() < nbtir)
                         {

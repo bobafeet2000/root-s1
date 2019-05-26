@@ -77,14 +77,14 @@ namespace Engine
 
             int move = (int)(elapsetime / Constant.PLAYER_SPEED);
 
-            if (Input.IsKeyDown(Keys.Right))
+            if (Input.IsKeyDown(Keys.Right) || (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftThumbstickRight)))
             {
 
                 if (pos_X < Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width - move) pos_X = pos_X + move;
                 else pos_X = Constant.MAIN_WINDOW_WIDTH - sprite.Rect.Width;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) || (GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.LeftThumbstickLeft)))
             {
 
                 if (pos_X > move) pos_X = pos_X - move;
