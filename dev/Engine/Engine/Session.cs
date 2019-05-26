@@ -29,7 +29,7 @@ namespace Engine
             //Tous les états possibles de la partie
             Intro, Game, Break
         }
-        public static SessionState CurrentSessionState = SessionState.Intro;
+        SessionState CurrentSessionState = SessionState.Intro;
 
         public Session()
         {
@@ -37,20 +37,13 @@ namespace Engine
             background1 = new Background(1,8);
             background2 = new Background(2,4);
             screen_intro = new ScreenText(Constant.GAME_INTRO);
-            CurrentSessionState = SessionState.Intro;
-            num_level = 0;
-            intro = 0;
-            intro_sound = false;
-            blink_text = 0;
-
+           
             sound_start = Art.Song_start.CreateInstance(); // on charge le son d'intro         
         }
 
         public void End()
         {
             sound_start.Stop();
-            if (CurrentSessionState==SessionState.Game)
-                mylevel.End();
         }
 
         public void Update(float elapsetime)
@@ -84,19 +77,22 @@ namespace Engine
 
                 case SessionState.Game:
                     {
-                        if (Input.KeyPressed(Keys.P))
+                        if (Input.KeyPressed(Keys.P) || Input.KeyPressedGamePad(Buttons.Start))
                         {
                             CurrentSessionState = SessionState.Break;
                         }
-                        if (mylevel != null)
-                            mylevel.Update(elapsetime);
+                        if (Input.KeyPressed(Keys.R))
+                        {
+                            //TODO: Quand on appuie sur la touche R, lancer une nouvelle partie
+                        }
+                        mylevel.Update(elapsetime);
                         
                         break;
                     }
 
                 case SessionState.Break:
                     {
-                        if (Input.KeyPressed(Keys.P))
+                        if (Input.KeyPressed(Keys.P) || Input.KeyPressedGamePad(Buttons.Start))
                         {
                             CurrentSessionState = SessionState.Game;
                         }
@@ -123,8 +119,7 @@ namespace Engine
                     break;
 
                 case SessionState.Game:
-                    if (mylevel != null)
-                        mylevel.Draw(spriteBatch);
+                    mylevel.Draw(spriteBatch);
                     break;
 
                 case SessionState.Break:

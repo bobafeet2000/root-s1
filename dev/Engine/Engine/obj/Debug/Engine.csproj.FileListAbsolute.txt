@@ -43,5 +43,3 @@ E:\dev\Engine\Engine\obj\Debug\Engine.csproj.CopyComplete
 E:\dev\Engine\Engine\obj\Debug\Engine.exe
 E:\dev\Engine\Engine\obj\Debug\Engine.pdb
 E:\dev\Engine\Engine\bin\Debug\Lidgren.Network.dll
-E:\dev\Engine\Engine\obj\Debug\Engine.csprojAssemblyReference.cache
-C:\Users\mariu\Desktop\Epita\Info\root-s2\dev\Engine\Engine\bin\Debug\Lidgren.Network.dll

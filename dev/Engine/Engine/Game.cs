@@ -146,7 +146,7 @@ namespace Engine
 
             elapsetime = (float)gameTime.ElapsedGameTime.TotalMilliseconds; // calcul du temps passé depuis le dernier update
 
-            Input.Update();  // Update entrée clavier du joueur
+            Input.Update();  // Update entrée clavier du joueur       
 
             switch (CurrentGameState)
             {
@@ -157,35 +157,35 @@ namespace Engine
                     break;
 
                 case GameState.MainMenu:
-                    if (Input.KeyPressed(Keys.Enter))
+                    if (Input.KeyPressed(Keys.Enter) || Input.KeyPressedGamePad(Buttons.Start))
                     {
                         session = new Session();
                         CurrentGameState = GameState.PlayGame;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         this.Exit();
                     }
-                    if (Input.KeyPressed(Keys.H))
+                    if (Input.KeyPressed(Keys.H) || Input.KeyPressedGamePad(Buttons.B))
                     {
                         screeninstruction = new ScreenInstruction(Constant.GAME_INSTRUCTION);
                         CurrentGameState = GameState.Instruction;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.C))
+                    if (Input.KeyPressed(Keys.C) || Input.KeyPressedGamePad(Buttons.X))
                     {
                         screencredit = new ScreenCredit(Constant.GAME_CREDIT);
                         CurrentGameState = GameState.Credit;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.S))
+                    if (Input.KeyPressed(Keys.S) || Input.KeyPressedGamePad(Buttons.A))
                     {
                         screenscore = new ScreenScore(Constant.GAME_SCORE);
                         CurrentGameState = GameState.Score;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.M))
+                    if (Input.KeyPressed(Keys.M) || Input.KeyPressedGamePad(Buttons.Y))
                     {
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
                         CurrentGameState = GameState.MultiMenu ;
@@ -196,7 +196,7 @@ namespace Engine
 
                 case GameState.PlayGame:
 
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb", Level.score.ToString(), Game.HIGH_SCORES_);
                         session.End();
@@ -204,20 +204,12 @@ namespace Engine
                         CurrentGameState = GameState.MainMenu;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.R) && Level.PLAYER_LIVES==0)
-                    {
-                        Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb", Level.score.ToString(), Game.HIGH_SCORES_);
-                        session.End();
-                        session = null;
-                        session = new Session();
-                        break;
-                    }
                     session.Update(elapsetime);
                     break;
 
                 case GameState.Instruction:
 
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         screeninstruction = null;
                         CurrentGameState = GameState.MainMenu;
@@ -228,7 +220,7 @@ namespace Engine
 
                 case GameState.Credit:
 
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         screencredit = null;
                         CurrentGameState = GameState.MainMenu;
@@ -238,7 +230,7 @@ namespace Engine
                     break;
 
                 case GameState.Score:
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         screenscore = null;
                         CurrentGameState = GameState.MainMenu;
@@ -248,23 +240,23 @@ namespace Engine
                     break;
 
                 case GameState.MultiMenu:
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         screenmenumulti = null;
                         CurrentGameState = GameState.MainMenu;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.D1))
+                    if (Input.KeyPressed(Keys.D1) || Input.KeyPressedGamePad(Buttons.DPadUp))
                     {
                         screenmenumulti.SetChoice(choice=1);
                         break;
                     }
-                    if (Input.KeyPressed(Keys.D2))
+                    if (Input.KeyPressed(Keys.D2) || Input.KeyPressedGamePad(Buttons.DPadDown))
                     {
                         screenmenumulti.SetChoice(choice=2);
                         break;
                     }
-                    if (Input.KeyPressed(Keys.Enter) && choice != 0)
+                    if ((Input.KeyPressed(Keys.Enter) || Input.KeyPressedGamePad(Buttons.Start)) && choice != 0)
                     {
                         screenmenumulti = null;
                         screenmenumulti2 = new ScreenMenuMulti2(Constant.GAME_MENUMULTI2,choice,connected);
@@ -285,7 +277,7 @@ namespace Engine
                     break;
 
                 case GameState.Multi:
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         screenmenumulti2 = null;
                         screenmenumulti = new ScreenMenuMulti(Constant.GAME_MENUMULTI);
@@ -322,7 +314,7 @@ namespace Engine
 
                 case GameState.PlayGameMulti:
 
-                    if (Input.KeyPressed(Keys.Escape))
+                    if (Input.KeyPressed(Keys.Escape) || Input.KeyPressedGamePad(Buttons.Back))
                     {
                         netsession.End();
                         netsession = null;

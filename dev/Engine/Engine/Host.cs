@@ -50,7 +50,8 @@ namespace Engine
                         x2 = msg.ReadInt32();
                         NetOutgoingMessage sendMsg = Server.CreateMessage();
                         sendMsg.Write(x);
-                        Server.SendMessage(sendMsg, msg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                        //Server.SendMessage(sendMsg, msg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                        Server.SendMessage(sendMsg, msg.SenderConnection, NetDeliveryMethod.Unreliable, 0);
                         break;
                     default:
 
@@ -65,11 +66,9 @@ namespace Engine
         public void Sendmsg(int x)
         {
             NetOutgoingMessage sendMsg = Server.CreateMessage();
-
-            //sendMsg.Write("Hello");
             sendMsg.Write(x);
-
-            Server.SendMessage(sendMsg,Server.Connections[0], NetDeliveryMethod.ReliableOrdered);
+            // if (Server.Connections.Count>0) Server.SendMessage(sendMsg,Server.Connections[0], NetDeliveryMethod.ReliableOrdered);
+            if (Server.Connections.Count > 0) Server.SendMessage(sendMsg, Server.Connections[0], NetDeliveryMethod.Unreliable);
         }
 
         public void Stop()

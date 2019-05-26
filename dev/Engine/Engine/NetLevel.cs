@@ -38,10 +38,13 @@ namespace Engine
         public int level_num;
         public int PERCENTAGE_SHOT = 200;
         public int score = 0;
+        public int delay = 0;
         public int PLAYER_LIVES = 5;
         public int blink_text = 0;
         public bool gameover_sound = false;
         public int timer = 0;
+        public bool once = true;
+        public bool once2 = true;
 
 
         public enum LevelState
@@ -113,13 +116,23 @@ namespace Engine
                         int x = player.pos_X + 15;
                         int y = player.pos_Y + 15;
                         tirsenemy.Remove(tirsenemy[i]);
-                        PLAYER_LIVES -= 1;
-                        Explosion explosions = new Explosion(4, 150);
-                        explosions.pos_X = x;
-                        explosions.pos_Y = y;
-                        explosion.Add(explosions);
-                        sound_explosion = Art.Song_explosion.CreateInstance();
-                        sound_explosion.Play();
+                        if (PLAYER_LIVES - 1 == 0)
+                        {
+                            player.Isdead();
+                            Explosion explosions = new Explosion(4, 150);
+                            explosions.pos_X = x;
+                            explosions.pos_Y = y;
+                            explosion.Add(explosions);
+                            sound_explosion = Art.Song_explosion.CreateInstance();
+                            sound_explosion.Play();
+                            PLAYER_LIVES -= 1;
+                        }
+                        else
+                        {
+                            PLAYER_LIVES -= 1;
+                            sound_explosion = Art.Song_explosion.CreateInstance();
+                            sound_explosion.Play();
+                        }
                     }
                 }
             }
@@ -301,7 +314,7 @@ namespace Engine
                         e.Update(elapsetime);
                     }
 
-                    if (Input.KeyPressed(Keys.LeftControl))
+                    if (Input.KeyPressed(Keys.LeftControl) || Input.KeyPressedGamePad(Buttons.A))
                     {
                         if (tirs.Count() < nbtir)
                         {
@@ -339,6 +352,9 @@ namespace Engine
                             }
                         }
 
+                    if (player.dead != true)
+                        player.Update(elapsetime); // update du player 
+
                     if (Game.choice == 1)
                     {
                         Game.host.Sendmsg(Game.netsession.mylevel.player.pos_X);
@@ -351,22 +367,40 @@ namespace Engine
                         if (xtemp !=0) Game.netsession.mylevel.player2.Setpos(xtemp, Game.netsession.mylevel.player2.pos_Y);
                     }
 
-                    player.Update(elapsetime); // update du player 
+                    //player.Update(elapsetime); // update du player 
 
                     player2.Update(elapsetime); // update du player 2
 
-                    if (level_num % 10 == 0)
+                    if (level_num % 10 == 0 && once)
                     {
                         score += 10000;
+                        once = false;
+                    }
+                    if (level_num % 10 != 0 && !once)
+                    {
+                        once = true;
                     }
 
-                    if (score % 10000 == 0 && score != 0)
+                    if (score % 10000 == 0 && score != 0 && once2)
+                    {
                         PLAYER_LIVES += 1;
+                        once2 = false;
+                    }
+                    if (score % 10000 != 0 && !once2)
+                    {
+                        once2 = true;
+                    }
 
                     if (PLAYER_LIVES == 0)
                     {
-                        CurrentLevelState = LevelState.Over;
-                        screen_over = new ScreenOver(Constant.GAME_OVER);
+                        if (delay > 100)
+                        {
+                            Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb", score.ToString(), Game.HIGH_SCORES_);
+                            screen_over = new ScreenOver(Constant.GAME_OVER);
+                            CurrentLevelState = LevelState.Over;
+                        }
+
+                        delay += 1;
                     }
 
                     break;
@@ -423,7 +457,9 @@ namespace Engine
                     spriteBatch.DrawString(Art.Font_Game_small, name, new Vector2(pos_X, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     spriteBatch.DrawString(Art.Font_Game_small, name_2, new Vector2(pos_X_2, pos_Y), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
                     spriteBatch.DrawString(Art.Font_Game_small, name_3, new Vector2(pos_X_3, 10), font_color_game_small * Constant.FONT_GAME_SMALL_COLOR_A);
-                    player.Draw(spriteBatch); // draw du player
+
+                    if (player.dead != true)
+                        player.Draw(spriteBatch);// draw du player
                     player2.Draw(spriteBatch); // draw du player 2
 
                     break;

@@ -43,7 +43,8 @@ namespace Engine
                         x2 = msg.ReadInt32();
                         NetOutgoingMessage sendMsg = netclient.CreateMessage();
                         sendMsg.Write(x);                 
-                        netclient.SendMessage(sendMsg,msg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                        //netclient.SendMessage(sendMsg,msg.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                        netclient.SendMessage(sendMsg, msg.SenderConnection, NetDeliveryMethod.Unreliable, 0);
                         break;
                     default:
                         break;

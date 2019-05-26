@@ -77,7 +77,7 @@ namespace Engine
 
                 case NetSessionState.Game:
                     {
-                        if (Input.KeyPressed(Keys.P))
+                        if (Input.KeyPressed(Keys.P) || Input.KeyPressedGamePad(Buttons.Start))
                         {
                             CurrentSessionState = NetSessionState.Break;
                         }
@@ -92,7 +92,7 @@ namespace Engine
 
                 case NetSessionState.Break:
                     {
-                        if (Input.KeyPressed(Keys.P))
+                        if (Input.KeyPressed(Keys.P) || Input.KeyPressedGamePad(Buttons.Start))
                         {
                             CurrentSessionState = NetSessionState.Game;
                         }

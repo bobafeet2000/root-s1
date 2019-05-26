@@ -129,7 +129,7 @@ namespace Engine
         public const string TEXTURE_EXPLOSION = "Explosion";                        
         public const int FRAME_EXPLOSION_ENEMY = 4;
 
-        public const int SPEEDTIR_ENEMY = 3;
+        public const int SPEEDTIR_ENEMY = 2;
         public const string TEXTURE_ENEMY1 = "enemy1";
         public const int CYCLE_ENEMY1 = 400;                                                      // Cycle en ms
         public const int FRAME_ENEMY1 = 2;

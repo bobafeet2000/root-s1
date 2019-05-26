@@ -25,3 +25,12 @@ C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Eng
 C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.csproj.CopyComplete
 C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.exe
 C:\Users\Théo\Desktop\Epita\Projet S2\root-s2\root-s2 TEST (WIP)\dev\Engine\Engine\obj\Release\Engine.pdb
+E:\dev\Engine\Engine\bin\Release\Engine.exe.config
+E:\dev\Engine\Engine\bin\Release\Engine.exe
+E:\dev\Engine\Engine\bin\Release\Engine.pdb
+E:\dev\Engine\Engine\bin\Release\FNA.dll
+E:\dev\Engine\Engine\bin\Release\Lidgren.Network.dll
+E:\dev\Engine\Engine\obj\Release\Engine.csproj.CoreCompileInputs.cache
+E:\dev\Engine\Engine\obj\Release\Engine.csproj.CopyComplete
+E:\dev\Engine\Engine\obj\Release\Engine.exe
+E:\dev\Engine\Engine\obj\Release\Engine.pdb
