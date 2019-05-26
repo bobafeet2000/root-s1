@@ -91,6 +91,7 @@ namespace Engine
             pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
             pos_Y = Constant.MAIN_WINDOW_HEIGHT / 2;
             font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+            font_color_boot = new Color(Constant.FONT_BOOT_COLOR_R, Constant.FONT_BOOT_COLOR_G, Constant.FONT_BOOT_COLOR_B); // couleur de la font boot msg
 
             background0 = new Background(0, 16);
             background1 = new Background(1, 8);
@@ -111,9 +112,9 @@ namespace Engine
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
             spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
-            spriteBatch.DrawString(Art.Font_Boot, name_2 , new Vector2(this.pos_X_2, Constant.MAIN_WINDOW_HEIGHT -50), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, name_2 , new Vector2(this.pos_X_2, Constant.MAIN_WINDOW_HEIGHT -50), font_color_boot * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, pos_Y+30), font_color_game * Constant.FONT_GAME_COLOR_A);
-            spriteBatch.DrawString(Art.Font_Boot, Constant.STRING_INSTRUCT_DISPLAY, new Vector2(13, Constant.MAIN_WINDOW_HEIGHT-30), font_color_game * Constant.FONT_GAME_COLOR_A);
+            spriteBatch.DrawString(Art.Font_Boot, Constant.STRING_INSTRUCT_DISPLAY, new Vector2(13, Constant.MAIN_WINDOW_HEIGHT-30), font_color_boot * Constant.FONT_GAME_COLOR_A);
         }
     }
 
@@ -157,6 +158,7 @@ namespace Engine
             pos_Y_5 = pos_Y_4 + 96;
             pos_Y_6 = pos_Y_2 - 96;
             font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+            font_color_boot = new Color(Constant.FONT_BOOT_COLOR_R, Constant.FONT_BOOT_COLOR_G, Constant.FONT_BOOT_COLOR_B); // couleur de la font boot msg
 
             background0 = new Background(0, 16);
             background1 = new Background(1, 8);
@@ -176,7 +178,7 @@ namespace Engine
             background0.Draw(spriteBatch);
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
-            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_boot * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
             spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_4, new Vector2(this.pos_X_4, this.pos_Y_4), font_color_game * Constant.FONT_GAME_COLOR_A);
@@ -226,6 +228,7 @@ namespace Engine
             pos_X_3 = (int)(Constant.MAIN_WINDOW_WIDTH / 2 - Art.Font_Boot.MeasureString(name_3).Length() / 2);
 
             font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+            font_color_boot = new Color(Constant.FONT_BOOT_COLOR_R, Constant.FONT_BOOT_COLOR_G, Constant.FONT_BOOT_COLOR_B); // couleur de la font boot msg
 
         }
 
@@ -236,7 +239,7 @@ namespace Engine
         public override void Draw(SpriteBatch spriteBatch)
         {
 
-            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A);// Affichage du titre de l'écran
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_boot * Constant.FONT_GAME_COLOR_A);// Affichage du titre de l'écran
             //spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, Constant.MAIN_WINDOW_HEIGHT - 50), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, Constant.MAIN_WINDOW_HEIGHT - 30), font_color_game * Constant.FONT_GAME_COLOR_A);
 
@@ -300,6 +303,7 @@ namespace Engine
             pos_Y_4 = pos_Y_3 + 50;
             pos_Y_5 = pos_Y_4 + 50;
             font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+            font_color_boot = new Color(Constant.FONT_BOOT_COLOR_R, Constant.FONT_BOOT_COLOR_G, Constant.FONT_BOOT_COLOR_B); // couleur de la font boot msg
 
             background0 = new Background(0, 16);
             background1 = new Background(1, 8);
@@ -319,7 +323,7 @@ namespace Engine
             background0.Draw(spriteBatch);
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
-            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_boot * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
             spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_4, new Vector2(this.pos_X_4, this.pos_Y_4), font_color_game * Constant.FONT_GAME_COLOR_A);
@@ -366,7 +370,8 @@ namespace Engine
             pos_Y_4 = pos_Y_3 + 50;
             pos_Y_5 = pos_Y_4 + 50;
             pos_Y_6 = pos_Y_5 + 50;
-            font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font 
+            font_color_game = new Color(Constant.FONT_GAME_COLOR_R, Constant.FONT_GAME_COLOR_G, Constant.FONT_GAME_COLOR_B); // couleur de la font
+            font_color_boot = new Color(Constant.FONT_BOOT_COLOR_R, Constant.FONT_BOOT_COLOR_G, Constant.FONT_BOOT_COLOR_B); // couleur de la font boot msg
 
             background0 = new Background(0, 16);
             background1 = new Background(1, 8);
@@ -386,7 +391,7 @@ namespace Engine
             background0.Draw(spriteBatch);
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
-            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_boot * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
             spriteBatch.DrawString(Art.Font_Boot, name_2, new Vector2(this.pos_X_2, this.pos_Y_2), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_3, new Vector2(this.pos_X_3, this.pos_Y_3), font_color_game * Constant.FONT_GAME_COLOR_A);
             spriteBatch.DrawString(Art.Font_Boot, name_4, new Vector2(this.pos_X_4, this.pos_Y_4), font_color_game * Constant.FONT_GAME_COLOR_A);
@@ -453,7 +458,7 @@ namespace Engine
             background0.Draw(spriteBatch);
             background1.Draw(spriteBatch);
             background2.Draw(spriteBatch);
-            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_game * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
+            spriteBatch.DrawString(Art.Font_Game, this.name, new Vector2(this.pos_X, this.pos_Y), font_color_boot * Constant.FONT_GAME_COLOR_A); // Affichage du titre de l'écran
             switch (choice)
             {
                 case 0:

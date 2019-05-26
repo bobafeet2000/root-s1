@@ -246,17 +246,17 @@ namespace Engine
                         CurrentGameState = GameState.MainMenu;
                         break;
                     }
-                    if (Input.KeyPressed(Keys.D1) || Input.KeyPressedGamePad(Buttons.DPadUp))
+                    if (Input.KeyPressed(Keys.D1) || Input.KeyPressedGamePad(Buttons.LeftThumbstickUp))
                     {
                         screenmenumulti.SetChoice(choice=1);
                         break;
                     }
-                    if (Input.KeyPressed(Keys.D2) || Input.KeyPressedGamePad(Buttons.DPadDown))
+                    if (Input.KeyPressed(Keys.D2) || Input.KeyPressedGamePad(Buttons.LeftThumbstickDown))
                     {
                         screenmenumulti.SetChoice(choice=2);
                         break;
                     }
-                    if ((Input.KeyPressed(Keys.Enter) || Input.KeyPressedGamePad(Buttons.Start)) && choice != 0)
+                    if ((Input.KeyPressed(Keys.Enter) || Input.KeyPressedGamePad(Buttons.A)) && choice != 0)
                     {
                         screenmenumulti = null;
                         screenmenumulti2 = new ScreenMenuMulti2(Constant.GAME_MENUMULTI2,choice,connected);
