@@ -29,7 +29,7 @@ namespace Engine
             //Tous les états possibles de la partie
             Intro, Game, Break
         }
-        SessionState CurrentSessionState = SessionState.Intro;
+        public static SessionState CurrentSessionState = SessionState.Intro;
 
         public Session()
         {

@@ -381,7 +381,7 @@ namespace Engine
 
                     if (PLAYER_LIVES == 0)
                     {
-                        if (delay > 30)
+                        if (delay > 100)
                         {
                                 Game.HIGH_SCORES_ = Parser.Parser.Tab_Construct(@"Content\score.smb", score.ToString(), Game.HIGH_SCORES_);
                                 screen_over = new ScreenOver(Constant.GAME_OVER);
